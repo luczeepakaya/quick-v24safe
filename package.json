@@ -1,0 +1,22 @@
+{
+  "name": "lukzi-vs-social-media",
+  "version": "1.0.0",
+  "description": "LUKZI VS SOCIAL MEDIA - Video & Audio Downloader",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "lukzi",
+    "downloader",
+    "youtube",
+    "tiktok",
+    "instagram",
+    "facebook",
+    "twitter",
+    "pinterest",
+    "spotify"
+  ],
+  "author": "LUKZI DEV",
+  "license": "MIT"
+}

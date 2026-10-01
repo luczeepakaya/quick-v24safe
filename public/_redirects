@@ -1,0 +1,6 @@
+/api/*   /.netlify/functions/api/:splat   200
+/about   /about.html                      200
+/contact /contact.html                    200
+/apis    /apis.html                       200
+/guaid   /guaid.html                      200
+/*       /404.html                        404

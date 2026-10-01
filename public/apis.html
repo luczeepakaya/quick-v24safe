@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full antialiased dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LUKZI VS SOCIAL MEDIA — Download, Save, Enjoy &amp; Respect LUKZI</title>
+  <meta name="description" content="LUKZI VS SOCIAL MEDIA helps you download videos and audio from your favorite social media platforms in just a single click."/>
+  <meta name="keywords" content="LUKZI,LUKZI DEV,LUKZI VS SOCIAL MEDIA,video downloader,social media downloader,YouTube downloader,TikTok downloader,Instagram downloader,Facebook downloader,Twitter downloader,Pinterest downloader,Spotify downloader"/>
+  <meta name="theme-color" content="#06b6d4"/>
+  <link rel="icon" href="/lukzi-logo.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="/lukzi-logo.png"/>
+  <link rel="stylesheet" href="/style.css"/>
+
+  <script>
+    (function(){
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (!prefersDark) {
+            document.documentElement.classList.remove('dark');
+          }
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="min-h-full flex flex-col font-sans transition-colors duration-300">
+  <div class="relative min-h-screen">
+    <!-- Background Image -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 bg-[url('/bg-light.png')] bg-cover bg-center bg-no-repeat transition-opacity duration-500 dark:bg-[url('/bg-dark.png')]"></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+      <div id="header-container" class="relative mx-auto flex h-[76px] max-w-7xl items-center justify-between rounded-[24px] border px-4 sm:px-6 backdrop-blur-2xl transition-all duration-300 border-white/10 bg-slate-900/90 shadow-2xl shadow-cyan-950/40">
+        <!-- Logo & Brand Name -->
+        <a href="/" aria-label="LUKZI VS SOCIAL MEDIA Home" class="group z-10 flex items-center gap-3">
+          <div class="relative">
+            <img id="nav-logo" src="/lukzi-logo.png" alt="LUKZI Logo" class="h-11 w-11 sm:h-12 sm:w-12 rounded-full object-cover border-2 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-transform duration-300 ease-out group-hover:scale-110" />
+            <span class="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-cyan-400">
+              <span class="h-2 w-2 rounded-full bg-slate-950"></span>
+            </span>
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="text-sm sm:text-base md:text-lg font-black tracking-wider text-white drop-shadow-md">
+              LUKZI <span class="text-cyan-400">VS</span> <span class="bg-gradient-to-r from-cyan-300 via-sky-200 to-pink-300 bg-clip-text text-transparent">SOCIAL MEDIA</span>
+            </span>
+            <span class="text-[10px] text-cyan-300 font-semibold tracking-widest uppercase opacity-90 hidden sm:inline-block">Official Video Downloader</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
+          <a href="/" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-bold transition-colors duration-300 text-slate-100 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Home</a>
+          <a href="/about" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-bold transition-colors duration-300 text-slate-200 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">About</a>
+          <a href="/guaid" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-bold transition-colors duration-300 text-slate-200 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">How to Use</a>
+          <a href="/contact" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-bold transition-colors duration-300 text-slate-200 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Contact</a>
+          <a href="/apis" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-bold transition-colors duration-300 text-slate-200 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">API</a>
+
+          <!-- Platforms Dropdown -->
+          <div class="platforms-dropdown relative inline-block">
+            <button id="platforms-btn" type="button" class="nav-link flex items-center gap-1.5 px-2 py-2 text-sm font-bold transition-colors duration-300 text-slate-200 hover:text-cyan-300 after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-cyan-400"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+              <span>Platforms</span>
+              <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div id="platforms-menu" class="absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[210px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-2xl shadow-cyan-950/50">
+              <a href="#" onclick="selectPlatformByName('YouTube'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
+              </a>
+              <a href="#" onclick="selectPlatformByName('TikTok'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
+              </a>
+              <a href="#" onclick="selectPlatformByName('Instagram'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
+              </a>
+              <a href="#" onclick="selectPlatformByName('Facebook'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
+              </a>
+              <a href="#" onclick="selectPlatformByName('Twitter'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
+              </a>
+              <a href="#" onclick="selectPlatformByName('Pinterest'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
+              </a>
+              <a href="#" onclick="selectPlatformByName('Spotify'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Side: Contact Button, Theme Toggle & Mobile Menu Button -->
+        <div class="z-10 ml-auto flex items-center gap-2.5">
+          <!-- Direct Contact Button -->
+          <a href="tel:0701854805" class="hidden sm:flex items-center gap-2 rounded-xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/15 to-blue-500/15 px-3.5 py-2 text-xs font-extrabold text-cyan-300 hover:border-cyan-400 hover:bg-cyan-500/25 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>070 185 4805</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle-btn" type="button" aria-label="Toggle theme" class="group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-yellow-300/20 bg-slate-800 text-yellow-300 hover:border-yellow-300/50 hover:shadow-[0_0_20px_rgba(253,224,71,0.4)]">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:rotate-180 rotate-0 scale-100 opacity-100"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:-rotate-12 -rotate-90 scale-0 opacity-0"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" type="button" aria-label="Open navigation menu" class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border transition-all duration-300 hover:scale-105 active:scale-95 lg:hidden border-white/10 bg-slate-800 text-white hover:bg-slate-700">
+            <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+            <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu" class="mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0">
+        <nav id="mobile-nav" class="rounded-[24px] border p-2.5 backdrop-blur-2xl border-white/10 bg-slate-900/95 shadow-xl shadow-black/40">
+          <div class="space-y-1">
+            <a href="/" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                </span>Home
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/about" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </span>About
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/guaid" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+                </span>How to Use
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/contact" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path></svg>
+                </span>Contact: 070 185 4805
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/apis" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
+                </span>API
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+          </div>
+
+          <!-- Mobile Platforms Accordion -->
+          <div class="mt-2 border-t border-slate-200/50 dark:border-white/5 pt-2">
+            <button id="mobile-platforms-toggle" class="w-full flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-cyan-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                </span>Platforms
+              </span>
+              <svg id="mobile-platforms-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div id="mobile-platforms-sub" class="overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
+              <div class="space-y-1 px-2 pb-2">
+                <a href="#" onclick="selectPlatformByName('YouTube'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
+                </a>
+                <a href="#" onclick="selectPlatformByName('TikTok'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
+                </a>
+                <a href="#" onclick="selectPlatformByName('Instagram'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
+                </a>
+                <a href="#" onclick="selectPlatformByName('Facebook'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
+                </a>
+                <a href="#" onclick="selectPlatformByName('Twitter'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
+                </a>
+                <a href="#" onclick="selectPlatformByName('Pinterest'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
+                </a>
+                <a href="#" onclick="selectPlatformByName('Spotify'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+<section class="max-w-4xl mx-auto px-4 pt-12 pb-8 text-center transition-all duration-700 delay-100 opacity-0 translate-y-8"><div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 text-sm font-medium mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml h-4 w-4" aria-hidden="true"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>Developer API</div><h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4"><span class="text-gray-900 dark:text-white">LUKZI VS SOCIAL MEDIA </span><span class="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">API</span></h1><p class="text-lg text-gray-600 dark:text-slate-300 max-w-2xl mx-auto">Our powerful API is currently under development. Soon you&#x27;ll be able to integrate LUKZI VS SOCIAL MEDIA into your own applications.</p></section><section class="max-w-4xl mx-auto px-4 pb-12"><div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-pink-500 p-8 md:p-12 text-center shadow-2xl shadow-purple-500/30 transition-all duration-700 delay-200 opacity-0 scale-95"><div class="absolute inset-0 opacity-10"><div class="absolute inset-0 bg-[url(&#x27;/bg-light.png&#x27;)] bg-cover bg-center animate-pulse"></div><div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div></div><div class="relative z-10"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock h-5 w-5 text-white animate-pulse" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg><span class="text-white font-medium">Coming Soon</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-4 w-4 text-yellow-300 animate-spin-slow" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg></div><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">API Documentation</h2><p class="text-purple-100 max-w-md mx-auto mb-8">We&#x27;re building the best API experience for developers. Stay tuned for updates!</p><div class="flex flex-wrap items-center justify-center gap-4"><div class="flex items-center gap-2 text-white/80 text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket h-4 w-4" aria-hidden="true"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"></path><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"></path></svg><span>High Performance</span></div><div class="flex items-center gap-2 text-white/80 text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield h-4 w-4" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span>Secure</span></div><div class="flex items-center gap-2 text-white/80 text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-4 w-4" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>REST API</span></div></div></div></div></section><section class="max-w-6xl mx-auto px-4 pb-16 transition-all duration-700 delay-300 opacity-0 translate-y-8"><h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">API <span class="text-purple-600 dark:text-purple-400">Features</span></h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"><div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 hover:scale-[1.02] opacity-0 translate-y-8" style="transition-delay:300ms"><div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-500/20 rounded-xl flex items-center justify-center mb-3 text-yellow-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-6 w-6" aria-hidden="true"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"></path></svg></div><h3 class="font-bold text-gray-900 dark:text-white mb-1">Lightning Fast</h3><p class="text-sm text-gray-500 dark:text-slate-400">Optimized API endpoints for quick responses</p></div><div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 hover:scale-[1.02] opacity-0 translate-y-8" style="transition-delay:400ms"><div class="w-12 h-12 bg-green-100 dark:bg-green-500/20 rounded-xl flex items-center justify-center mb-3 text-green-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield h-6 w-6" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></div><h3 class="font-bold text-gray-900 dark:text-white mb-1">Secure &amp; Safe</h3><p class="text-sm text-gray-500 dark:text-slate-400">Built with security best practices</p></div><div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 hover:scale-[1.02] opacity-0 translate-y-8" style="transition-delay:500ms"><div class="w-12 h-12 bg-blue-100 dark:bg-blue-500/20 rounded-xl flex items-center justify-center mb-3 text-blue-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server h-6 w-6" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg></div><h3 class="font-bold text-gray-900 dark:text-white mb-1">Reliable</h3><p class="text-sm text-gray-500 dark:text-slate-400">High availability with minimal downtime</p></div></div></section><section class="max-w-6xl mx-auto px-4 pb-16 transition-all duration-700 delay-400 opacity-0 translate-y-8"><h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">Available <span class="text-purple-600 dark:text-purple-400">Endpoints</span></h2><div class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-2xl shadow-purple-500/10 dark:shadow-black/40 p-6 md:p-8 border border-white dark:border-white/10"><div class="space-y-3"><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:400ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/tiktok</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download TikTok videos</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:450ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/instagram</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download Instagram reels</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:500ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/facebook</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download Facebook videos</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:550ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/twitter</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download Twitter/X videos</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:600ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/pinterest</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download Pinterest videos</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:650ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/spotify</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download Spotify audio</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:700ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/yts</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Get YouTube video details</span></div><div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-white/5 transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-500/30 opacity-0 -translate-x-4" style="transition-delay:750ms"><div class="flex items-center gap-3"><span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">POST</span><span class="text-sm font-mono text-gray-700 dark:text-slate-300">/api/ytdl</span></div><span class="text-xs text-gray-500 dark:text-slate-400 hidden sm:block">Download YouTube videos</span></div></div><div class="mt-6 p-4 rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-center"><p class="text-sm text-purple-600 dark:text-purple-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles inline h-4 w-4 mr-1" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>More endpoints coming soon with full documentation!</p></div></div></section><section class="max-w-4xl mx-auto px-4 pb-20 transition-all duration-700 delay-500 opacity-0 translate-y-12"><div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 md:p-12 text-center shadow-2xl shadow-purple-500/30 hover:shadow-3xl hover:shadow-purple-500/50 transition-all duration-500 hover:scale-[1.01]"><div class="absolute inset-0 opacity-10 bg-[url(&#x27;/bg-light.png&#x27;)] bg-cover bg-center animate-pulse"></div><div class="relative z-10"><h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Want Early Access?</h2><p class="text-purple-100 mb-6 max-w-md mx-auto">Subscribe to our newsletter to get notified when the API is ready.</p><form class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto"><input type="email" placeholder="Enter your email" class="w-full px-4 py-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder:text-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50" value=""/><button type="submit" class="px-6 py-3 rounded-xl bg-white text-purple-600 font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 whitespace-nowrap disabled:opacity-70 disabled:hover:scale-100 flex items-center gap-2">Notify Me</button></form><p class="text-purple-200/80 text-xs mt-3">We&#x27;ll never spam you. Unsubscribe anytime.</p></div></div></section><footer class="border-t border-slate-200 dark:border-white/10 py-6"><div class="max-w-6xl mx-auto px-4 text-center text-sm text-slate-500 dark:text-slate-400"><p>LUKZI VS SOCIAL MEDIA — Download, Save, Enjoy. Made with ❤️</p></div></footer></div><!--$--><!--/$-->
+  <script>
+    function initTheme() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const sunIcon = document.getElementById('sun-icon');
+      const moonIcon = document.getElementById('moon-icon');
+      const headerContainer = document.getElementById('header-container');
+
+      function updateThemeUi(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          sunIcon.className = 'absolute transition-all duration-500 group-hover:rotate-180 rotate-0 scale-100 opacity-100';
+          moonIcon.className = 'absolute transition-all duration-500 group-hover:-rotate-12 -rotate-90 scale-0 opacity-0';
+          toggleBtn.className = 'group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-yellow-300/20 bg-slate-800 text-yellow-300 hover:border-yellow-300/50 hover:shadow-[0_0_20px_rgba(253,224,71,0.4)]';
+          headerContainer.className = 'relative mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-[24px] border px-5 backdrop-blur-2xl transition-all duration-300 sm:h-[78px] sm:px-7 border-white/10 bg-slate-900/80 shadow-xl shadow-black/40';
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          sunIcon.className = 'absolute transition-all duration-500 group-hover:rotate-180 rotate-90 scale-0 opacity-0';
+          moonIcon.className = 'absolute transition-all duration-500 group-hover:-rotate-12 rotate-0 scale-100 opacity-100';
+          toggleBtn.className = 'group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-cyan-200 bg-cyan-50 text-cyan-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]';
+          headerContainer.className = 'relative mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-[24px] border px-5 backdrop-blur-2xl transition-all duration-300 sm:h-[78px] sm:px-7 border-white/80 bg-white/75 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.35),0_4px_15px_-5px_rgba(0,0,0,0.1)]';
+        }
+      }
+
+      const isCurrentDark = document.documentElement.classList.contains('dark');
+      updateThemeUi(isCurrentDark);
+
+      toggleBtn.addEventListener('click', () => {
+        const currentlyDark = document.documentElement.classList.contains('dark');
+        updateThemeUi(!currentlyDark);
+      });
+    }
+
+    function initNavigation() {
+      const platformsBtn = document.getElementById('platforms-btn');
+      const platformsMenu = document.getElementById('platforms-menu');
+      const dropdownArrow = document.getElementById('dropdown-arrow');
+      let isDropdownOpen = false;
+
+      function toggleDropdown(open) {
+        isDropdownOpen = open;
+        if (open) {
+          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-100 translate-y-0 pointer-events-auto border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
+          dropdownArrow.classList.add('rotate-180');
+        } else {
+          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
+          dropdownArrow.classList.remove('rotate-180');
+        }
+      }
+
+      platformsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown(!isDropdownOpen);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.platforms-dropdown')) {
+          toggleDropdown(false);
+        }
+      });
+
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuOpenIcon = document.getElementById('menu-open-icon');
+      const menuCloseIcon = document.getElementById('menu-close-icon');
+      let isMobileMenuOpen = false;
+
+      mobileBtn.addEventListener('click', () => {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden mt-2 max-h-[600px] opacity-100';
+          menuOpenIcon.classList.add('hidden');
+          menuCloseIcon.classList.remove('hidden');
+        } else {
+          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0';
+          menuOpenIcon.classList.remove('hidden');
+          menuCloseIcon.classList.add('hidden');
+        }
+      });
+
+      const mobilePlatformsToggle = document.getElementById('mobile-platforms-toggle');
+      const mobilePlatformsSub = document.getElementById('mobile-platforms-sub');
+      const mobilePlatformsArrow = document.getElementById('mobile-platforms-arrow');
+      let isMobilePlatformsOpen = false;
+
+      mobilePlatformsToggle.addEventListener('click', () => {
+        isMobilePlatformsOpen = !isMobilePlatformsOpen;
+        if (isMobilePlatformsOpen) {
+          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-[400px] opacity-100';
+          mobilePlatformsArrow.classList.add('rotate-180');
+        } else {
+          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0';
+          mobilePlatformsArrow.classList.remove('rotate-180');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      initNavigation();
+    });
+  </script>
+</body>
+</html>
