@@ -50,6 +50,72 @@ async function proxyUpstream(endpoint, body) {
   return await res.json();
 }
 
+async function extractInstagramDirect(url) {
+  try {
+    const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
+    if (!match) return null;
+    const shortcode = match[1];
+    const embedUrl = `https://www.instagram.com/reel/${shortcode}/embed/`;
+
+    const res = await fetch(embedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    const html = await res.text();
+    const vMatch = html.match(/\\"video_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+    if (vMatch) {
+      const videoUrl = vMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
+
+      // Caption / Title
+      let title = 'Instagram Reel';
+      const capMatch = html.match(/\\"edge_media_to_caption\\":\{\\"edges\\":\[\{\\"node\\":\{\\"text\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+      if (capMatch) {
+        try {
+          title = JSON.parse(`"${capMatch[1]}"`);
+        } catch (e) {
+          title = capMatch[1];
+        }
+      }
+
+      // Username / Owner
+      let author = 'Instagram User';
+      const userMatch = html.match(/\\"owner\\":\{[^}]*?\\"username\\":\\"([^"\\]*)\\"/);
+      if (userMatch) author = userMatch[1];
+
+      // Views
+      let views = null;
+      const viewMatch = html.match(/\\"video_view_count\\":(\d+)/);
+      // Thumbnail
+      let thumbnail = null;
+      const tMatch = html.match(/\\"display_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+      if (tMatch) {
+        thumbnail = tMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
+      }
+
+      return {
+        success: true,
+        data: {
+          platform: 'instagram',
+          title: title,
+          thumbnail: thumbnail,
+          meta: {
+            author: author,
+            views: views
+          },
+          qualities: {
+            hd: videoUrl,
+            sd: videoUrl
+          }
+        }
+      };
+    }
+  } catch (err) {
+    console.error('Direct Instagram extraction error:', err.message);
+  }
+  return null;
+}
+
 exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -82,12 +148,47 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // Special handling for Instagram with automatic direct fallback
+  if (path === '/api/instagram' && event.httpMethod === 'POST') {
+    try {
+      const body = event.body ? JSON.parse(event.body) : {};
+      let data = await proxyUpstream('/api/instagram', body);
+
+      // If upstream failed or returned an error, try direct extraction
+      if (!data || !data.success || !data.data?.qualities?.hd) {
+        console.log('Upstream Instagram returned error, falling back to direct embed extractor...');
+        const directData = await extractInstagramDirect(body.url || '');
+        if (directData) {
+          data = directData;
+        }
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(data)
+      };
+    } catch (err) {
+      try {
+        const body = event.body ? JSON.parse(event.body) : {};
+        const directData = await extractInstagramDirect(body.url || '');
+        if (directData) {
+          return { statusCode: 200, headers, body: JSON.stringify(directData) };
+        }
+      } catch (e) {}
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ success: false, error: err.message })
+      };
+    }
+  }
+
   const proxyEndpoints = [
     '/api/yts',
     '/api/ytdl',
     '/api/tiktok',
     '/api/facebook',
-    '/api/instagram',
     '/api/twitter',
     '/api/pinterest',
     '/api/spotify'

@@ -128,6 +128,65 @@ const server = http.createServer(async (req, res) => {
     '/api/spotify'
   ];
 
+async function extractInstagramDirect(url) {
+  try {
+    const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
+    if (!match) return null;
+    const shortcode = match[1];
+    const embedUrl = `https://www.instagram.com/reel/${shortcode}/embed/`;
+
+    const res = await fetch(embedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    const html = await res.text();
+    const vMatch = html.match(/\\"video_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+    if (vMatch) {
+      const videoUrl = vMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
+      let title = 'Instagram Reel';
+      const capMatch = html.match(/\\"edge_media_to_caption\\":\{\\"edges\\":\[\{\\"node\\":\{\\"text\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+      if (capMatch) {
+        try {
+          title = JSON.parse(`"${capMatch[1]}"`);
+        } catch (e) {
+          title = capMatch[1];
+        }
+      }
+      let author = 'Instagram User';
+      const userMatch = html.match(/\\"owner\\":\{[^}]*?\\"username\\":\\"([^"\\]*)\\"/);
+      if (userMatch) author = userMatch[1];
+      let views = null;
+      // Thumbnail
+      let thumbnail = null;
+      const tMatch = html.match(/\\"display_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+      if (tMatch) {
+        thumbnail = tMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
+      }
+
+      return {
+        success: true,
+        data: {
+          platform: 'instagram',
+          title: title,
+          thumbnail: thumbnail,
+          meta: {
+            author: author,
+            views: views
+          },
+          qualities: {
+            hd: videoUrl,
+            sd: videoUrl
+          }
+        }
+      };
+    }
+  } catch (err) {
+    console.error('Direct Instagram extraction error:', err.message);
+  }
+  return null;
+}
+
   if (proxyEndpoints.includes(pathname) && req.method === 'POST') {
     let bodyStr = '';
     req.on('data', chunk => { bodyStr += chunk; });
@@ -135,10 +194,28 @@ const server = http.createServer(async (req, res) => {
       try {
         const body = bodyStr ? JSON.parse(bodyStr) : {};
         console.log(`[API Request] ${pathname} with URL:`, body.url);
-        const data = await proxyUpstreamApi(pathname, body);
+        let data = await proxyUpstreamApi(pathname, body);
+
+        if (pathname === '/api/instagram' && (!data || !data.success || !data.data?.qualities?.hd)) {
+          console.log('Upstream Instagram failed, attempting direct embed extractor...');
+          const directData = await extractInstagramDirect(body.url || '');
+          if (directData) data = directData;
+        }
+
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(data));
       } catch (err) {
+        if (pathname === '/api/instagram') {
+          try {
+            const body = bodyStr ? JSON.parse(bodyStr) : {};
+            const directData = await extractInstagramDirect(body.url || '');
+            if (directData) {
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify(directData));
+              return;
+            }
+          } catch (e) {}
+        }
         console.error(`Error processing ${pathname}:`, err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, error: err.message || 'Internal Server Error' }));
