@@ -42,16 +42,155 @@
         <!-- Logo & Brand Name -->
         <a href="/" aria-label="LUKZI VS SOCIAL MEDIA Home" class="z-10 flex items-center gap-2.5 shrink-0">
           <img id="nav-logo" src="/lukzi-logo.png" alt="LUKZI Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border-2 border-cyan-400 shadow-md shadow-cyan-500/40 transition-transform duration-300 ease-out hover:scale-105" />
-          <span class="text-base sm:text-lg md:text-xl font-extrabold bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-500 bg-clip-text text-transparent tracking-wide uppercase">LUKZI VS SOCIAL MEDIA</span>
+          <span class="text-sm sm:text-base md:text-lg font-extrabold bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-500 bg-clip-text text-transparent tracking-wide uppercase truncate max-w-[170px] sm:max-w-none">LUKZI VS SOCIAL MEDIA</span>
         </a>
 
-        <!-- Right Side: Theme Toggle -->
+        <!-- Desktop Navigation (Non-overlapping Flex Layout) -->
+        <nav class="hidden lg:flex items-center gap-5 xl:gap-8">
+          <a href="/" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Home</a>
+          <a href="/about" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">About</a>
+          <a href="/guaid" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">How to Use</a>
+          <a href="/contact" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Contact</a>
+          <a href="/apis" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">API</a>
+
+          <!-- Platforms Dropdown -->
+          <div class="platforms-dropdown relative inline-block">
+            <button id="platforms-btn" type="button" class="nav-link flex items-center gap-1 px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+              <span>Platforms</span>
+              <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div id="platforms-menu" class="absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-xl shadow-black/40">
+              <a href="#" onclick="selectPlatformByName('YouTube'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
+              </a>
+              <a href="#" onclick="selectPlatformByName('TikTok'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
+              </a>
+              <a href="#" onclick="selectPlatformByName('Instagram'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
+              </a>
+              <a href="#" onclick="selectPlatformByName('Facebook'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
+              </a>
+              <a href="#" onclick="selectPlatformByName('Twitter'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
+              </a>
+              <a href="#" onclick="selectPlatformByName('Pinterest'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
+              </a>
+              <a href="#" onclick="selectPlatformByName('Spotify'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Side: Contact Badge, Theme Toggle & Mobile Menu -->
         <div class="z-10 flex items-center gap-2.5 shrink-0">
+          <!-- Direct Call/WhatsApp Badge (shown on XL screens to keep layout clean) -->
+          <a href="tel:0701854805" class="hidden xl:flex items-center gap-1.5 rounded-xl border border-cyan-400/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-bold text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/20 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>070 185 4805</span>
+          </a>
+
+          <!-- Theme Toggle -->
           <button id="theme-toggle-btn" type="button" aria-label="Toggle theme" class="group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-yellow-300/20 bg-slate-800 text-yellow-300 hover:border-yellow-300/50 hover:shadow-[0_0_20px_rgba(253,224,71,0.4)]">
             <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:rotate-180 rotate-0 scale-100 opacity-100"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
             <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:-rotate-12 -rotate-90 scale-0 opacity-0"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
           </button>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" type="button" aria-label="Open navigation menu" class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border transition-all duration-300 hover:scale-105 active:scale-95 lg:hidden border-white/10 bg-slate-800 text-white hover:bg-slate-700">
+            <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+            <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+          </button>
         </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu" class="mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0">
+        <nav id="mobile-nav" class="rounded-[24px] border p-2.5 backdrop-blur-2xl border-white/10 bg-slate-900/95 shadow-xl shadow-black/40">
+          <div class="space-y-1">
+            <a href="/" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                </span>Home
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/about" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </span>About
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/guaid" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+                </span>How to Use
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/contact" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path></svg>
+                </span>Contact (070 185 4805)
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+            <a href="/apis" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
+              <span class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
+                </span>API
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+          </div>
+
+          <!-- Mobile Platforms Accordion -->
+          <div class="mt-2 border-t border-slate-200/50 dark:border-white/5 pt-2">
+            <button id="mobile-platforms-toggle" class="w-full flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-cyan-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                </span>Platforms
+              </span>
+              <svg id="mobile-platforms-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div id="mobile-platforms-sub" class="overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
+              <div class="space-y-1 px-2 pb-2">
+                <a href="#" onclick="selectPlatformByName('YouTube'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
+                </a>
+                <a href="#" onclick="selectPlatformByName('TikTok'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
+                </a>
+                <a href="#" onclick="selectPlatformByName('Instagram'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
+                </a>
+                <a href="#" onclick="selectPlatformByName('Facebook'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
+                </a>
+                <a href="#" onclick="selectPlatformByName('Twitter'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
+                </a>
+                <a href="#" onclick="selectPlatformByName('Pinterest'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
+                </a>
+                <a href="#" onclick="selectPlatformByName('Spotify'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
     </header>
 
@@ -260,108 +399,6 @@
           <span class="text-gray-400 dark:text-slate-500 text-sm">&amp; More</span>
         </div>
       </div>
-
-      <!-- Device Guide Section (iOS, Android, PC) -->
-      <section class="mt-16 text-left">
-        <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold text-cyan-400 mb-3 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-            <span>Easy Step-by-Step Guide</span>
-          </div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            ඕනෑම Device එකකින් Videos Save කරන්නේ කෙසේද?
-          </h2>
-          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-            iPhone (iOS), Android සහ PC/Laptop සඳහා වීඩියෝ Gallery එකටම පහසුවෙන් Save කරගන්නා ආකාරය.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <!-- iOS Card -->
-          <div class="group relative rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 p-6 backdrop-blur-2xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:shadow-cyan-500/10">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
-              </div>
-              <span class="rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-bold text-cyan-500 border border-cyan-500/20">iOS / iPhone</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Apple iOS (iPhone / iPad)</h3>
-            <ol class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-xs mt-0.5">1</span>
-                <span>Video Link එක Copy කර Search box එකට Paste කර <strong>Get Details</strong> ඔබන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-xs mt-0.5">2</span>
-                <span>වීඩියෝව Load වූ පසු <strong class="text-cyan-600 dark:text-cyan-300">Save to Gallery</strong> බටන් එක ඔබන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-xs mt-0.5">3</span>
-                <span>Apple Share Sheet එකේ <strong class="text-emerald-600 dark:text-emerald-400">"Save Video"</strong> ඔබන්න. වීඩියෝව කෙලින්ම ඔබේ <strong class="text-slate-900 dark:text-white">Photos (Gallery)</strong> එකට වැටේ!</span>
-              </li>
-            </ol>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-white/5 text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <span>💡 Safari හෝ Chrome බ්‍රව්සරයෙන් වඩාත් සුමටව ක්‍රියා කරයි.</span>
-            </div>
-          </div>
-
-          <!-- Android Card -->
-          <div class="group relative rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 p-6 backdrop-blur-2xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-emerald-500/10">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 2.5 3"/><path d="m19 8-2.5 3"/><path d="M8 14h.01"/><path d="M16 14h.01"/><rect width="16" height="12" x="4" y="9" rx="2"/></svg>
-              </div>
-              <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-500 border border-emerald-500/20">Android</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Android Mobile</h3>
-            <ol class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs mt-0.5">1</span>
-                <span>ඕනෑම Video URL එකක් Copy කර Input එකට Paste කරන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs mt-0.5">2</span>
-                <span><strong class="text-emerald-600 dark:text-emerald-300">Save to Gallery</strong> ඔබා Share Menu එකෙන් Gallery / Photos තෝරන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs mt-0.5">3</span>
-                <span>නැතහොත් <strong class="text-cyan-600 dark:text-cyan-300">Download HD</strong> ඔබන්න. වීඩියෝව Download වී auto-detect මගින් Gallery එකට එක්වේ.</span>
-              </li>
-            </ol>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-white/5 text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <span>💡 Chrome හෝ Samsung Internet බ්‍රව්සරයෙන් පහසුවෙන්ම ක්‍රියාත්මක වේ.</span>
-            </div>
-          </div>
-
-          <!-- PC / Mac Card -->
-          <div class="group relative rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 p-6 backdrop-blur-2xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/50 hover:shadow-violet-500/10">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white shadow-md shadow-violet-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
-              </div>
-              <span class="rounded-full bg-violet-500/10 px-3 py-1 text-xs font-bold text-violet-500 border border-violet-500/20">PC &amp; Mac</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Computer / Laptop</h3>
-            <ol class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-xs mt-0.5">1</span>
-                <span>බ්‍රව්සරයෙන් Video Link එක Copy කර Search box එකට Paste කරන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-xs mt-0.5">2</span>
-                <span><strong class="text-violet-600 dark:text-violet-300">Download HD</strong> (හෝ MP4/MP3 Quality) බටන් එක ඔබන්න.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-xs mt-0.5">3</span>
-                <span>වීඩියෝව High Speed එකෙන් ඔබේ <strong class="text-slate-900 dark:text-white">Downloads</strong> ෆෝල්ඩරයට කෙලින්ම save වේ!</span>
-              </li>
-            </ol>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-white/5 text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <span>💡 Chrome, Edge, Safari, Firefox ඕනෑම එකක ක්‍රියාත්මක වේ.</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <!-- Footer Branding -->
       <footer class="mt-12 text-center text-sm text-gray-500 dark:text-slate-400">
@@ -1002,11 +1039,11 @@
         actionsHtml = `
           <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
             ${noWatermark ? `
-            <button type="button" onclick="saveMediaToGallery('${noWatermark}', 'lukzi-tiktok.mp4', this)" class="flex items-center justify-center gap-2.5 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 w-full cursor-pointer bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] active:scale-[0.98] border border-white/20">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-4.5 w-4.5 shrink-0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <button type="button" onclick="saveMediaToGallery('${noWatermark}', 'lukzi-tiktok.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
               <span>Save to Gallery</span>
             </button>` : ''}
-            <button type="button" onclick="proxyDownload('${noWatermark}', 'lukzi-tiktok.mp4', this)" ${!noWatermark ? 'disabled' : ''} class="flex items-center justify-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-bold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
+            <button type="button" onclick="proxyDownload('${noWatermark}', 'lukzi-tiktok.mp4', this)" ${!noWatermark ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
               <span>Download MP4</span>
             </button>
@@ -1019,8 +1056,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               <span>Profile Picture</span>
             </button>` : ''}
-            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1.5 px-2.5 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
-              <span>💡 <strong>Mobile (iOS/Android):</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
+            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
+              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
             </div>
           </div>
         `;
@@ -1028,11 +1065,11 @@
         actionsHtml = `
           <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
             ${hdUrl ? `
-            <button type="button" onclick="saveMediaToGallery('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" class="flex items-center justify-center gap-2.5 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 w-full cursor-pointer bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] active:scale-[0.98] border border-white/20">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-4.5 w-4.5 shrink-0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <button type="button" onclick="saveMediaToGallery('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
               <span>Save to Gallery</span>
             </button>` : ''}
-            <button type="button" onclick="proxyDownload('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" ${!hdUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-bold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
+            <button type="button" onclick="proxyDownload('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" ${!hdUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
               <span>Download HD</span>
             </button>
@@ -1041,8 +1078,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
               <span>Download SD</span>
             </button>` : ''}
-            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1.5 px-2.5 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
-              <span>💡 <strong>Mobile (iOS/Android):</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
+            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
+              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
             </div>
           </div>
         `;
@@ -1144,9 +1181,9 @@
 
         btn.disabled = false;
         if (ytFormat === 'mp4') {
-          btn.className = 'w-full flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 px-4 py-3 text-sm font-bold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-indigo-500/40 active:scale-[0.98] shadow-lg border border-white/20';
+          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98]';
           btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-4.5 w-4.5 shrink-0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
             <span>Save to Gallery</span>
           `;
           btn.onclick = function() { saveMediaToGallery(downloadUrl, filename, this); };
@@ -1156,19 +1193,19 @@
             secBtn = document.createElement('button');
             secBtn.id = 'yt-secondary-dl-btn';
             secBtn.type = 'button';
-            secBtn.className = 'w-full flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 px-4 py-2.5 text-sm font-bold text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] mt-2 shadow-md shadow-cyan-500/30';
+            secBtn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] mt-2';
             secBtn.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>Download MP4 (${ytQuality})</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+              <span>Download MP4</span>
             `;
             secBtn.onclick = () => directDownload(downloadUrl, filename);
             btn.insertAdjacentElement('afterend', secBtn);
           }
         } else {
-          btn.className = 'w-full flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 px-4 py-3 text-sm font-bold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98] shadow-lg';
+          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-green-500/40 active:scale-[0.98]';
           btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4.5 w-4.5"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-            <span>Download Audio (MP3)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            <span>Download Audio</span>
           `;
           btn.onclick = () => directDownload(downloadUrl, filename);
         }
@@ -1217,8 +1254,71 @@
     }
 
     function initNavigation() {
-      // Clean header navigation without cluttering drawers or menus
-    }
+      const platformsBtn = document.getElementById('platforms-btn');
+      const platformsMenu = document.getElementById('platforms-menu');
+      const dropdownArrow = document.getElementById('dropdown-arrow');
+      let isDropdownOpen = false;
+
+      function toggleDropdown(open) {
+        isDropdownOpen = open;
+        if (open) {
+          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-100 translate-y-0 pointer-events-auto border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
+          dropdownArrow.classList.add('rotate-180');
+        } else {
+          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
+          dropdownArrow.classList.remove('rotate-180');
+        }
+      }
+
+      platformsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown(!isDropdownOpen);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.platforms-dropdown')) {
+          toggleDropdown(false);
+        }
+      });
+
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuOpenIcon = document.getElementById('menu-open-icon');
+      const menuCloseIcon = document.getElementById('menu-close-icon');
+      let isMobileMenuOpen = false;
+
+      window.toggleMobileMenu = function(open) {
+        isMobileMenuOpen = open;
+        if (open) {
+          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden mt-2 max-h-[600px] opacity-100';
+          menuOpenIcon.classList.add('hidden');
+          menuCloseIcon.classList.remove('hidden');
+        } else {
+          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0';
+          menuOpenIcon.classList.remove('hidden');
+          menuCloseIcon.classList.add('hidden');
+        }
+      };
+
+      mobileBtn.addEventListener('click', () => {
+        toggleMobileMenu(!isMobileMenuOpen);
+      });
+
+      const mobilePlatformsToggle = document.getElementById('mobile-platforms-toggle');
+      const mobilePlatformsSub = document.getElementById('mobile-platforms-sub');
+      const mobilePlatformsArrow = document.getElementById('mobile-platforms-arrow');
+      let isMobilePlatformsOpen = false;
+
+      mobilePlatformsToggle.addEventListener('click', () => {
+        isMobilePlatformsOpen = !isMobilePlatformsOpen;
+        if (isMobilePlatformsOpen) {
+          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-[400px] opacity-100';
+          mobilePlatformsArrow.classList.add('rotate-180');
+        } else {
+          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0';
+          mobilePlatformsArrow.classList.remove('rotate-180');
+        }
+      });
 
       const pasteBtn = document.getElementById('paste-btn');
       const urlInput = document.getElementById('url-input');

@@ -187,91 +187,6 @@ exports.handler = async (event, context) => {
     }
   }
 
-async function extractYouTubeDirect(youtubeUrl, type = 'mp4', quality = '720p') {
-  const ANU_KEY = Buffer.from('C5D58EF67A7584E4A29F6C35BBC4EB12', 'hex');
-  function decryptSaveTube(enc) {
-    try {
-      const b = Buffer.from(enc.replace(/\s/g, ''), 'base64');
-      const iv = b.subarray(0, 16);
-      const data = b.subarray(16);
-      const d = crypto.createDecipheriv('aes-128-cbc', ANU_KEY, iv);
-      return JSON.parse(Buffer.concat([d.update(data), d.final()]).toString());
-    } catch (e) {
-      return null;
-    }
-  }
-
-  const cdnHosts = ['cdn405.savetube.vip', 'cdn404.savetube.vip', 'cdn401.savetube.vip', 'cdn402.savetube.vip'];
-  let lastError = null;
-
-  for (const cdnHost of cdnHosts) {
-    try {
-      const infoRes = await fetch('https://' + cdnHost + '/v2/info', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'origin': 'https://ytsave.savetube.me',
-          'referer': 'https://ytsave.savetube.me/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        body: JSON.stringify({ url: youtubeUrl })
-      });
-      if (!infoRes.ok) continue;
-      const infoJson = await infoRes.json();
-      if (!infoJson.data) continue;
-      const decrypted = decryptSaveTube(infoJson.data);
-      if (!decrypted || !decrypted.id) continue;
-
-      const qNum = (quality || '720p').replace(/[^0-9]/g, '') || (type === 'mp3' ? '128' : '720');
-      const downloadType = type === 'mp3' ? 'audio' : 'video';
-
-      const dlRes = await fetch('https://' + cdnHost + '/download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'origin': 'https://ytsave.savetube.me',
-          'referer': 'https://ytsave.savetube.me/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        body: JSON.stringify({
-          id: decrypted.id,
-          key: decrypted.key,
-          downloadType,
-          quality: qNum
-        })
-      });
-      if (!dlRes.ok) continue;
-      const dlJson = await dlRes.json();
-      const downloadUrl = dlJson.data?.downloadUrl;
-      if (!downloadUrl) continue;
-
-      return {
-        success: true,
-        data: {
-          platform: 'youtube',
-          type,
-          title: decrypted.title || 'YouTube Media',
-          thumbnail: decrypted.thumbnail || ('https://i.ytimg.com/vi/' + decrypted.id + '/hqdefault.jpg'),
-          meta: {
-            duration: decrypted.duration_raw || (decrypted.duration ? (Math.floor(decrypted.duration / 60) + ':' + (decrypted.duration % 60)) : null),
-            author: decrypted.author || null,
-            views: '0'
-          },
-          qualities: {
-            hd: downloadType === 'video' ? downloadUrl : null,
-            sd: downloadType === 'video' ? downloadUrl : null,
-            audio: downloadType === 'audio' ? downloadUrl : null
-          }
-        }
-      };
-    } catch (err) {
-      lastError = err;
-    }
-  }
-
-  throw new Error(lastError ? lastError.message : 'Failed to retrieve YouTube download link');
-}
-
   const proxyEndpoints = [
     '/api/yts',
     '/api/ytdl',
@@ -285,50 +200,13 @@ async function extractYouTubeDirect(youtubeUrl, type = 'mp4', quality = '720p') 
   if (proxyEndpoints.includes(path) && event.httpMethod === 'POST') {
     try {
       const body = event.body ? JSON.parse(event.body) : {};
-
-      if (path === '/api/ytdl') {
-        try {
-          const ytData = await extractYouTubeDirect(body.url || '', body.type || 'mp4', body.quality || '720p');
-          if (ytData && ytData.success) {
-            return {
-              statusCode: 200,
-              headers,
-              body: JSON.stringify(ytData)
-            };
-          }
-        } catch (ytErr) {
-          console.warn('Direct YouTube extraction failed in Netlify, falling back to upstream:', ytErr.message);
-        }
-      }
-
-      let data = await proxyUpstream(path, body);
-
-      if (path === '/api/ytdl' && (!data || !data.success)) {
-        const ytData = await extractYouTubeDirect(body.url || '', body.type || 'mp4', body.quality || '720p');
-        if (ytData && ytData.success) {
-          data = ytData;
-        }
-      }
-
+      const data = await proxyUpstream(path, body);
       return {
         statusCode: 200,
         headers,
         body: JSON.stringify(data)
       };
     } catch (err) {
-      if (path === '/api/ytdl') {
-        try {
-          const body = event.body ? JSON.parse(event.body) : {};
-          const ytData = await extractYouTubeDirect(body.url || '', body.type || 'mp4', body.quality || '720p');
-          if (ytData && ytData.success) {
-            return {
-              statusCode: 200,
-              headers,
-              body: JSON.stringify(ytData)
-            };
-          }
-        } catch (e) {}
-      }
       return {
         statusCode: 500,
         headers,
