@@ -1,5 +1,8 @@
 const crypto = require('crypto');
 
+// In-memory real-time presence tracking (sessionId -> timestamp)
+const activePresences = new Map();
+
 // Secret for local fallback
 const JWT_SECRET = 'lukzi_secret_' + Math.random().toString(36);
 
@@ -224,6 +227,35 @@ exports.handler = async (event, context) => {
         'Access-Control-Allow-Origin': '*'
       },
       body: ''
+    };
+  }
+
+  if (path === '/api/presence' && event.httpMethod === 'POST') {
+    const now = Date.now();
+    let body = {};
+    try {
+      body = event.body ? JSON.parse(event.body) : {};
+    } catch (e) {}
+
+    const sid = body.sid || ('anon_' + Math.random().toString(36).slice(2));
+    if (body.leave) {
+      activePresences.delete(sid);
+    } else {
+      activePresences.set(sid, now);
+    }
+
+    // Purge sessions older than 45 seconds
+    for (const [id, lastTime] of activePresences.entries()) {
+      if (now - lastTime > 45000) {
+        activePresences.delete(id);
+      }
+    }
+
+    const online = Math.max(1, activePresences.size);
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, online, sid })
     };
   }
 

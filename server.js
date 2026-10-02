@@ -7,6 +7,9 @@ const crypto = require('crypto');
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
+// In-memory real-time presence tracking (sessionId -> timestamp)
+const activePresences = new Map();
+
 // Secret for local JWT token fallback
 const JWT_SECRET = crypto.randomBytes(32).toString('hex');
 
@@ -224,6 +227,30 @@ async function extractInstagramDirect(url) {
     return;
   }
 
+  // API: Real-time presence heartbeat
+  if (pathname === '/api/presence' && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', () => {
+      const now = Date.now();
+      let body = {};
+      try { body = bodyStr ? JSON.parse(bodyStr) : {}; } catch (e) {}
+      const sid = body.sid || ('anon_' + Math.random().toString(36).slice(2));
+      if (body.leave) {
+        activePresences.delete(sid);
+      } else {
+        activePresences.set(sid, now);
+      }
+      for (const [id, lastTime] of activePresences.entries()) {
+        if (now - lastTime > 45000) activePresences.delete(id);
+      }
+      const online = Math.max(1, activePresences.size);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, online, sid }));
+    });
+    return;
+  }
+
   // API: /api/download?url=...
   if (pathname === '/api/download' && (req.method === 'GET' || req.method === 'HEAD')) {
     const fileUrl = parsedUrl.searchParams.get('url');
@@ -249,12 +276,18 @@ async function extractInstagramDirect(url) {
         return;
       }
 
-      const contentType = response.headers.get('content-type') || 'application/octet-stream';
+      let contentType = response.headers.get('content-type') || 'application/octet-stream';
+      if ((!contentType || contentType === 'application/octet-stream') && filename.endsWith('.mp4')) {
+        contentType = 'video/mp4';
+      } else if ((!contentType || contentType === 'application/octet-stream') && filename.endsWith('.mp3')) {
+        contentType = 'audio/mpeg';
+      }
       const contentLength = response.headers.get('content-length');
 
       const headers = {
         'Content-Disposition': `attachment; filename="${filename}"`,
-        'Content-Type': contentType
+        'Content-Type': contentType,
+        'Access-Control-Allow-Origin': '*'
       };
       if (contentLength) headers['Content-Length'] = contentLength;
 

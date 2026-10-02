@@ -198,6 +198,28 @@
     <main class="max-w-6xl mx-auto px-4 pt-12 pb-20 text-center">
       <!-- Title & Hero -->
       <div class="transition-all duration-700 opacity-100 translate-y-0">
+        <!-- Live Real-Time Visitor Stats Badge (100% Real) -->
+        <div class="inline-flex items-center gap-3.5 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-lg shadow-cyan-500/10 mb-6 transition-all duration-300 hover:border-cyan-400">
+          <!-- Real-Time Online Presence -->
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Online Now:</span>
+            <span id="live-online-count" class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 font-mono tracking-wide">1</span>
+          </div>
+          
+          <span class="h-3.5 w-px bg-slate-300 dark:bg-slate-700"></span>
+          
+          <!-- Total Real Visits -->
+          <div class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500 dark:text-cyan-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Visits:</span>
+            <span id="live-total-count" class="text-xs font-extrabold text-cyan-600 dark:text-cyan-400 font-mono tracking-wide">...</span>
+          </div>
+        </div>
+
         <!-- Target Line -->
         <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 sm:mb-6 tracking-tight leading-tight">
           <span class="text-gray-900 dark:text-white">Download. </span>
@@ -535,6 +557,129 @@
 
     function closeMoreModal() {
       document.getElementById('more-modal').classList.add('hidden');
+    }
+
+    async function saveMediaToGallery(url, filename, btn = null) {
+      if (!url) {
+        showError('Download link is not available.');
+        return;
+      }
+
+      let origContent = '';
+      if (btn) {
+        origContent = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `
+          <svg class="h-4 w-4 animate-spin inline-block mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Preparing File...</span>
+        `;
+      }
+
+      const resetBtn = (statusMsg = 'Saved!') => {
+        if (!btn) return;
+        btn.innerHTML = `
+          <svg class="h-4 w-4 inline-block mr-1.5 text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>${statusMsg}</span>
+        `;
+        setTimeout(() => {
+          btn.innerHTML = origContent;
+          btn.disabled = false;
+        }, 3500);
+      };
+
+      try {
+        // Step 1: Fetch as blob
+        let blob = null;
+        try {
+          const res = await fetch(url, { mode: 'cors' });
+          if (res.ok) blob = await res.blob();
+        } catch (fetchErr) {
+          console.warn('Direct blob fetch failed, trying proxy...', fetchErr);
+        }
+
+        if (!blob) {
+          try {
+            const proxyRes = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
+            if (proxyRes.ok) blob = await proxyRes.blob();
+          } catch (proxyErr) {
+            console.warn('Proxy fetch failed:', proxyErr);
+          }
+        }
+
+        if (!blob) {
+          console.warn('Could not fetch blob for Web Share, falling back to direct download');
+          if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
+          return proxyDownload(url, filename, btn);
+        }
+
+        // Determine proper MIME type for Gallery / Photos app recognition
+        let mimeType = blob.type;
+        if (!mimeType || mimeType === 'application/octet-stream') {
+          if (filename.endsWith('.mp4')) mimeType = 'video/mp4';
+          else if (filename.endsWith('.mp3')) mimeType = 'audio/mpeg';
+          else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) mimeType = 'image/jpeg';
+          else if (filename.endsWith('.png')) mimeType = 'image/png';
+          else mimeType = 'video/mp4';
+        }
+
+        const file = new File([blob], filename, { type: mimeType });
+
+        // Step 2: Check if Web Share API with files is supported (Mobile: iOS / Android)
+        let canShareFiles = false;
+        try {
+          canShareFiles = !!(navigator.canShare && navigator.canShare({ files: [file] }));
+        } catch (e) {
+          canShareFiles = false;
+        }
+
+        if (canShareFiles) {
+          if (btn) {
+            btn.innerHTML = `
+              <svg class="h-4 w-4 animate-pulse inline-block mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Opening Share Sheet...</span>
+            `;
+          }
+
+          try {
+            await navigator.share({
+              files: [file],
+              title: filename,
+              text: 'Save video to Gallery / Photos'
+            });
+            resetBtn('Saved to Gallery!');
+            return;
+          } catch (shareErr) {
+            if (shareErr.name === 'AbortError') {
+              if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
+              return;
+            }
+            console.warn('Navigator share error, falling back to download:', shareErr);
+          }
+        }
+
+        // Step 3: Desktop fallback or when Web Share is unsupported
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+
+        resetBtn('Downloaded!');
+      } catch (err) {
+        console.error('saveMediaToGallery error:', err);
+        if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
+        proxyDownload(url, filename, btn);
+      }
     }
 
     async function proxyDownload(url, filename, btn = null) {
@@ -893,9 +1038,14 @@
         const profilePic = data.meta?.profile_pic;
         actionsHtml = `
           <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
+            ${noWatermark ? `
+            <button type="button" onclick="saveMediaToGallery('${noWatermark}', 'lukzi-tiktok.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span>Save to Gallery</span>
+            </button>` : ''}
             <button type="button" onclick="proxyDownload('${noWatermark}', 'lukzi-tiktok.mp4', this)" ${!noWatermark ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>No Watermark</span>
+              <span>Download MP4</span>
             </button>
             <button type="button" onclick="proxyDownload('${audio}', 'lukzi-tiktok-audio.mp3', this)" ${!audio ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98] disabled:opacity-50">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
@@ -906,19 +1056,31 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               <span>Profile Picture</span>
             </button>` : ''}
+            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
+              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
+            </div>
           </div>
         `;
       } else {
         actionsHtml = `
           <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
+            ${hdUrl ? `
+            <button type="button" onclick="saveMediaToGallery('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span>Save to Gallery</span>
+            </button>` : ''}
             <button type="button" onclick="proxyDownload('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" ${!hdUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>HD Quality</span>
+              <span>Download HD</span>
             </button>
-            <button type="button" onclick="proxyDownload('${sdUrl}', 'lukzi-${platform}-sd.mp4', this)" ${!sdUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98] disabled:opacity-50">
+            ${sdUrl && sdUrl !== hdUrl ? `
+            <button type="button" onclick="proxyDownload('${sdUrl}', 'lukzi-${platform}-sd.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98]">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>SD Quality</span>
-            </button>
+              <span>Download SD</span>
+            </button>` : ''}
+            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
+              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
+            </div>
           </div>
         `;
       }
@@ -966,6 +1128,8 @@
         mp4Opts.classList.add('hidden');
         mp3Opts.classList.remove('hidden');
       }
+      const secBtn = document.getElementById('yt-secondary-dl-btn');
+      if (secBtn) secBtn.remove();
     }
 
     function setYtQuality(q) {
@@ -977,6 +1141,8 @@
           btn.className = 'yt-q-btn rounded-lg border py-1.5 text-xs font-medium transition-all border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700';
         }
       });
+      const secBtn = document.getElementById('yt-secondary-dl-btn');
+      if (secBtn) secBtn.remove();
     }
 
     async function generateYouTubeDownload(url) {
@@ -1014,12 +1180,35 @@
         const filename = `${data.data?.title || 'lukzi-video'}.${ext}`;
 
         btn.disabled = false;
-        btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-green-500/40 active:scale-[0.98]';
-        btn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-          <span>Download</span>
-        `;
-        btn.onclick = () => directDownload(downloadUrl, filename);
+        if (ytFormat === 'mp4') {
+          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98]';
+          btn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <span>Save to Gallery</span>
+          `;
+          btn.onclick = function() { saveMediaToGallery(downloadUrl, filename, this); };
+
+          let secBtn = document.getElementById('yt-secondary-dl-btn');
+          if (!secBtn) {
+            secBtn = document.createElement('button');
+            secBtn.id = 'yt-secondary-dl-btn';
+            secBtn.type = 'button';
+            secBtn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] mt-2';
+            secBtn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+              <span>Download MP4</span>
+            `;
+            secBtn.onclick = () => directDownload(downloadUrl, filename);
+            btn.insertAdjacentElement('afterend', secBtn);
+          }
+        } else {
+          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-green-500/40 active:scale-[0.98]';
+          btn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            <span>Download Audio</span>
+          `;
+          btn.onclick = () => directDownload(downloadUrl, filename);
+        }
       } catch (err) {
         console.error(err);
         alert(err.message || 'Download generation failed. Please try again.');
@@ -1158,10 +1347,71 @@
       });
     }
 
+    async function initVisitorStats() {
+      // 1. Session ID for presence tracking
+      let sid = sessionStorage.getItem('lukzi_sid');
+      if (!sid) {
+        sid = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+        sessionStorage.setItem('lukzi_sid', sid);
+      }
+
+      // 2. Real-Time Online Presence Heartbeat
+      async function sendHeartbeat(isLeaving = false) {
+        try {
+          const payload = { sid, leave: isLeaving };
+          if (isLeaving && navigator.sendBeacon) {
+            navigator.sendBeacon('/api/presence', JSON.stringify(payload));
+            return;
+          }
+          const res = await fetch('/api/presence', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (data && typeof data.online === 'number') {
+            const el = document.getElementById('live-online-count');
+            if (el) el.textContent = data.online;
+          }
+        } catch (e) {
+          const el = document.getElementById('live-online-count');
+          if (el && (!el.textContent || el.textContent === '...')) el.textContent = '1';
+        }
+      }
+
+      sendHeartbeat();
+      setInterval(() => sendHeartbeat(), 20000);
+      window.addEventListener('beforeunload', () => sendHeartbeat(true));
+
+      // 3. Total Unique Visits (100% Real Persistent Cloud Hit Counter)
+      const hasCounted = sessionStorage.getItem('lukzi_counted');
+      const action = hasCounted ? 'get' : 'hit';
+      try {
+        const res = await fetch(`https://countapi.mileshilliard.com/api/v1/${action}/lukzi_vs_social_media_visits`);
+        const data = await res.json();
+        if (data && typeof data.value === 'number') {
+          sessionStorage.setItem('lukzi_counted', '1');
+          const el = document.getElementById('live-total-count');
+          if (el) el.textContent = Number(data.value).toLocaleString();
+        }
+      } catch (err) {
+        try {
+          const res2 = await fetch(`https://abacus.jasoncameron.dev/${hasCounted ? 'get' : 'hit'}/lukzi-downloader/visits`);
+          const data2 = await res2.json();
+          if (data2 && typeof data2.value === 'number') {
+            sessionStorage.setItem('lukzi_counted', '1');
+            const el = document.getElementById('live-total-count');
+            if (el) el.textContent = Number(data2.value).toLocaleString();
+          }
+        } catch (e2) {}
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       renderPlatformGrid();
       initTheme();
       initNavigation();
+      initVisitorStats();
     });
   </script>
 </body>
