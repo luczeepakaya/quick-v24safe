@@ -2,5 +2,6 @@
 /about   /about.html                      200
 /contact /contact.html                    200
 /apis    /apis.html                       200
-/guaid   /guaid.html                      200
+/guaid   /                                301
+/guaid.html /                             301
 /*       /404.html                        404
