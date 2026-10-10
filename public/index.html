@@ -1328,10 +1328,17 @@
           }
           showToast('Preparing video for Photos / Gallery...', 'info');
 
-          const dlUrl = `/api/download?url=${encodeURIComponent(videoUrl)}&filename=${encodeURIComponent(cleanFilename)}`;
-          const res = await fetch(dlUrl);
-          if (!res.ok) throw new Error('Could not fetch video file');
-          const blob = await res.blob();
+          let blob = null;
+          try {
+            const directRes = await fetch(videoUrl);
+            if (directRes.ok) blob = await directRes.blob();
+          } catch(e) {}
+          if (!blob) {
+            const dlUrl = `/api/download?url=${encodeURIComponent(videoUrl)}&filename=${encodeURIComponent(cleanFilename)}`;
+            const res = await fetch(dlUrl);
+            if (res.ok) blob = await res.blob();
+          }
+          if (!blob) throw new Error('Could not fetch video file');
 
           const file = new File([blob], cleanFilename, { type: 'video/mp4' });
 
@@ -1639,15 +1646,16 @@
     function triggerFileDownload(url, filename) {
       if (!url) return;
       const cleanName = filename || 'lukzi-download.mp4';
-      const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
       
       const a = document.createElement('a');
       a.style.display = 'none';
-      a.href = dlUrl;
-      a.download = cleanName;
+      a.href = url;
+      a.setAttribute('download', cleanName);
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => a.remove(), 500);
+      setTimeout(() => a.remove(), 1000);
     }
 
     async function generateYouTubeDownload(url) {
