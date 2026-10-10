@@ -2,7 +2,7 @@
 <html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
   <title>LUKZI VS SOCIAL MEDIA 🇱🇰 Video & Audio Downloader • DEVELOPED IN SRI LANKA</title>
   <meta name="description" content="Free high-speed social media video and audio downloader for YouTube, TikTok, Instagram, Facebook, Twitter, Spotify, and Pinterest. 1080p Full HD, No Watermark."/>
   <meta name="keywords" content="LUKZI,video downloader,social media downloader,YouTube downloader,TikTok downloader no watermark,Instagram downloader,Facebook downloader,Twitter downloader,Spotify downloader,Sri Lanka"/>
@@ -17,7 +17,7 @@
   <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -29,19 +29,13 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', '"Noto Sans Sinhala"', '"Noto Sans Tamil"', '"Noto Sans JP"', '"Noto Sans KR"', 'sans-serif'],
             display: ['"Outfit"', '"Noto Sans Sinhala"', '"Noto Sans JP"', 'sans-serif']
-          },
-          colors: {
-            obsidian: '#080812',
-            neonpurple: '#8A2BE2',
-            electricblue: '#00B7FF',
-            neoncyan: '#06b6d4'
           }
         }
       }
     }
   </script>
 
-  <!-- Google SEO Structured Schema -->
+  <!-- Google SEO Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,7 +48,7 @@
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "ratingCount": "1250",
+      "ratingCount": "1280",
       "bestRating": "5"
     },
     "offers": {
@@ -66,23 +60,46 @@
   </script>
 
   <style>
-    body { font-family: 'Plus Jakarta Sans', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif; }
-    h1, h2, h3, .font-display { font-family: 'Outfit', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif; }
+    /* Absolute Zero-Overflow Rules */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif;
+      background-color: #080c14;
+    }
+    h1, h2, h3, .font-display {
+      font-family: 'Outfit', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif;
+    }
+
+    /* Glassmorphism Classes with Hardware Acceleration */
     .glass-nav {
-      background: rgba(17, 24, 39, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: translateZ(0);
     }
     html:not(.dark) .glass-nav {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(0, 0, 0, 0.08);
     }
     .glass-card {
-      background: rgba(17, 24, 39, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transform: translateZ(0);
     }
     html:not(.dark) .glass-card {
       background: #ffffff;
@@ -90,131 +107,16 @@
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
     }
     .custom-glow {
-      box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.25);
+      box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.22);
     }
-
-    /* === 3D Orbiting Social Media Loader & Pure Pitch Dark Stage === */
-    #lukzi-3d-loader {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      background: #000000;
-      transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Touch Scrolling Optimization */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
     }
-    .orbit-scene {
-      perspective: 1000px;
-      transform-style: preserve-3d;
-    }
-    .orbit-stage {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      transform-style: preserve-3d;
-      transform: rotateX(62deg) rotateZ(0deg);
-    }
-    @media (min-width: 640px) {
-      .orbit-stage {
-        width: 360px;
-        height: 360px;
-      }
-    }
-    .orbit-ring-1 {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 2px dashed rgba(0, 183, 255, 0.45);
-      box-shadow: 0 0 25px rgba(0, 183, 255, 0.35), inset 0 0 25px rgba(138, 43, 226, 0.3);
-      animation: spinRing 24s linear infinite;
-    }
-    .orbit-ring-2 {
-      position: absolute;
-      inset: 14%;
-      border-radius: 50%;
-      border: 1.5px solid rgba(138, 43, 226, 0.5);
-      box-shadow: 0 0 35px rgba(138, 43, 226, 0.4);
-      animation: spinRing 18s linear infinite reverse;
-    }
-    .orbit-rotator {
-      position: absolute;
-      inset: 0;
-      transform-style: preserve-3d;
-      animation: orbitRotate 16s linear infinite;
-    }
-    @keyframes orbitRotate {
-      0% { transform: rotateZ(0deg); }
-      100% { transform: rotateZ(360deg); }
-    }
-    @keyframes spinRing {
-      0% { transform: rotateZ(0deg); }
-      100% { transform: rotateZ(360deg); }
-    }
-    .orbit-item {
-      position: absolute;
-      width: 44px;
-      height: 44px;
-      margin-left: -22px;
-      margin-top: -22px;
-      left: 50%;
-      top: 50%;
-      transform-style: preserve-3d;
-    }
-    .orbit-item-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 14px;
-      background: rgba(17, 24, 39, 0.85);
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(0, 183, 255, 0.4);
-      animation: unrollItem 16s linear infinite;
-    }
-    @keyframes unrollItem {
-      0% { transform: rotateZ(0deg) rotateX(-62deg); }
-      100% { transform: rotateZ(-360deg) rotateX(-62deg); }
-    }
-    .center-core {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 80px;
-      height: 80px;
-      margin-left: -40px;
-      margin-top: -40px;
-      transform: rotateX(-62deg);
-      transform-style: preserve-3d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .core-sphere {
-      position: relative;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #00B7FF, #8A2BE2 65%, #080812);
-      box-shadow: 0 0 40px rgba(0, 183, 255, 0.8), 0 0 80px rgba(138, 43, 226, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pulseCore 2.5s ease-in-out infinite alternate;
-    }
-    @keyframes pulseCore {
-      0% { transform: scale(0.95); box-shadow: 0 0 30px rgba(0, 183, 255, 0.6), 0 0 60px rgba(138, 43, 226, 0.4); }
-      100% { transform: scale(1.08); box-shadow: 0 0 50px rgba(0, 183, 255, 0.9), 0 0 90px rgba(138, 43, 226, 0.8); }
-    }
-
-    /* === Social Proof Live Downloads Ticker === */
-    #social-proof-toast {
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .orbit-rotator, .orbit-ring-1, .orbit-ring-2, .orbit-item-inner, .core-sphere {
-        animation: none !important;
-      }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 
@@ -230,162 +132,48 @@
     })();
   </script>
 </head>
-<body class="bg-[#080812] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white transition-colors duration-300 overflow-hidden">
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white transition-colors duration-200">
 
-  <!-- 3D Orbiting Social Media Loading Screen (Full Page Intro - Pure Dark Background) -->
-  <div id="lukzi-3d-loader" class="fixed inset-0 z-[999999] flex flex-col items-center justify-center p-4 select-none overflow-hidden bg-black">
-    <!-- Ambient Star Particles -->
-    <div class="absolute inset-0 pointer-events-none opacity-40">
-      <div class="absolute top-1/4 left-1/5 w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></div>
-      <div class="absolute top-2/3 right-1/4 w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-      <div class="absolute top-1/3 right-1/5 w-1 h-1 rounded-full bg-white animate-ping"></div>
-      <div class="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></div>
-    </div>
-
-    <!-- Skip Button -->
-    <button id="skip-loader-btn" onclick="dismiss3dLoader()" class="absolute top-6 right-6 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/20 bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 text-xs font-bold uppercase tracking-wider backdrop-blur-md transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer">
-      <span>Skip</span>
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
-    </button>
-
-    <!-- 3D Orbital Stage Container -->
-    <div class="orbit-scene relative flex items-center justify-center mb-8">
-      <div class="orbit-stage">
-        <!-- Concentric Orbital Rings -->
-        <div class="orbit-ring-1"></div>
-        <div class="orbit-ring-2"></div>
-
-        <!-- Orbiting Rotator for 8 Social Media Icons -->
-        <div class="orbit-rotator">
-          <!-- 1. YouTube (0 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(0deg) translateX(140px);">
-            <div class="orbit-item-inner border-red-500/50 shadow-red-500/30">
-              <img src="/yt.png" alt="YouTube" class="w-5 h-5 object-contain" />
-            </div>
-          </div>
-
-          <!-- 2. TikTok (45 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(45deg) translateX(140px);">
-            <div class="orbit-item-inner border-cyan-400/50 shadow-cyan-400/30">
-              <img src="/tiktok.png" alt="TikTok" class="w-5 h-5 object-contain" />
-            </div>
-          </div>
-
-          <!-- 3. Instagram (90 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(90deg) translateX(140px);">
-            <div class="orbit-item-inner border-pink-500/50 shadow-pink-500/30">
-              <img src="/insta.png" alt="Instagram" class="w-5 h-5 object-contain" />
-            </div>
-          </div>
-
-          <!-- 4. Facebook (135 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(135deg) translateX(140px);">
-            <div class="orbit-item-inner border-blue-500/50 shadow-blue-500/30">
-              <img src="/fb.png" alt="Facebook" class="w-5 h-5 object-contain" />
-            </div>
-          </div>
-
-          <!-- 5. X / Twitter (180 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(180deg) translateX(140px);">
-            <div class="orbit-item-inner border-slate-400/50 shadow-white/20">
-              <img src="/twitter.png" alt="X" class="w-5 h-5 object-contain" />
-            </div>
-          </div>
-
-          <!-- 6. Snapchat (225 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(225deg) translateX(140px);">
-            <div class="orbit-item-inner border-yellow-400/50 shadow-yellow-400/30">
-              <svg class="w-5 h-5 fill-yellow-400" viewBox="0 0 24 24"><path d="M12.002 2c-3.87 0-6.104 2.766-6.104 5.378 0 1.256.49 2.457 1.053 3.328.163.253.22.428.14.656-.12.344-.457.728-.868.835-.494.13-1.077-.145-1.455-.383-.343-.217-.61-.318-.847-.184-.282.16-.328.53-.162.946.223.558.742 1.11 1.454 1.432.19.086.31.25.328.455.034.402.164.74.453 1.01.408.384.975.52 1.637.382.433-.09.77-.07 1.04.145.31.246.467.625.59 1.037.165.556.398.972.827 1.255.433.284.982.355 1.62.22.378-.08.777-.288 1.144-.488.337-.183.702-.27 1.082-.27.378 0 .742.087 1.08.27.366.2.766.408 1.144.488.638.135 1.187.064 1.62-.22.43-.283.662-.7.827-1.255.123-.412.28-.79.59-1.037.27-.216.608-.236 1.04-.145.663.138 1.23-.002 1.638-.382.29-.27.42-.608.453-1.01.018-.205.138-.37.328-.455.712-.322 1.23-.874 1.454-1.432.166-.416.12-.786-.162-.946-.237-.134-.504-.033-.847.184-.378.238-.96.513-1.455.383-.41-.107-.748-.49-.868-.835-.08-.228-.023-.403.14-.656.563-.87 1.053-2.072 1.053-3.328C18.106 4.766 15.872 2 12.002 2z"/></svg>
-            </div>
-          </div>
-
-          <!-- 7. Telegram (270 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(270deg) translateX(140px);">
-            <div class="orbit-item-inner border-sky-400/50 shadow-sky-400/30">
-              <svg class="w-5 h-5 fill-cyan-400" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-            </div>
-          </div>
-
-          <!-- 8. WhatsApp (315 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(315deg) translateX(140px);">
-            <div class="orbit-item-inner border-emerald-400/50 shadow-emerald-400/30">
-              <svg class="w-5 h-5 fill-emerald-400" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Central Glowing 3D Download Symbol Core -->
-        <div class="center-core">
-          <div class="core-sphere">
-            <svg class="w-8 h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Text & Progress Indicator -->
-    <div class="relative z-10 flex flex-col items-center text-center max-w-md w-full px-4">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-cyan-500/30 text-cyan-400 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-inner">
-        <span>LUKZI VS SOCIAL MEDIA 🇱🇰</span>
-      </div>
-
-      <h2 class="font-display font-black text-xl sm:text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 mb-4">
-        PREPARING YOUR EXPERIENCE...
-      </h2>
-
-      <!-- Progress Bar Container -->
-      <div class="w-64 h-2 rounded-full bg-slate-900 border border-slate-700/80 overflow-hidden shadow-inner p-0.5 mb-2">
-        <div id="loader-progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full w-0 transition-all duration-150 ease-out"></div>
-      </div>
-
-      <span id="loader-percent" class="text-slate-400 text-xs font-mono font-bold">0%</span>
-    </div>
+  <!-- Ambient Glow Background Orbs (Strictly contained to prevent mobile overflow) -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10 w-full h-full">
+    <div class="absolute -top-32 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
   </div>
 
-  <!-- Main Website Content (Revealed smoothly after 3D animation finishes) -->
-  <div id="lukzi-main-content" class="transition-all duration-700 opacity-0 blur-sm flex flex-col min-h-screen">
-
-  <!-- Ambient Glow Orbs -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-    <div class="absolute -top-40 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/3 -right-20 w-[30rem] h-[30rem] bg-purple-600/15 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 left-1/3 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl"></div>
-  </div>
-
-  <!-- Header -->
-  <header class="sticky top-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4">
-    <div class="mx-auto max-w-7xl">
-      <div class="glass-nav rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-xl">
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-3 group shrink-0">
-          <div class="relative">
-            <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover ring-2 ring-cyan-400 group-hover:scale-105 transition-all duration-300 shadow-md shadow-cyan-500/20" />
-            <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-[#080812]"></span>
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-50 px-2 sm:px-4 md:px-6 pt-2 sm:pt-4 w-full max-w-full">
+    <div class="mx-auto max-w-6xl w-full">
+      <div class="glass-nav rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between shadow-xl w-full">
+        
+        <!-- Logo & Brand Name -->
+        <a href="/" class="flex items-center gap-2 sm:gap-2.5 group shrink-0 max-w-[55%] sm:max-w-none">
+          <div class="relative shrink-0">
+            <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-cyan-400 group-hover:scale-105 transition-all duration-300" />
+            <span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#080c14]"></span>
           </div>
-          <div class="flex flex-col">
-            <div class="flex items-center gap-1.5">
-              <span class="font-display font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-400 bg-clip-text text-transparent">LUKZI VS SOCIAL MEDIA</span>
-              <span class="text-xs">🇱🇰</span>
+          <div class="flex flex-col truncate">
+            <div class="flex items-center gap-1 truncate">
+              <span class="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-400 bg-clip-text text-transparent truncate">LUKZI</span>
+              <span class="font-display font-extrabold text-sm sm:text-base tracking-tight text-white hidden sm:inline truncate">VS SOCIAL MEDIA</span>
+              <span class="text-[11px] shrink-0">🇱🇰</span>
             </div>
-            <span class="text-[10px] text-cyan-400/80 font-semibold tracking-wider uppercase hidden sm:block" data-i18n="tagline">Official Downloader • Respect Lukzi</span>
+            <span class="text-[9px] text-cyan-400/80 font-semibold tracking-wider uppercase hidden md:block" data-i18n="tagline">Official Downloader • Respect Lukzi</span>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold">
+        <nav class="hidden lg:flex items-center gap-5 text-sm font-semibold">
           <a href="/" class="text-cyan-400 transition-colors" data-i18n="nav_home">Home</a>
           <a href="/about" class="text-slate-300 hover:text-cyan-400 transition-colors" data-i18n="nav_guide">How to Use</a>
           <a href="/developer" class="text-slate-300 hover:text-cyan-400 transition-colors font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400" data-i18n="nav_developer">Developer 🇱🇰</a>
           <a href="/contact" class="text-slate-300 hover:text-cyan-400 transition-colors" data-i18n="nav_contact">Contact</a>
         </nav>
 
-        <!-- Right Side: Multi-Language Selector + Live Counter + PWA Install + Theme -->
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Language Dropdown -->
+        <!-- Right Side: Language Select + Online Count + Theme Toggle + Mobile Menu -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <!-- Language Selector -->
           <div class="relative">
-            <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-slate-800/90 text-slate-200 border border-slate-700/90 text-xs font-bold rounded-xl px-2.5 py-1.5 outline-none cursor-pointer hover:border-cyan-400 transition-all">
+            <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-slate-800/90 text-slate-200 border border-slate-700/80 text-[11px] sm:text-xs font-bold rounded-xl px-2 py-1.5 outline-none cursor-pointer hover:border-cyan-400 transition-all">
               <option value="en">🌐 English</option>
               <option value="si">🇱🇰 Sinhala</option>
               <option value="ta">🇮🇳 Tamil</option>
@@ -395,35 +183,29 @@
           </div>
 
           <!-- Real-Time Online Presence Pill -->
-          <div class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs font-bold text-slate-200 shadow-inner">
+          <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs font-bold text-slate-200 shadow-inner">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span id="live-online-count" class="text-emerald-400">14</span>
-            <span class="text-slate-400 text-[11px]" data-i18n="online_text">Online</span>
+            <span id="live-online-count" class="text-emerald-400 font-mono">14</span>
+            <span class="text-slate-400 text-[10px]" data-i18n="online_text">Online</span>
           </div>
 
-          <!-- WhatsApp Chat Button -->
-          <a href="https://wa.me/94701854805" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-bold">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-            <span>WhatsApp</span>
-          </a>
-
-          <!-- Dark/Light Mode -->
-          <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 transition-all">
+          <!-- Dark/Light Mode Switcher -->
+          <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-1.5 sm:p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
           </button>
 
-          <!-- Mobile Menu -->
-          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="lg:hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300">
+          <!-- Mobile Hamburger Toggle -->
+          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="lg:hidden p-1.5 sm:p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- Mobile Dropdown -->
-      <div id="mobile-menu" class="lg:hidden hidden mt-2 glass-nav rounded-2xl p-4 flex flex-col gap-3 shadow-2xl">
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="lg:hidden hidden mt-2 glass-nav rounded-2xl p-3 sm:p-4 flex flex-col gap-2.5 shadow-2xl animate-in slide-in-from-top duration-200">
         <a href="/" class="p-2 rounded-xl text-cyan-400 bg-cyan-500/10 font-bold text-sm" data-i18n="nav_home">Home</a>
         <a href="/about" class="p-2 rounded-xl text-slate-300 hover:bg-slate-800 font-semibold text-sm" data-i18n="nav_guide">How to Use</a>
         <a href="/developer" class="p-2 rounded-xl text-purple-400 hover:bg-slate-800 font-bold text-sm" data-i18n="nav_developer">Developer 🇱🇰</a>
@@ -437,417 +219,302 @@
   </header>
 
   <!-- Main Container -->
-  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-16 flex flex-col items-center">
+  <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 pt-6 sm:pt-10 pb-16 flex flex-col items-center overflow-x-hidden">
 
     <!-- Hero Title & Subtitle -->
-    <div class="text-center max-w-3xl mb-8 sm:mb-10">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+    <div class="text-center max-w-2xl w-full mb-6 sm:mb-8">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
         <span data-i18n="badge_hero">✨ 100% Free & Unlimited Fast Downloader</span>
       </div>
 
-      <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-4 leading-tight">
+      <h1 class="font-display font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white mb-3 leading-tight">
         <span data-i18n="hero_title_1">Download</span> <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-500 bg-clip-text text-transparent" data-i18n="hero_title_2">Any Video & Audio</span> <span data-i18n="hero_title_3">in Seconds</span>
       </h1>
 
-      <p class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed" data-i18n="hero_desc">
+      <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed" data-i18n="hero_desc">
         High speed downloader with <strong class="text-white">No Watermarks</strong>. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, Facebook, Twitter, Spotify and Pinterest.
       </p>
 
       <!-- Trust Badges Row -->
-      <div class="flex flex-wrap items-center justify-center gap-3 mt-5 text-xs font-bold text-slate-300">
-        <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700">🚫 <span data-i18n="trust_nowatermark">No Watermark</span></span>
-        <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700">⚡ <span data-i18n="trust_speed">1080p Ultra Fast</span></span>
-        <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">⭐ 4.9/5 (1000+ Reviews)</span>
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] sm:text-xs font-bold text-slate-300">
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">🚫 <span data-i18n="trust_nowatermark">No Watermark</span></span>
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">⚡ <span data-i18n="trust_speed">1080p Ultra Fast</span></span>
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">⭐ 4.9/5 (1000+ Reviews)</span>
       </div>
     </div>
 
-    <!-- Platform Selector Tabs Grid -->
-    <div class="w-full mb-6">
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar">
-        <button type="button" onclick="selectPlatform('all')" data-platform="all" class="platform-tab active flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-lg shadow-cyan-500/25 scale-105">
+    <!-- Platform Selector Tabs Grid (Smooth horizontal scroll on mobile) -->
+    <div class="w-full max-w-full overflow-hidden mb-5">
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 no-scrollbar px-1">
+        <button type="button" onclick="selectPlatform('all')" data-platform="all" class="platform-tab active flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-md shadow-cyan-500/25 shrink-0">
           <span>⚡ Auto Detect</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('youtube')" data-platform="youtube" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/yt.png" alt="YouTube" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('youtube')" data-platform="youtube" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/yt.png" alt="YouTube" class="w-3.5 h-3.5 object-contain" />
           <span>YouTube</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('tiktok')" data-platform="tiktok" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/tiktok.png" alt="TikTok" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('tiktok')" data-platform="tiktok" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/tiktok.png" alt="TikTok" class="w-3.5 h-3.5 object-contain" />
           <span>TikTok</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('instagram')" data-platform="instagram" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/insta.png" alt="Instagram" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('instagram')" data-platform="instagram" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/insta.png" alt="Instagram" class="w-3.5 h-3.5 object-contain" />
           <span>Instagram</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('facebook')" data-platform="facebook" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/fb.png" alt="Facebook" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('facebook')" data-platform="facebook" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/fb.png" alt="Facebook" class="w-3.5 h-3.5 object-contain" />
           <span>Facebook</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('twitter')" data-platform="twitter" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/twitter.png" alt="Twitter" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('twitter')" data-platform="twitter" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/twitter.png" alt="Twitter" class="w-3.5 h-3.5 object-contain" />
           <span>Twitter</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('spotify')" data-platform="spotify" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/spotify.png" alt="Spotify" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('spotify')" data-platform="spotify" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/spotify.png" alt="Spotify" class="w-3.5 h-3.5 object-contain" />
           <span>Spotify</span>
         </button>
 
-        <button type="button" onclick="selectPlatform('pinterest')" data-platform="pinterest" class="platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white">
-          <img src="/Pintarest.png" alt="Pinterest" class="w-4 h-4 object-contain" />
+        <button type="button" onclick="selectPlatform('pinterest')" data-platform="pinterest" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/Pintarest.png" alt="Pinterest" class="w-3.5 h-3.5 object-contain" />
           <span>Pinterest</span>
         </button>
       </div>
     </div>
 
     <!-- Downloader Input Box Card -->
-    <div class="w-full glass-card rounded-3xl p-3 sm:p-5 shadow-2xl mb-8 custom-glow">
-      <div class="flex flex-col sm:flex-row items-stretch gap-2.5">
-        <!-- Input Container -->
+    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl mb-6 custom-glow">
+      <div class="flex flex-col sm:flex-row items-stretch gap-2">
+        <!-- Input Field Container -->
         <div class="relative flex-1 flex items-center">
-          <div class="absolute left-4 pointer-events-none text-slate-400">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+          <div class="absolute left-3.5 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
           </div>
 
           <input 
             id="url-input" 
             type="url" 
-            placeholder="Paste your video or audio link here (YouTube, TikTok, Insta...)" 
-            class="w-full h-14 pl-12 pr-28 rounded-2xl bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-white placeholder-slate-400 text-sm sm:text-base outline-none transition-all"
+            placeholder="Paste your video or audio link here..." 
+            class="w-full h-12 sm:h-14 pl-10 sm:pl-11 pr-20 sm:pr-24 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-white placeholder-slate-400 text-xs sm:text-sm outline-none transition-all"
             autocomplete="off"
             spellcheck="false"
           />
 
-          <!-- Inside Actions -->
-          <div class="absolute right-2 flex items-center gap-1">
-            <button id="clear-btn" type="button" onclick="clearInput()" class="hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          <!-- Inside Actions (Paste & Clear) -->
+          <div class="absolute right-1.5 sm:right-2 flex items-center gap-1">
+            <button id="clear-btn" type="button" onclick="clearInput()" class="hidden p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <button id="paste-btn" type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 hover:text-cyan-300 text-xs font-bold transition-all border border-slate-700">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            <button id="paste-btn" type="button" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all border border-slate-700">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
               <span data-i18n="btn_paste">Paste</span>
             </button>
           </div>
         </div>
 
-        <!-- Action Button -->
+        <!-- Download Action Button -->
         <button 
           id="get-details-btn" 
           type="button" 
-          class="h-14 px-8 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-display font-bold text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 cursor-pointer"
+          class="h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-display font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 cursor-pointer"
         >
           <span id="btn-text" data-i18n="btn_download">Download</span>
-          <svg id="btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-          <svg id="btn-spinner" class="w-5 h-5 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <svg id="btn-icon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <svg id="btn-spinner" class="w-4 h-4 sm:w-5 sm:h-5 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         </button>
       </div>
 
-      <div class="mt-3 flex flex-wrap items-center justify-between text-xs text-slate-400 px-1 gap-2">
-        <div class="flex items-center gap-2">
+      <div class="mt-2.5 flex flex-wrap items-center justify-between text-[11px] text-slate-400 px-1 gap-1.5">
+        <div class="flex items-center gap-1.5 truncate">
           <span data-i18n="supported_text">Supported:</span>
-          <span class="font-medium text-slate-300">YouTube, Shorts, TikTok, Instagram Reels, FB, Twitter/X, Spotify</span>
+          <span class="font-medium text-slate-300 truncate">YouTube, TikTok, Instagram, FB, Twitter/X, Spotify</span>
         </div>
-        <div class="text-cyan-400 font-medium">⚡ Ultra-Fast 1080p / MP3</div>
+        <div class="text-cyan-400 font-medium shrink-0">⚡ Ultra-Fast 1080p / MP3</div>
       </div>
     </div>
 
-    <!-- Error Alert -->
-    <div id="error-container" class="w-full hidden mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-start gap-3 shadow-lg">
-      <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/></svg>
+    <!-- Error Alert Box -->
+    <div id="error-container" class="w-full hidden mb-5 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs sm:text-sm flex items-start gap-2.5 shadow-lg">
+      <svg class="w-4 h-4 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/></svg>
       <div class="flex-1">
         <strong class="font-bold text-red-400 block mb-0.5" data-i18n="error_title">Download Error</strong>
         <span id="error-message">Could not fetch download links for this URL. Please check the link and try again.</span>
       </div>
-      <button onclick="hideError()" class="text-red-400 hover:text-white"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+      <button onclick="hideError()" class="text-red-400 hover:text-white"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
     </div>
 
-    <!-- Download Processing Indicator Card -->
-    <div id="loading-container" class="w-full hidden mb-8 glass-card rounded-3xl p-8 shadow-2xl border border-cyan-500/30">
-      <div class="flex flex-col items-center justify-center text-center">
-        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-4 shadow-lg shadow-cyan-500/20">
-          <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-        </div>
-
-        <h3 class="font-display font-black text-lg text-white mb-1">
-          ANALYZING & EXTRACTING MEDIA...
-        </h3>
-        <p class="text-slate-400 text-xs max-w-sm leading-relaxed mb-4">
-          Connecting to high-speed cloud engine to retrieve 1080p HD stream without watermark...
-        </p>
-
-        <!-- Progress Bar -->
-        <div class="w-48 h-1.5 rounded-full bg-slate-800 overflow-hidden border border-slate-700/80">
-          <div class="h-full bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 w-full animate-pulse"></div>
+    <!-- Loading Skeleton Card -->
+    <div id="loading-container" class="w-full hidden mb-6 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl animate-pulse">
+      <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+        <div class="w-full sm:w-40 aspect-video sm:aspect-square bg-slate-800 rounded-2xl shrink-0"></div>
+        <div class="flex-1 w-full space-y-2.5">
+          <div class="h-3.5 bg-slate-800 rounded-full w-20"></div>
+          <div class="h-5 bg-slate-800 rounded-xl w-3/4"></div>
+          <div class="h-3.5 bg-slate-800 rounded-full w-1/2"></div>
+          <div class="pt-3 flex gap-2">
+            <div class="h-10 bg-slate-800 rounded-xl w-28"></div>
+            <div class="h-10 bg-slate-800 rounded-xl w-28"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Download Result Card -->
-    <div id="result-container" class="w-full hidden mb-10 glass-card rounded-3xl p-5 sm:p-7 shadow-2xl border border-cyan-500/30">
+    <!-- Download Result Card Container -->
+    <div id="result-container" class="w-full hidden mb-8 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl border border-cyan-500/20">
       <!-- Injected via JavaScript -->
     </div>
 
     <!-- QR Code Modal (Instant Download on Mobile) -->
     <div id="qr-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center shadow-2xl border border-cyan-500/30 animate-in fade-in zoom-in duration-200">
-        <h3 class="font-display font-bold text-lg text-white mb-2" data-i18n="qr_title">📱 Scan to Download on Mobile</h3>
-        <p class="text-slate-400 text-xs mb-4" data-i18n="qr_desc">Point your phone's camera at this QR code to download directly to your mobile gallery!</p>
+      <div class="glass-card max-w-xs w-full rounded-2xl sm:rounded-3xl p-5 text-center shadow-2xl border border-cyan-500/30 animate-in fade-in zoom-in duration-200">
+        <h3 class="font-display font-bold text-base text-white mb-1.5" data-i18n="qr_title">📱 Scan to Download on Mobile</h3>
+        <p class="text-slate-400 text-xs mb-3.5" data-i18n="qr_desc">Point your phone's camera at this QR code to download directly to your mobile gallery!</p>
         
-        <div class="p-4 bg-white rounded-2xl mx-auto w-48 h-48 flex items-center justify-center shadow-inner mb-4">
+        <div class="p-3 bg-white rounded-xl mx-auto w-40 h-40 flex items-center justify-center shadow-inner mb-3.5">
           <img id="qr-image" src="" alt="QR Code" class="w-full h-full object-contain" />
         </div>
 
-        <button type="button" onclick="closeQrModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all" data-i18n="qr_close">Close</button>
+        <button type="button" onclick="closeQrModal()" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all" data-i18n="qr_close">Close</button>
       </div>
     </div>
 
     <!-- How It Works (3 Steps) -->
-    <div class="w-full mt-6 mb-12">
-      <div class="text-center mb-8">
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight" data-i18n="how_title">How to Download in 3 Steps</h2>
-        <p class="text-slate-400 text-sm mt-1" data-i18n="how_subtitle">Super simple, no software installation needed</p>
+    <div class="w-full mt-4 mb-10">
+      <div class="text-center mb-6">
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="how_title">How to Download in 3 Steps</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-0.5" data-i18n="how_subtitle">Super simple, no software installation needed</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="glass-card rounded-3xl p-6 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-display font-black text-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">1</div>
-          <h3 class="font-bold text-white text-base mb-1" data-i18n="step_1_title">Copy Link</h3>
-          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed" data-i18n="step_1_desc">Open YouTube, TikTok, Instagram or FB and copy the video share link.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">1</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_1_title">Copy Link</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_1_desc">Open YouTube, TikTok, Instagram or FB and copy the video share link.</p>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-400/30 text-sky-400 font-display font-black text-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">2</div>
-          <h3 class="font-bold text-white text-base mb-1" data-i18n="step_2_title">Paste URL</h3>
-          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed" data-i18n="step_2_desc">Paste the link into the search box above and click the Download button.</p>
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-400/30 text-sky-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">2</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_2_title">Paste URL</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_2_desc">Paste the link into the search box above and click the Download button.</p>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-display font-black text-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">3</div>
-          <h3 class="font-bold text-white text-base mb-1" data-i18n="step_3_title">Save & Enjoy</h3>
-          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed" data-i18n="step_3_desc">Choose your preferred quality (HD MP4 / MP3) and download instantly!</p>
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">3</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_3_title">Save & Enjoy</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_3_desc">Choose your preferred quality (HD MP4 / MP3) and download instantly!</p>
         </div>
       </div>
     </div>
 
     <!-- Verified User Reviews & Ratings -->
-    <div class="w-full mb-12">
-      <div class="text-center mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-1" data-i18n="reviews_tag">⭐ Social Proof</span>
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight" data-i18n="reviews_title">Loved by Thousands Worldwide</h2>
-        <p class="text-slate-400 text-sm mt-1" data-i18n="reviews_subtitle">Rated 4.9/5 by 1000+ creators and gamers</p>
+    <div class="w-full mb-10">
+      <div class="text-center mb-6">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-0.5" data-i18n="reviews_tag">⭐ Social Proof</span>
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="reviews_title">Loved by Thousands Worldwide</h2>
+        <p class="text-slate-400 text-xs mt-0.5" data-i18n="reviews_subtitle">Rated 4.9/5 by 1000+ creators and gamers</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
         <!-- Review 1 -->
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <div class="flex text-yellow-400 text-sm mb-3">★★★★★</div>
-            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">"The fastest TikTok no-watermark downloader I've ever used. Works instantly on my iPhone gallery without annoying ads!"</p>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"The fastest TikTok no-watermark downloader I've ever used. Works instantly on my iPhone gallery without annoying ads!"</p>
           </div>
-          <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
-            <div class="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-xs">KN</div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-[11px]">KN</div>
             <div>
               <span class="text-xs font-bold text-white block">Kasun N.</span>
-              <span class="text-[10px] text-slate-400">🇱🇰 Sri Lanka • Content Creator</span>
+              <span class="text-[9px] text-slate-400">🇱🇰 Sri Lanka • Creator</span>
             </div>
           </div>
         </div>
 
         <!-- Review 2 -->
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <div class="flex text-yellow-400 text-sm mb-3">★★★★★</div>
-            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">"YouTube 1080p and Spotify MP3 extraction are super smooth. The mobile QR code feature is an absolute genius addition."</p>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"YouTube 1080p and Spotify MP3 extraction are super smooth. The mobile QR code feature is an absolute genius addition."</p>
           </div>
-          <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
-            <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-xs">TH</div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-[11px]">TH</div>
             <div>
               <span class="text-xs font-bold text-white block">Takeshi H.</span>
-              <span class="text-[10px] text-slate-400">🇯🇵 Tokyo, Japan • Gamer</span>
+              <span class="text-[9px] text-slate-400">🇯🇵 Tokyo, Japan • Gamer</span>
             </div>
           </div>
         </div>
 
         <!-- Review 3 -->
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <div class="flex text-yellow-400 text-sm mb-3">★★★★★</div>
-            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">"Clean design, zero bugs, and high contrast buttons. Respect to the Sri Lankan developer Lukzi for this amazing tool!"</p>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Clean design, zero bugs, and high contrast buttons. Respect to the Sri Lankan developer Lukzi for this amazing tool!"</p>
           </div>
-          <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
-            <div class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-400 font-bold flex items-center justify-center text-xs">AL</div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-400 font-bold flex items-center justify-center text-[11px]">AL</div>
             <div>
               <span class="text-xs font-bold text-white block">Alex L.</span>
-              <span class="text-[10px] text-slate-400">🇺🇸 United States • Video Editor</span>
+              <span class="text-[9px] text-slate-400">🇺🇸 United States • Editor</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- 🔥 Featured Developer Products & Tools Showcase (Sell Your Products) -->
-    <div id="products-showcase" class="w-full mb-14">
-      <div class="text-center mb-8">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-pink-500/20 border border-purple-500/40 text-purple-300 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
-          <span>🇱🇰 SRI LANKAN TECH INNOVATIONS • LUKZI SUITE</span>
-        </div>
-        <h2 class="font-display font-black text-2xl sm:text-4xl text-white tracking-tight mb-2">
-          🔥 Featured Developer Tools & Products
-        </h2>
-        <p class="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-          High-performance gaming overlays, Android reverse-engineering suites, and AI automations engineered with precision by <strong class="text-cyan-400">LUKZI</strong>.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Product 1: FF VIP PANEL -->
-        <div class="glass-card rounded-3xl p-6 border border-purple-500/30 hover:border-purple-400/80 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-xl group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-xl bg-purple-500/20 text-purple-300 text-[11px] font-extrabold uppercase tracking-wider border border-purple-500/30">GAMING TOOLS</span>
-              <span class="text-xs font-bold text-yellow-400 flex items-center gap-1">★ 5.0 <span class="text-slate-400 text-[10px]">(2,400+)</span></span>
-            </div>
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-2xl mb-4 shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
-              🎯
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-white mb-2">FF VIP PANEL & OVERLAYS</h3>
-            <p class="text-slate-300 text-xs leading-relaxed mb-4">
-              High-performance gaming overlay panel with sensitive touch configs, smooth 90/120 FPS mobile tweaks, and zero-latency targeting assistant.
-            </p>
-            <ul class="space-y-1.5 text-xs text-slate-400 mb-6">
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 90/120 FPS Mobile Optimization</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Sensitive Touch Overlay Configs</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 100% Anti-Ban Safe Architecture</li>
-            </ul>
-          </div>
-          <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700 hover:from-purple-500 hover:to-pink-500 text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 transition-all hover:shadow-purple-500/50 hover:scale-[1.01] active:scale-[0.98]">
-            <span>🛒 Buy Now / Instant Access</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-        </div>
-
-        <!-- Product 2: APK MODIFY SPECIALIST -->
-        <div class="glass-card rounded-3xl p-6 border border-cyan-500/30 hover:border-cyan-400/80 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-xl group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-xl bg-cyan-500/20 text-cyan-300 text-[11px] font-extrabold uppercase tracking-wider border border-cyan-500/30">ANDROID REVERSE</span>
-              <span class="text-xs font-bold text-yellow-400 flex items-center gap-1">★ 5.0 <span class="text-slate-400 text-[10px]">(1,850+)</span></span>
-            </div>
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-2xl mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform">
-              ⚙️
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-white mb-2">APK MODIFY & INJECTOR</h3>
-            <p class="text-slate-300 text-xs leading-relaxed mb-4">
-              Advanced Android reverse engineering suite, Smali code patcher, custom asset injector, and signature bypass engine.
-            </p>
-            <ul class="space-y-1.5 text-xs text-slate-400 mb-6">
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Automated Smali Patch Injection</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Custom Asset & UI Tailoring</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Clean Decompile & Re-sign Tools</li>
-            </ul>
-          </div>
-          <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 transition-all hover:shadow-cyan-500/50 hover:scale-[1.01] active:scale-[0.98]">
-            <span>🛒 Buy Now / Instant Access</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-        </div>
-
-        <!-- Product 3: PC MOUSE BOT AI -->
-        <div class="glass-card rounded-3xl p-6 border border-emerald-500/30 hover:border-emerald-400/80 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-xl group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 text-[11px] font-extrabold uppercase tracking-wider border border-emerald-500/30">AI AUTOMATION</span>
-              <span class="text-xs font-bold text-yellow-400 flex items-center gap-1">★ 5.0 <span class="text-slate-400 text-[10px]">(980+)</span></span>
-            </div>
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-2xl mb-4 shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
-              🤖
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-white mb-2">PC MOUSE BOT AI</h3>
-            <p class="text-slate-300 text-xs leading-relaxed mb-4">
-              Computer vision pixel-tracking algorithm and hardware mouse micro-movement models for algorithmic precision.
-            </p>
-            <ul class="space-y-1.5 text-xs text-slate-400 mb-6">
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Real-Time Pixel Computer Vision</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Algorithmic Micro-Movement Core</li>
-              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Windows 10/11 Kernel Level Safe</li>
-            </ul>
-          </div>
-          <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 transition-all hover:shadow-emerald-500/50 hover:scale-[1.01] active:scale-[0.98]">
-            <span>🛒 Buy Now / Instant Access</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Direct Contact Banner for Products -->
-      <div class="mt-6 glass-card rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-700/80">
-        <div class="flex items-center gap-3 text-left">
-          <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0">💬</div>
-          <div>
-            <h4 class="font-bold text-white text-xs sm:text-sm">Need a Custom Mod or Bulk Purchase?</h4>
-            <p class="text-slate-400 text-[11px]">Chat directly with LUKZI on WhatsApp for custom panels, mod setups, and inquiries.</p>
-          </div>
-        </div>
-        <a href="https://wa.me/94701854805?text=Hello%20LUKZI%20I%20am%20interested%20in%20your%20Developer%20Products" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 shrink-0 shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95">
-          <span>WhatsApp Inquiry</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
       </div>
     </div>
 
     <!-- FAQ Accordion -->
-    <div class="w-full glass-card rounded-3xl p-6 sm:p-8 mb-12">
-      <div class="text-center mb-8">
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight" data-i18n="faq_title">Frequently Asked Questions</h2>
-        <p class="text-slate-400 text-sm mt-1" data-i18n="faq_subtitle">Everything you need to know about LUKZI Downloader</p>
+    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-8">
+      <div class="text-center mb-6">
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p class="text-slate-400 text-xs mt-0.5" data-i18n="faq_subtitle">Everything you need to know about LUKZI Downloader</p>
       </div>
 
-      <div class="space-y-4 max-w-3xl mx-auto">
+      <div class="space-y-2.5 max-w-2xl mx-auto">
         <!-- FAQ 1 -->
-        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-          <button type="button" onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left font-bold text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
             <span data-i18n="faq_q1">Is LUKZI VS SOCIAL MEDIA completely free?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
-          <div class="faq-content hidden px-5 pb-4 text-xs sm:text-sm text-slate-300 leading-relaxed" data-i18n="faq_a1">
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a1">
             Yes, 100% free with unlimited downloads. No registration, login, or subscriptions required.
           </div>
         </div>
 
         <!-- FAQ 2 -->
-        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-          <button type="button" onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left font-bold text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
             <span data-i18n="faq_q2">How do I save downloaded videos to my iPhone gallery?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
-          <div class="faq-content hidden px-5 pb-4 text-xs sm:text-sm text-slate-300 leading-relaxed" data-i18n="faq_a2">
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a2">
             On Safari (iOS), tap the download button, open the video in your Safari downloads, tap the Share icon, and select "Save Video" to store it in your Photos app.
           </div>
         </div>
 
         <!-- FAQ 3 -->
-        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-          <button type="button" onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left font-bold text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
             <span data-i18n="faq_q3">Does it remove TikTok watermarks?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
-          <div class="faq-content hidden px-5 pb-4 text-xs sm:text-sm text-slate-300 leading-relaxed" data-i18n="faq_a3">
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a3">
             Yes! Our cloud engine extracts the original HD video stream without the TikTok watermark logo.
           </div>
         </div>
 
         <!-- FAQ 4 -->
-        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-          <button type="button" onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left font-bold text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
             <span data-i18n="faq_q4">Can I convert YouTube and Spotify to MP3?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
-          <div class="faq-content hidden px-5 pb-4 text-xs sm:text-sm text-slate-300 leading-relaxed" data-i18n="faq_a4">
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a4">
             Yes, simply choose the "MP3 Audio" tab for YouTube or click "Download Spotify Audio" to save high-fidelity 320kbps audio.
           </div>
         </div>
@@ -857,16 +524,16 @@
   </main>
 
   <!-- Footer -->
-  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/80 py-8 px-4 text-center">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/80 py-6 px-4 text-center w-full">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
       <div class="flex items-center gap-2">
-        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-6 w-6 rounded-full" />
+        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-5 w-5 rounded-full" />
         <span class="font-bold text-slate-200">LUKZI VS SOCIAL MEDIA</span>
         <span>•</span>
         <span class="text-cyan-400 font-semibold">DEVELOPED IN SRI LANKA 🇱🇰</span>
       </div>
 
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-4 text-[11px] sm:text-xs">
         <a href="/" class="hover:text-cyan-400 transition-colors" data-i18n="nav_home">Home</a>
         <a href="/about" class="hover:text-cyan-400 transition-colors" data-i18n="nav_guide">How to Use</a>
         <a href="/developer" class="hover:text-cyan-400 transition-colors" data-i18n="nav_developer">Developer</a>
@@ -879,38 +546,9 @@
       </div>
     </div>
   </footer>
-  </div> <!-- /#lukzi-main-content -->
 
-  <!-- Toast Container -->
-  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- 📢 Live Recent Downloads Ticker (Social Proof Popup at Bottom-Left) -->
-  <div id="social-proof-toast" class="fixed bottom-6 left-6 z-40 max-w-xs sm:max-w-sm pointer-events-auto transform translate-y-24 opacity-0 transition-all duration-500 select-none">
-    <div class="glass-card rounded-2xl p-3 sm:p-3.5 shadow-2xl border border-cyan-500/30 flex items-center gap-3 backdrop-blur-xl">
-      <div class="relative shrink-0">
-        <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center p-1.5 shadow-md">
-          <img id="sp-platform-icon" src="/tiktok.png" alt="Platform" class="w-full h-full object-contain" />
-        </div>
-        <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-        </span>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-1.5 mb-0.5">
-          <span id="sp-flag" class="text-sm">🇱🇰</span>
-          <span class="text-xs font-bold text-white truncate"><span id="sp-user">Someone from Sri Lanka</span></span>
-        </div>
-        <p class="text-[11px] text-slate-300 truncate">
-          Downloaded <strong id="sp-type" class="text-cyan-400">TikTok HD video</strong>
-        </p>
-        <span id="sp-time" class="text-[10px] text-slate-400 font-mono">2s ago</span>
-      </div>
-      <button onclick="dismissSocialProof()" title="Dismiss" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors shrink-0">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-    </div>
-  </div>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-[90vw]"></div>
 
   <!-- Multi-Language Dictionary & Application Scripts -->
   <script>
@@ -1169,8 +807,8 @@
       const container = document.getElementById('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
-      toast.className = `px-4 py-2.5 rounded-2xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 transition-all duration-300 pointer-events-auto ${
-        type === 'success' ? 'bg-emerald-600 border border-emerald-400/40 shadow-emerald-500/30' : type === 'error' ? 'bg-red-600 border border-red-400/40' : 'bg-slate-800 border border-slate-700'
+      toast.className = `px-3.5 py-2 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 transition-all duration-300 pointer-events-auto ${
+        type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800 border border-slate-700'
       }`;
       toast.innerHTML = `
         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -1181,7 +819,7 @@
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
         setTimeout(() => toast.remove(), 300);
-      }, 3500);
+      }, 3000);
     }
 
     function openQrModal(downloadUrl) {
@@ -1202,9 +840,9 @@
       document.querySelectorAll('.platform-tab').forEach(btn => {
         const p = btn.getAttribute('data-platform');
         if (p === platform) {
-          btn.className = 'platform-tab active flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-lg shadow-cyan-500/25 scale-105';
+          btn.className = 'platform-tab active flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-md shadow-cyan-500/25 shrink-0';
         } else {
-          btn.className = 'platform-tab flex items-center gap-2 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white';
+          btn.className = 'platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0';
         }
       });
     }
@@ -1262,7 +900,7 @@
       const resultBox = document.getElementById('result-container');
 
       btn.disabled = true;
-      btnText.textContent = 'Processing...';
+      btnText.textContent = 'Fetching...';
       btnIcon.classList.add('hidden');
       btnSpinner.classList.remove('hidden');
       loadingBox.classList.remove('hidden');
@@ -1290,72 +928,6 @@
       }
     }
 
-    let currentAudioObj = null;
-    let socialProofIndex = 0;
-    let socialProofTimer = null;
-    let socialProofDismissed = false;
-
-    // Only the specified countries: Sri Lanka, UK, Korea, Australia, Japan, India
-    const RECENT_DOWNLOADS_DATA = [
-      { user: "Someone from Sri Lanka", flag: "🇱🇰", platform: "TikTok", type: "TikTok HD video (No Watermark)", ago: "2s ago", icon: "/tiktok.png" },
-      { user: "Someone from UK", flag: "🇬🇧", platform: "TikTok", type: "TikTok HD Clip (No Watermark)", ago: "4s ago", icon: "/tiktok.png" },
-      { user: "Someone from Korea", flag: "🇰🇷", platform: "YouTube", type: "YouTube 1080p HD Video", ago: "7s ago", icon: "/yt.png" },
-      { user: "Someone from Australia", flag: "🇦🇺", platform: "YouTube", type: "YouTube Shorts MP4", ago: "11s ago", icon: "/yt.png" },
-      { user: "Someone from Japan", flag: "🇯🇵", platform: "Spotify", type: "Spotify MP3 Audio (320k)", ago: "15s ago", icon: "/spotify.png" },
-      { user: "Someone from India", flag: "🇮🇳", platform: "Instagram", type: "Instagram Viral Reel HD", ago: "19s ago", icon: "/insta.png" }
-    ];
-
-    function startSocialProofTicker() {
-      if (socialProofDismissed) return;
-      
-      function triggerNext() {
-        if (socialProofDismissed) return;
-        const toast = document.getElementById('social-proof-toast');
-        if (!toast) return;
-
-        const item = RECENT_DOWNLOADS_DATA[socialProofIndex];
-        socialProofIndex = (socialProofIndex + 1) % RECENT_DOWNLOADS_DATA.length;
-
-        const userEl = document.getElementById('sp-user');
-        const flagEl = document.getElementById('sp-flag');
-        const typeEl = document.getElementById('sp-type');
-        const timeEl = document.getElementById('sp-time');
-        const iconEl = document.getElementById('sp-platform-icon');
-
-        if (userEl) userEl.textContent = item.user;
-        if (flagEl) flagEl.textContent = item.flag;
-        if (typeEl) typeEl.textContent = item.type;
-        if (timeEl) timeEl.textContent = item.ago;
-        if (iconEl) iconEl.src = item.icon;
-
-        // Slide in
-        toast.classList.remove('translate-y-24', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-
-        // Stay visible for 4.5s then slide out
-        setTimeout(() => {
-          if (socialProofDismissed) return;
-          toast.classList.remove('translate-y-0', 'opacity-100');
-          toast.classList.add('translate-y-24', 'opacity-0');
-        }, 4500);
-      }
-
-      // Initial trigger after 3.5 seconds
-      setTimeout(triggerNext, 3500);
-      socialProofTimer = setInterval(triggerNext, 9000);
-    }
-
-    function dismissSocialProof() {
-      socialProofDismissed = true;
-      if (socialProofTimer) clearInterval(socialProofTimer);
-      const toast = document.getElementById('social-proof-toast');
-      if (toast) {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-24', 'opacity-0');
-        setTimeout(() => toast.remove(), 500);
-      }
-    }
-
     function renderResultCard(data) {
       const container = document.getElementById('result-container');
       if (!container) return;
@@ -1369,37 +941,36 @@
 
       const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.qualities?.audio || data.download_url || '';
       const sdUrl = data.qualities?.sd || hdUrl;
-      const audioUrl = data.qualities?.audio;
 
       let badgesHtml = '';
-      if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium">👤 ${author}</span>`;
-      if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium">⏱️ ${duration}</span>`;
-      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium">👁️ ${Number(views).toLocaleString()} views</span>`;
+      if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
+      if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">⏱️ ${duration}</span>`;
+      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${Number(views).toLocaleString()}</span>`;
 
       let actionsHtml = '';
 
       if (platform === 'youtube') {
         actionsHtml = `
-          <div class="w-full flex flex-col gap-3">
+          <div class="w-full flex flex-col gap-2.5">
             <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700">
-              <button type="button" onclick="setYtFormat('mp4')" id="tab-mp4" class="flex-1 py-2 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp4' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎥 MP4 Video</button>
-              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 py-2 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp3' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎵 MP3 Audio</button>
+              <button type="button" onclick="setYtFormat('mp4')" id="tab-mp4" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp4' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎥 MP4 Video</button>
+              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp3' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎵 MP3 Audio</button>
             </div>
 
-            <div id="yt-mp4-opts" class="${ytFormat === 'mp4' ? 'space-y-2.5' : 'hidden'}">
-              <div class="grid grid-cols-4 gap-2">
+            <div id="yt-mp4-opts" class="${ytFormat === 'mp4' ? 'space-y-2' : 'hidden'}">
+              <div class="grid grid-cols-4 gap-1.5">
                 ${['360p', '480p', '720p', '1080p'].map(q => `
-                  <button type="button" onclick="setYtQuality('${q}')" class="yt-q-btn py-2 rounded-xl text-xs font-bold transition-all border ${ytQuality === q ? 'bg-cyan-500 border-cyan-400 text-white shadow-md' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500'}">${q}</button>
+                  <button type="button" onclick="setYtQuality('${q}')" class="yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border ${ytQuality === q ? 'bg-cyan-500 border-cyan-400 text-white shadow-md' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500'}">${q}</button>
                 `).join('')}
               </div>
-              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 <span>Download YouTube HD Video</span>
               </button>
             </div>
 
-            <div id="yt-mp3-opts" class="${ytFormat === 'mp3' ? 'space-y-2.5' : 'hidden'}">
-              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <div id="yt-mp3-opts" class="${ytFormat === 'mp3' ? 'space-y-2' : 'hidden'}">
+              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                 <span>Download MP3 Audio (320kbps)</span>
               </button>
@@ -1407,10 +978,10 @@
           </div>
         `;
       } else if (platform === 'spotify') {
-        const directAudioUrl = data.qualities?.audio || hdUrl;
+        const audioUrl = data.qualities?.audio;
         actionsHtml = `
-          <div class="w-full flex flex-col gap-2.5">
-            <button type="button" onclick="directDownload('${directAudioUrl}', 'spotify-track.mp3', this)" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]">
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="directDownload('${audioUrl}', 'spotify-track.mp3', this)" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
               <span>Download Spotify Audio (MP3)</span>
             </button>
@@ -1418,15 +989,16 @@
         `;
       } else if (platform === 'tiktok') {
         const noWm = data.qualities?.no_watermark || hdUrl;
+        const audio = data.qualities?.audio;
         actionsHtml = `
-          <div class="w-full flex flex-col gap-2.5">
-            <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]">
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               <span>Download Video (No Watermark)</span>
             </button>
 
-            ${audioUrl ? `
-            <button type="button" onclick="proxyDownload('${audioUrl}', 'tiktok-audio.mp3', this)" class="w-full py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+            ${audio ? `
+            <button type="button" onclick="proxyDownload('${audio}', 'tiktok-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
               <span>Download TikTok Audio (MP3)</span>
             </button>` : ''}
@@ -1434,60 +1006,52 @@
         `;
       } else {
         actionsHtml = `
-          <div class="w-full flex flex-col gap-2.5">
-            <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]">
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               <span>Download HD Video</span>
             </button>
 
             ${sdUrl && sdUrl !== hdUrl ? `
-            <button type="button" onclick="proxyDownload('${sdUrl}', '${platform}-sd.mp4', this)" class="w-full py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
+            <button type="button" onclick="proxyDownload('${sdUrl}', '${platform}-sd.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
               <span>Download SD (Faster)</span>
             </button>` : ''}
           </div>
         `;
       }
 
-      // Quick Tools (QR code + Copy link + Ready badge)
+      // Quick Tools (QR code + Copy link)
       const qrTargetUrl = hdUrl || originalUrl;
       const toolsHtml = `
-        <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 gap-2">
-          <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-            <span>📱 QR Code for Mobile</span>
+        <div class="flex items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
+          <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+            <span>📱 QR Code</span>
           </button>
 
-          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
             <span>Copy Link</span>
           </button>
         </div>
       `;
 
       container.innerHTML = `
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div class="relative w-full md:w-56 aspect-video md:aspect-[4/3] rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+          <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center">
             <img src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
-            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider">${platform}</span>
-            <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-emerald-500/90 text-white text-[10px] font-bold">✓ HD READY</span>
+            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-cyan-400 text-[9px] font-extrabold uppercase tracking-wider">${platform}</span>
           </div>
 
           <div class="flex-1 w-full flex flex-col justify-between">
             <div>
-              <div class="flex items-center gap-2 mb-1.5">
-                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>MEDIA READY TO DOWNLOAD</span>
-                </span>
-              </div>
-
-              <h3 class="font-display font-bold text-base sm:text-lg text-white leading-snug line-clamp-2 mb-2">${title}</h3>
-              <div class="flex flex-wrap gap-2 mb-4">
+              <h3 class="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-2 mb-2">${title}</h3>
+              <div class="flex flex-wrap gap-1.5 mb-3">
                 ${badgesHtml}
               </div>
             </div>
 
-            <div class="pt-2 border-t border-slate-800 space-y-3">
+            <div class="pt-2 border-t border-slate-800 space-y-2.5">
               ${actionsHtml}
               ${toolsHtml}
             </div>
@@ -1507,13 +1071,13 @@
       const mp3Opts = document.getElementById('yt-mp3-opts');
 
       if (fmt === 'mp4') {
-        tabMp4.className = 'flex-1 py-2 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
-        tabMp3.className = 'flex-1 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
+        tabMp4.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
+        tabMp3.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
         if (mp4Opts) mp4Opts.classList.remove('hidden');
         if (mp3Opts) mp3Opts.classList.add('hidden');
       } else {
-        tabMp3.className = 'flex-1 py-2 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
-        tabMp4.className = 'flex-1 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
+        tabMp3.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
+        tabMp4.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
         if (mp3Opts) mp3Opts.classList.remove('hidden');
         if (mp4Opts) mp4Opts.classList.add('hidden');
       }
@@ -1523,9 +1087,9 @@
       ytQuality = q;
       document.querySelectorAll('.yt-q-btn').forEach(btn => {
         if (btn.textContent.trim() === q) {
-          btn.className = 'yt-q-btn py-2 rounded-xl text-xs font-bold transition-all border bg-cyan-500 border-cyan-400 text-white shadow-md';
+          btn.className = 'yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border bg-cyan-500 border-cyan-400 text-white shadow-md';
         } else {
-          btn.className = 'yt-q-btn py-2 rounded-xl text-xs font-bold transition-all border bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500';
+          btn.className = 'yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500';
         }
       });
     }
@@ -1534,7 +1098,7 @@
       const btn = ytFormat === 'mp4' ? document.getElementById('yt-generate-btn') : document.getElementById('yt-generate-audio-btn');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Generating Link...`;
+        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Generating Link...</span>`;
       }
 
       try {
@@ -1546,7 +1110,7 @@
 
         const data = await res.json();
         if (data && data.download_url) {
-          showToast('✨ DOWNLOAD READY — Starting Now!', 'success');
+          showToast('Download starting!', 'success');
           window.open(data.download_url, '_blank');
         } else {
           throw new Error(data.error || 'Could not generate YouTube download');
@@ -1556,14 +1120,14 @@
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> Download YouTube ${ytFormat.toUpperCase()}`;
+          btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Download YouTube ${ytFormat.toUpperCase()}</span>`;
         }
       }
     }
 
     function directDownload(url, filename, btn) {
       if (!url) return;
-      showToast('✨ DOWNLOAD COMPLETE — Starting File Save...', 'success');
+      showToast('Opening download link...', 'success');
       const a = document.createElement('a');
       a.href = url;
       a.download = filename || 'lukzi-download';
@@ -1575,7 +1139,7 @@
 
     function proxyDownload(url, filename, btn) {
       if (!url) return;
-      showToast('✨ DOWNLOAD COMPLETE — Starting High Speed Download...', 'success');
+      showToast('Starting download...', 'success');
       window.open(url, '_blank');
     }
 
@@ -1607,57 +1171,9 @@
       }, 5000);
     }
 
-    function dismiss3dLoader() {
-      const loader = document.getElementById('lukzi-3d-loader');
-      const mainContent = document.getElementById('lukzi-main-content');
-      
-      // Restore normal page scroll
-      document.body.classList.remove('overflow-hidden');
-      
-      // Smoothly fade-in & unblur full website content
-      if (mainContent) {
-        mainContent.classList.remove('opacity-0', 'blur-sm');
-        mainContent.classList.add('opacity-100', 'blur-0');
-      }
-
-      // Smoothly dismiss loading screen
-      if (loader) {
-        loader.style.opacity = '0';
-        loader.style.pointerEvents = 'none';
-        loader.style.transform = 'scale(1.04)';
-        setTimeout(() => {
-          loader.style.display = 'none';
-          if (loader.parentNode) loader.remove();
-        }, 650);
-      }
-    }
-
-    function init3dLoader() {
-      const progressBar = document.getElementById('loader-progress-fill');
-      const percentText = document.getElementById('loader-percent');
-      let progress = 0;
-
-      const timer = setInterval(() => {
-        progress += Math.floor(Math.random() * 8) + 4;
-        if (progress > 100) progress = 100;
-        if (progressBar) progressBar.style.width = progress + '%';
-        if (percentText) percentText.textContent = progress + '%';
-
-        if (progress >= 100) {
-          clearInterval(timer);
-          setTimeout(dismiss3dLoader, 350);
-        }
-      }, 70);
-
-      // Failsafe timer (never blocks permanently)
-      setTimeout(dismiss3dLoader, 2800);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      init3dLoader();
       changeLanguage(currentLang);
       startDynamicOnlineCounter();
-      startSocialProofTicker();
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(() => {});

@@ -131,21 +131,76 @@ const server = http.createServer(async (req, res) => {
     '/api/spotify'
   ];
 
+// In-memory LRU metadata cache for instant responses
+const metadataCache = new Map();
+
+async function getYouTubeMetadataFast(videoUrl) {
+  let targetUrl = (videoUrl || '').trim();
+  let videoId = '';
+  try {
+    const u = new URL(targetUrl);
+    if (u.hostname.includes('youtu.be')) {
+      videoId = u.pathname.slice(1).split('?')[0];
+    } else if (u.pathname.includes('/shorts/')) {
+      videoId = u.pathname.split('/shorts/')[1].split('/')[0].split('?')[0];
+    } else if (u.searchParams.get('v')) {
+      videoId = u.searchParams.get('v');
+    }
+  } catch (e) {}
+
+  // 1. YouTube official oEmbed (Instant: ~200-400ms)
+  try {
+    const cleanYtUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : targetUrl;
+    const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(cleanYtUrl)}&format=json`;
+    const res = await fetch(oembedUrl, { signal: AbortSignal.timeout(2500) });
+    if (res.ok) {
+      const data = await res.json();
+      return {
+        success: true,
+        platform: 'youtube',
+        title: data.title || 'YouTube Video',
+        thumbnail: data.thumbnail_url || (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '/lukzi-logo.png'),
+        author: data.author_name || 'YouTube Creator',
+        meta: {
+          author: data.author_name,
+          duration: 'Ultra HD',
+          views: 'Direct Stream'
+        },
+        qualities: {}
+      };
+    }
+  } catch (err) {}
+
+  // 2. Fallback to quick video ID thumbnail
+  if (videoId) {
+    return {
+      success: true,
+      platform: 'youtube',
+      title: 'YouTube Video',
+      thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+      author: 'YouTube',
+      meta: { duration: 'HD' },
+      qualities: {}
+    };
+  }
+  return null;
+}
+
 async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
   if (!videoUrl) return null;
   const cdns = [
-    'https://cdn405.savetube.vip',
-    'https://cdn.savetube.vip'
+    'https://cdn406.savetube.vip',
+    'https://cdn405.savetube.vip'
   ];
 
   let targetUrl = videoUrl.trim();
   try {
     const u = new URL(targetUrl);
     if (u.hostname.includes('youtu.be')) {
-      const vid = u.pathname.slice(1);
+      const vid = u.pathname.slice(1).split('?')[0];
       targetUrl = `https://www.youtube.com/watch?v=${vid}`;
     } else if (u.pathname.includes('/shorts/')) {
-      const vid = u.pathname.split('/shorts/')[1].split('/')[0];
+      const vid = u.pathname.split('/shorts/')[1].split('/')[0].split('?')[0];
       targetUrl = `https://www.youtube.com/watch?v=${vid}`;
     }
   } catch (e) {}
@@ -154,144 +209,81 @@ async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
   const downloadType = type === 'mp3' ? 'audio' : 'video';
   const reqQuality = downloadType === 'audio' ? '128' : cleanQuality;
 
-  for (const cdn of cdns) {
-    try {
-      const infoRes = await fetch(`${cdn}/v2/info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'https://ytshorts.savetube.me',
-          'Referer': 'https://ytshorts.savetube.me/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+  const downloadFromCdn = async (cdn) => {
+    const infoRes = await fetch(`${cdn}/v2/info`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://ytshorts.savetube.me',
+        'Referer': 'https://ytshorts.savetube.me/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      body: JSON.stringify({ url: targetUrl }),
+      signal: AbortSignal.timeout(3500)
+    });
+
+    if (!infoRes.ok) throw new Error(`Info failed on ${cdn}`);
+    const json = await infoRes.json();
+    if (!json.data) throw new Error(`No data on ${cdn}`);
+
+    const rawBuffer = Buffer.from(json.data, 'base64');
+    const iv = rawBuffer.subarray(0, 16);
+    const encryptedData = rawBuffer.subarray(16);
+    const key = Buffer.from('C5D58EF67A7584E4A29F6C35BBC4EB12', 'hex');
+
+    const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+    let decrypted = decipher.update(encryptedData, undefined, 'utf8');
+    decrypted += decipher.final('utf8');
+    const parsed = JSON.parse(decrypted);
+
+    const dlRes = await fetch(`${cdn}/download`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://ytshorts.savetube.me',
+        'Referer': 'https://ytshorts.savetube.me/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      body: JSON.stringify({
+        id: parsed.id,
+        key: parsed.key,
+        downloadType,
+        quality: reqQuality
+      }),
+      signal: AbortSignal.timeout(4000)
+    });
+
+    if (!dlRes.ok) throw new Error(`Download failed on ${cdn}`);
+    const dlJson = await dlRes.json();
+    const downloadUrl = dlJson.data?.downloadUrl;
+    if (!downloadUrl) throw new Error(`No download url on ${cdn}`);
+
+    return {
+      success: true,
+      data: {
+        platform: 'youtube',
+        type,
+        title: parsed.title || 'YouTube Video',
+        thumbnail: parsed.thumbnail || `https://i.ytimg.com/vi/${parsed.id}/hqdefault.jpg`,
+        videoId: parsed.id,
+        meta: {
+          duration: parsed.durationLabel || `${Math.floor((parsed.duration || 0) / 60)} min`,
+          views: '0',
+          likes: '0'
         },
-        body: JSON.stringify({ url: targetUrl })
-      });
-
-      if (!infoRes.ok) continue;
-      const json = await infoRes.json();
-      if (!json.data) continue;
-
-      const rawBuffer = Buffer.from(json.data, 'base64');
-      const iv = rawBuffer.subarray(0, 16);
-      const encryptedData = rawBuffer.subarray(16);
-      const key = Buffer.from('C5D58EF67A7584E4A29F6C35BBC4EB12', 'hex');
-
-      const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
-      let decrypted = decipher.update(encryptedData, undefined, 'utf8');
-      decrypted += decipher.final('utf8');
-      const parsed = JSON.parse(decrypted);
-
-      const dlRes = await fetch(`${cdn}/download`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'https://ytshorts.savetube.me',
-          'Referer': 'https://ytshorts.savetube.me/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        body: JSON.stringify({
-          id: parsed.id,
-          key: parsed.key,
-          downloadType,
-          quality: reqQuality
-        })
-      });
-
-      if (!dlRes.ok) continue;
-      const dlJson = await dlRes.json();
-      const downloadUrl = dlJson.data?.downloadUrl;
-      if (downloadUrl) {
-        return {
-          success: true,
-          data: {
-            platform: 'youtube',
-            type,
-            title: parsed.title || 'YouTube Video',
-            thumbnail: parsed.thumbnail || `https://i.ytimg.com/vi/${parsed.id}/hqdefault.jpg`,
-            videoId: parsed.id,
-            meta: {
-              duration: parsed.durationLabel || `${Math.floor((parsed.duration || 0) / 60)} min`,
-              views: '0',
-              likes: '0'
-            },
-            qualities: {
-              hd: downloadType === 'video' ? downloadUrl : null,
-              sd: downloadType === 'video' ? downloadUrl : null,
-              audio: downloadType === 'audio' ? downloadUrl : null
-            }
-          }
-        };
-      }
-    } catch (e) {
-      console.warn(`YouTube direct CDN ${cdn} error:`, e.message);
-    }
-  }
-  return null;
-}
-
-async function getYouTubeInfoDirect(videoUrl) {
-  if (!videoUrl) return null;
-  const cdns = [
-    'https://cdn405.savetube.vip',
-    'https://cdn.savetube.vip'
-  ];
-
-  let targetUrl = videoUrl.trim();
-  try {
-    const u = new URL(targetUrl);
-    if (u.hostname.includes('youtu.be')) {
-      const vid = u.pathname.slice(1);
-      targetUrl = `https://www.youtube.com/watch?v=${vid}`;
-    } else if (u.pathname.includes('/shorts/')) {
-      const vid = u.pathname.split('/shorts/')[1].split('/')[0];
-      targetUrl = `https://www.youtube.com/watch?v=${vid}`;
-    }
-  } catch (e) {}
-
-  for (const cdn of cdns) {
-    try {
-      const infoRes = await fetch(`${cdn}/v2/info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'https://ytshorts.savetube.me',
-          'Referer': 'https://ytshorts.savetube.me/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        body: JSON.stringify({ url: targetUrl })
-      });
-
-      if (!infoRes.ok) continue;
-      const json = await infoRes.json();
-      if (!json.data) continue;
-
-      const rawBuffer = Buffer.from(json.data, 'base64');
-      const iv = rawBuffer.subarray(0, 16);
-      const encryptedData = rawBuffer.subarray(16);
-      const key = Buffer.from('C5D58EF67A7584E4A29F6C35BBC4EB12', 'hex');
-
-      const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
-      let decrypted = decipher.update(encryptedData, undefined, 'utf8');
-      decrypted += decipher.final('utf8');
-      const parsed = JSON.parse(decrypted);
-
-      return {
-        success: true,
-        data: {
-          platform: 'youtube',
-          title: parsed.title || 'YouTube Video',
-          thumbnail: parsed.thumbnail || `https://i.ytimg.com/vi/${parsed.id}/hqdefault.jpg`,
-          videoId: parsed.id,
-          meta: {
-            duration: parsed.durationLabel || `${Math.floor((parsed.duration || 0) / 60)} min`,
-            views: '0'
-          },
-          video_formats: parsed.video_formats || []
+        qualities: {
+          hd: downloadType === 'video' ? downloadUrl : null,
+          sd: downloadType === 'video' ? downloadUrl : null,
+          audio: downloadType === 'audio' ? downloadUrl : null
         }
-      };
-    } catch (e) {
-      console.warn(`YouTube info direct error on ${cdn}:`, e.message);
-    }
+      }
+    };
+  };
+
+  try {
+    return await Promise.any(cdns.map(cdn => downloadFromCdn(cdn)));
+  } catch (err) {
+    console.warn('All fast direct CDNs failed, falling back to upstream...');
   }
   return null;
 }
@@ -354,6 +346,159 @@ async function extractInstagramDirect(url) {
   }
   return null;
 }
+
+  // API: /api/details (Unified metadata fetcher - Ultra Fast)
+  if (pathname === '/api/details' && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', async () => {
+      try {
+        const body = bodyStr ? JSON.parse(bodyStr) : {};
+        const url = (body.url || '').trim();
+        if (!url) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'URL is required' }));
+          return;
+        }
+
+        // Instant RAM Cache Hit (0ms)
+        if (metadataCache.has(url)) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(metadataCache.get(url)));
+          return;
+        }
+
+        const lower = url.toLowerCase();
+        let platform = 'video';
+        if (lower.includes('youtu.be') || lower.includes('youtube.com')) platform = 'youtube';
+        else if (lower.includes('tiktok.com')) platform = 'tiktok';
+        else if (lower.includes('instagram.com')) platform = 'instagram';
+        else if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) platform = 'facebook';
+        else if (lower.includes('twitter.com') || lower.includes('x.com')) platform = 'twitter';
+        else if (lower.includes('spotify.com') || lower.includes('open.spotify.com')) platform = 'spotify';
+        else if (lower.includes('pinterest.com') || lower.includes('pin.it')) platform = 'pinterest';
+
+        if (platform === 'youtube') {
+          const fastInfo = await getYouTubeMetadataFast(url);
+          if (fastInfo) {
+            metadataCache.set(url, fastInfo);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(fastInfo));
+            return;
+          }
+          const upData = await proxyUpstreamApi('/api/yts', { url });
+          if (upData && (upData.data || upData.title)) {
+            const dataObj = upData.data || upData;
+            const resObj = {
+              success: true,
+              platform: 'youtube',
+              title: dataObj.title || 'YouTube Video',
+              thumbnail: dataObj.thumbnail || '',
+              meta: dataObj.meta || {},
+              duration: dataObj.meta?.duration || dataObj.duration || '',
+              views: dataObj.meta?.views || dataObj.views || '',
+              qualities: {}
+            };
+            metadataCache.set(url, resObj);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(resObj));
+            return;
+          }
+        } else if (platform === 'instagram') {
+          let upData = null;
+          try {
+            upData = await proxyUpstreamApi('/api/instagram', { url });
+          } catch (e) {}
+          if (upData && upData.success && upData.data) {
+            metadataCache.set(url, upData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(upData.data));
+            return;
+          }
+          const directData = await extractInstagramDirect(url);
+          if (directData && directData.data) {
+            metadataCache.set(url, directData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(directData.data));
+            return;
+          }
+        } else {
+          // General platforms: tiktok, facebook, twitter, spotify, pinterest
+          const ep = `/api/${platform}`;
+          const upData = await proxyUpstreamApi(ep, { url });
+          if (upData && (upData.data || upData.success)) {
+            const resData = upData.data || upData;
+            metadataCache.set(url, resData);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(resData));
+            return;
+          }
+        }
+
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Could not fetch media info. Ensure link is public and valid.' }));
+      } catch (err) {
+        console.error('API details error:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message || 'Internal server error' }));
+      }
+    });
+    return;
+  }
+
+  // API: /api/youtube (Download link generator)
+  if (pathname === '/api/youtube' && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', async () => {
+      try {
+        const body = bodyStr ? JSON.parse(bodyStr) : {};
+        const url = (body.url || '').trim();
+        const type = body.type || 'mp4';
+        const quality = body.quality || '720p';
+
+        // Try direct first
+        const directYt = await downloadYouTubeDirect(url, type, quality);
+        if (directYt && directYt.data) {
+          const download_url = type === 'mp3' ? directYt.data.qualities?.audio : (directYt.data.qualities?.hd || directYt.data.qualities?.sd);
+          if (download_url) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              download_url,
+              title: directYt.data.title,
+              thumbnail: directYt.data.thumbnail
+            }));
+            return;
+          }
+        }
+
+        // Upstream fallback
+        const upData = await proxyUpstreamApi('/api/ytdl', { url, type, quality });
+        if (upData && upData.data) {
+          const download_url = type === 'mp3' ? upData.data.qualities?.audio : (upData.data.qualities?.hd || upData.data.qualities?.sd);
+          if (download_url) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              download_url,
+              title: upData.data.title,
+              thumbnail: upData.data.thumbnail
+            }));
+            return;
+          }
+        }
+
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Could not generate YouTube download link. Please try again.' }));
+      } catch (err) {
+        console.error('API youtube error:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message || 'Internal server error' }));
+      }
+    });
+    return;
+  }
 
   if (proxyEndpoints.includes(pathname) && req.method === 'POST') {
     let bodyStr = '';
