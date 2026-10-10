@@ -10,6 +10,32 @@ const PUBLIC_DIR = path.join(__dirname, 'public');
 // In-memory real-time presence tracking (sessionId -> timestamp)
 const activePresences = new Map();
 
+// High-speed in-memory URL result cache (15 minutes TTL)
+const urlCache = new Map();
+const CACHE_TTL_MS = 15 * 60 * 1000;
+
+function getCached(url) {
+  if (!url) return null;
+  const key = url.trim().toLowerCase();
+  const entry = urlCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.time > CACHE_TTL_MS) {
+    urlCache.delete(key);
+    return null;
+  }
+  return entry.data;
+}
+
+function setCache(url, data) {
+  if (!url || !data || !data.success) return;
+  const key = url.trim().toLowerCase();
+  if (urlCache.size > 1000) {
+    const firstKey = urlCache.keys().next().value;
+    urlCache.delete(firstKey);
+  }
+  urlCache.set(key, { time: Date.now(), data });
+}
+
 // Secret for local JWT token fallback
 const JWT_SECRET = crypto.randomBytes(32).toString('hex');
 
@@ -486,28 +512,39 @@ const server = http.createServer(async (req, res) => {
           return;
         }
 
-        // Direct file link check (.mp4, .mp3, etc.)
+        // 1. High-speed in-memory Cache hit (< 5ms response)
+        const cached = getCached(url);
+        if (cached) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(cached));
+          return;
+        }
+
+        const sendSuccess = (data) => {
+          if (data && data.success) setCache(url, data);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(data));
+        };
+
+        // 2. Direct file link check (.mp4, .mp3, etc.)
         const directFile = resolveDirectFileUrl(url);
         if (directFile) {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(directFile));
+          sendSuccess(directFile);
           return;
         }
 
         const lower = url.toLowerCase();
 
-        // 1. TikTok (TikWM direct API)
+        // 3. TikTok (TikWM direct API)
         if (lower.includes('tiktok.com')) {
           const tikData = await extractTikTok(url);
           if (tikData) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(tikData));
+            sendSuccess(tikData);
             return;
           }
           const upstream = await proxyUpstreamApi('/api/tiktok', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'tiktok',
               title: upstream.data?.title || 'TikTok Video',
@@ -517,17 +554,16 @@ const server = http.createServer(async (req, res) => {
               views: upstream.data?.meta?.views || '',
               qualities: upstream.data?.qualities || {},
               download_url: upstream.data?.qualities?.hd || upstream.data?.qualities?.no_watermark || ''
-            }));
+            });
             return;
           }
         }
 
-        // 2. YouTube (SaveTube direct + oEmbed)
+        // 4. YouTube (SaveTube direct + oEmbed)
         if (lower.includes('youtube.com') || lower.includes('youtu.be')) {
           const ytDirect = await getYouTubeInfoDirect(url);
           if (ytDirect && ytDirect.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'youtube',
               title: ytDirect.data.title,
@@ -541,13 +577,12 @@ const server = http.createServer(async (req, res) => {
                 audio: ''
               },
               download_url: ''
-            }));
+            });
             return;
           }
           const upstream = await proxyUpstreamApi('/api/yts', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'youtube',
               title: upstream.data?.title || 'YouTube Video',
@@ -557,23 +592,21 @@ const server = http.createServer(async (req, res) => {
               views: upstream.data?.meta?.views || '',
               qualities: upstream.data?.qualities || {},
               download_url: upstream.data?.qualities?.hd || ''
-            }));
+            });
             return;
           }
         }
 
-        // 3. Instagram (Direct Embed / OpenGraph / Upstream)
+        // 5. Instagram (Direct Embed / OpenGraph / Upstream)
         if (lower.includes('instagram.com')) {
           const instaDirect = await extractInstagramDirect(url);
           if (instaDirect && instaDirect.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(instaDirect));
+            sendSuccess(instaDirect);
             return;
           }
           const upstream = await proxyUpstreamApi('/api/instagram', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'instagram',
               title: upstream.data?.title || 'Instagram Post / Reel',
@@ -583,23 +616,21 @@ const server = http.createServer(async (req, res) => {
               views: upstream.data?.meta?.views || '',
               qualities: upstream.data?.qualities || {},
               download_url: upstream.data?.qualities?.hd || ''
-            }));
+            });
             return;
           }
         }
 
-        // 4. Facebook (OpenGraph / Upstream)
+        // 6. Facebook (OpenGraph / Upstream)
         if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) {
           const fbDirect = await scrapeOpenGraph(url, 'Facebook', 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop');
           if (fbDirect && fbDirect.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(fbDirect));
+            sendSuccess(fbDirect);
             return;
           }
           const upstream = await proxyUpstreamApi('/api/facebook', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'facebook',
               title: upstream.data?.title || 'Facebook Video',
@@ -609,23 +640,21 @@ const server = http.createServer(async (req, res) => {
               views: upstream.data?.meta?.views || '',
               qualities: upstream.data?.qualities || {},
               download_url: upstream.data?.qualities?.hd || upstream.data?.qualities?.sd || ''
-            }));
+            });
             return;
           }
         }
 
-        // 5. Twitter / X
+        // 7. Twitter / X
         if (lower.includes('twitter.com') || lower.includes('x.com')) {
           const twDirect = await scrapeOpenGraph(url, 'Twitter', '/twitter.png');
           if (twDirect && twDirect.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(twDirect));
+            sendSuccess(twDirect);
             return;
           }
           const upstream = await proxyUpstreamApi('/api/twitter', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'twitter',
               title: upstream.data?.title || 'Twitter / X Video',
@@ -635,17 +664,16 @@ const server = http.createServer(async (req, res) => {
               views: upstream.data?.meta?.views || '',
               qualities: upstream.data?.qualities || {},
               download_url: upstream.data?.qualities?.hd || ''
-            }));
+            });
             return;
           }
         }
 
-        // 6. Spotify
+        // 8. Spotify
         if (lower.includes('spotify.com')) {
           const upstream = await proxyUpstreamApi('/api/spotify', { url });
           if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            sendSuccess({
               success: true,
               platform: 'spotify',
               title: upstream.data?.title || 'Spotify Track',
@@ -655,24 +683,22 @@ const server = http.createServer(async (req, res) => {
               views: '',
               qualities: { audio: upstream.data?.download_url || upstream.data?.qualities?.audio || '' },
               download_url: upstream.data?.download_url || upstream.data?.qualities?.audio || ''
-            }));
+            });
             return;
           }
         }
 
-        // 7. Pinterest & Generic Scraper
+        // 9. Pinterest & Generic Scraper
         const genericOg = await scrapeOpenGraph(url, 'Media');
         if (genericOg && genericOg.success) {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(genericOg));
+          sendSuccess(genericOg);
           return;
         }
 
         // Fallback to /api/yts
         const genUpstream = await proxyUpstreamApi('/api/yts', { url });
         if (genUpstream && genUpstream.success) {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(genUpstream.data || genUpstream));
+          sendSuccess(genUpstream.data || genUpstream);
           return;
         }
 
