@@ -287,6 +287,21 @@
       </div>
     </div>
 
+    <!-- Smart Clipboard Auto-Detector Banner -->
+    <div id="clipboard-detect-banner" class="hidden w-full max-w-xl mx-auto mb-4 px-3.5 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-500/50 backdrop-blur-md flex items-center justify-between gap-2 text-xs shadow-xl shadow-cyan-500/10 transition-all duration-300">
+      <div class="flex items-center gap-2 overflow-hidden">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span>
+        <span class="text-cyan-400 font-bold shrink-0">📋 Copied link found:</span>
+        <span id="clipboard-preview-text" class="text-slate-300 truncate max-w-[130px] sm:max-w-[220px] font-mono text-[11px]"></span>
+      </div>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button type="button" onclick="pasteAndSearchCopiedLink()" class="px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-[11px] shadow-md transition-all flex items-center gap-1">
+          <span>⚡ Download</span>
+        </button>
+        <button type="button" onclick="dismissClipboardBanner()" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Dismiss">✕</button>
+      </div>
+    </div>
+
     <!-- Downloader Input Box Card -->
     <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl mb-6 custom-glow">
       <div class="flex flex-col sm:flex-row items-stretch gap-2">
@@ -462,6 +477,86 @@
               <span class="text-xs font-bold text-white block">Alex L.</span>
               <span class="text-[9px] text-slate-400">🇺🇸 United States • Editor</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Developer Products (LUKZI Store) -->
+    <div class="w-full mb-10">
+      <div class="text-center mb-6">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-0.5">🔥 Official Store • Lukzi Innovations</span>
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight">Premium Developer Products</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-0.5">Custom Gaming Tools, AI Bots & Reverse Engineering Mods</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Product 1: Free Fire Panel -->
+        <div class="glass-card rounded-2xl p-5 border border-cyan-500/30 flex flex-col justify-between hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/10 transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-extrabold text-[10px] tracking-wide uppercase">🔥 Gaming Panel</span>
+              <span class="text-emerald-400 font-bold text-xs">Active Dev</span>
+            </div>
+            <h3 class="font-display font-extrabold text-base text-white group-hover:text-cyan-400 transition-colors">FF VIP PANEL & 120 FPS ENGINE</h3>
+            <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">High-performance gaming overlay panel with micro-touch sensitivity tweaks, memory optimizer, and ultra-smooth 90/120 FPS fix.</p>
+            <ul class="mt-3 space-y-1 text-[11px] text-slate-400">
+              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> Zero Latency Overlay</li>
+              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> Anti-Lag Script Engine</li>
+              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> Instant Activation</li>
+            </ul>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-800">
+            <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all">
+              <span>🛒 Buy Now / Access</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 2: AI Mouse Bot -->
+        <div class="glass-card rounded-2xl p-5 border border-purple-500/30 flex flex-col justify-between hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/10 transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-400/30 text-purple-400 font-extrabold text-[10px] tracking-wide uppercase">🤖 AI Automation</span>
+              <span class="text-purple-400 font-bold text-xs">AI Core v3</span>
+            </div>
+            <h3 class="font-display font-extrabold text-base text-white group-hover:text-purple-400 transition-colors">PC MOUSE BOT AI</h3>
+            <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">Algorithmic AI micro-movement model with real-time computer vision pixel-tracking and precision hardware automation.</p>
+            <ul class="mt-3 space-y-1 text-[11px] text-slate-400">
+              <li class="flex items-center gap-1.5"><span class="text-purple-400">✓</span> Computer Vision Pixel Aim</li>
+              <li class="flex items-center gap-1.5"><span class="text-purple-400">✓</span> Recoil Compensation</li>
+              <li class="flex items-center gap-1.5"><span class="text-purple-400">✓</span> 100% Undetectable Hardware Tweak</li>
+            </ul>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-800">
+            <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-purple-500/20 transition-all">
+              <span>🛒 Buy Now / Access</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 3: APK Modify Suite -->
+        <div class="glass-card rounded-2xl p-5 border border-emerald-500/30 flex flex-col justify-between hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10 transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-extrabold text-[10px] tracking-wide uppercase">🛡️ BR MODS TEAM</span>
+              <span class="text-emerald-400 font-bold text-xs">Premium</span>
+            </div>
+            <h3 class="font-display font-extrabold text-base text-white group-hover:text-emerald-400 transition-colors">ANDROID MOD APK SUITE</h3>
+            <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">Android reverse engineering service, custom smali code injection, VIP feature unlocks, and high-speed tailored game assets.</p>
+            <ul class="mt-3 space-y-1 text-[11px] text-slate-400">
+              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Custom Smali Patching</li>
+              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Security Bypass & Signature Fix</li>
+              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> BR MODS Core Build</li>
+            </ul>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-800">
+            <a href="https://lukziwebsite.pages.dev/#products" target="_blank" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 transition-all">
+              <span>🛒 Buy Now / Access</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -879,6 +974,43 @@
       if (el) el.classList.add('hidden');
     }
 
+    let lastDetectedClipboardUrl = '';
+
+    async function checkClipboardOnFocus() {
+      if (!navigator.clipboard || !navigator.clipboard.readText) return;
+      try {
+        const text = (await navigator.clipboard.readText() || '').trim();
+        if (text && text !== lastDetectedClipboardUrl && text !== (document.getElementById('url-input')?.value || '').trim()) {
+          const detected = detectPlatformFromUrl(text);
+          if (detected) {
+            lastDetectedClipboardUrl = text;
+            const banner = document.getElementById('clipboard-detect-banner');
+            const preview = document.getElementById('clipboard-preview-text');
+            if (banner && preview) {
+              preview.textContent = text;
+              banner.classList.remove('hidden');
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
+    function dismissClipboardBanner() {
+      const banner = document.getElementById('clipboard-detect-banner');
+      if (banner) banner.classList.add('hidden');
+    }
+
+    function pasteAndSearchCopiedLink() {
+      const banner = document.getElementById('clipboard-detect-banner');
+      const input = document.getElementById('url-input');
+      if (lastDetectedClipboardUrl && input) {
+        input.value = lastDetectedClipboardUrl;
+        document.getElementById('clear-btn')?.classList.remove('hidden');
+        if (banner) banner.classList.add('hidden');
+        handleGetDetails();
+      }
+    }
+
     async function handleGetDetails() {
       hideError();
       const input = document.getElementById('url-input');
@@ -906,6 +1038,42 @@
       loadingBox.classList.remove('hidden');
       resultBox.classList.add('hidden');
 
+      // Client-Side Instant YouTube Resolver (Sub-200ms)
+      if (detected === 'youtube') {
+        try {
+          let videoId = '';
+          const u = new URL(rawUrl);
+          if (u.hostname.includes('youtu.be')) {
+            videoId = u.pathname.slice(1).split('?')[0];
+          } else if (u.pathname.includes('/shorts/')) {
+            videoId = u.pathname.split('/shorts/')[1].split('/')[0].split('?')[0];
+          } else if (u.searchParams.get('v')) {
+            videoId = u.searchParams.get('v');
+          }
+          if (videoId) {
+            fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+              .then(r => r.json())
+              .then(ytData => {
+                renderResultCard({
+                  success: true,
+                  platform: 'youtube',
+                  title: ytData.title || 'YouTube Video',
+                  thumbnail: ytData.thumbnail_url || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+                  author: ytData.author_name || 'YouTube',
+                  duration: 'HD',
+                  views: 'Verified Stream',
+                  qualities: {}
+                });
+                btn.disabled = false;
+                btnText.textContent = 'Download';
+                btnIcon.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                loadingBox.classList.add('hidden');
+              }).catch(() => {});
+          }
+        } catch (e) {}
+      }
+
       try {
         const res = await fetch('/api/details', {
           method: 'POST',
@@ -925,6 +1093,30 @@
         btnIcon.classList.remove('hidden');
         btnSpinner.classList.add('hidden');
         loadingBox.classList.add('hidden');
+      }
+    }
+
+    function playInAppPreview(videoUrl) {
+      const box = document.getElementById('media-preview-box');
+      if (!box || !videoUrl) return;
+      box.innerHTML = `
+        <video src="${videoUrl}" controls autoplay playsinline class="w-full h-full object-cover rounded-2xl bg-black"></video>
+      `;
+    }
+
+    async function shareMediaNative(url, title) {
+      if (!url) return;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title || 'LUKZI Download',
+            text: 'Save & Share with LUKZI VS SOCIAL MEDIA 🇱🇰',
+            url: url
+          });
+          showToast('Share opened!', 'success');
+        } catch (e) {}
+      } else {
+        copyDirectUrl(url);
       }
     }
 
@@ -951,6 +1143,7 @@
 
       const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.qualities?.audio || data.download_url || '';
       const sdUrl = data.qualities?.sd || hdUrl;
+      const audioUrl = data.qualities?.audio || (platform === 'spotify' ? hdUrl : '');
 
       let badgesHtml = '';
       if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
@@ -988,7 +1181,6 @@
           </div>
         `;
       } else if (platform === 'spotify') {
-        const audioUrl = data.qualities?.audio;
         actionsHtml = `
           <div class="w-full flex flex-col gap-2">
             <button type="button" onclick="directDownload('${audioUrl}', 'spotify-track.mp3', this)" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
@@ -999,7 +1191,6 @@
         `;
       } else if (platform === 'tiktok') {
         const noWm = data.qualities?.no_watermark || hdUrl;
-        const audio = data.qualities?.audio;
         actionsHtml = `
           <div class="w-full flex flex-col gap-2">
             <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
@@ -1007,10 +1198,10 @@
               <span>Download Video (No Watermark)</span>
             </button>
 
-            ${audio ? `
-            <button type="button" onclick="proxyDownload('${audio}', 'tiktok-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>Download TikTok Audio (MP3)</span>
+            ${audioUrl ? `
+            <button type="button" onclick="proxyDownload('${audioUrl}', 'tiktok-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+              <span>🎵 Extract MP3 Audio (320kbps)</span>
             </button>` : ''}
           </div>
         `;
@@ -1026,30 +1217,48 @@
             <button type="button" onclick="proxyDownload('${sdUrl}', '${platform}-sd.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
               <span>Download SD (Faster)</span>
             </button>` : ''}
+
+            <button type="button" onclick="proxyDownload('${audioUrl || hdUrl}', '${platform}-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/80 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+              <span>🎵 Extract MP3 Audio (320kbps)</span>
+            </button>
           </div>
         `;
       }
 
-      // Quick Tools (QR code + Copy link)
+      // Quick Tools (QR code + Copy link + Native Share)
       const qrTargetUrl = hdUrl || originalUrl;
+      const cleanSafeTitle = title.replace(/'/g, "\\'");
       const toolsHtml = `
-        <div class="flex items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
-          <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-            <span>📱 QR Code</span>
+        <div class="flex flex-wrap items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
+          <button type="button" onclick="shareMediaNative('${qrTargetUrl}', '${cleanSafeTitle}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-400 text-xs font-bold transition-all">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+            <span>📲 Save to Photos / Share</span>
           </button>
 
-          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-            <span>Copy Link</span>
-          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+              <span>QR Code</span>
+            </button>
+
+            <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              <span>Copy Link</span>
+            </button>
+          </div>
         </div>
       `;
 
       container.innerHTML = `
         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-          <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center">
-            <img src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
+          <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center group" id="media-preview-box">
+            <img id="media-thumb-img" src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
+            ${hdUrl && platform !== 'youtube' ? `
+              <button type="button" onclick="playInAppPreview('${hdUrl}')" title="Play Preview" class="absolute inset-0 m-auto w-11 h-11 rounded-full bg-cyan-500/90 hover:bg-cyan-400 text-white flex items-center justify-center shadow-xl shadow-cyan-500/40 transition-transform group-hover:scale-110">
+                <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            ` : ''}
             <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-cyan-400 text-[9px] font-extrabold uppercase tracking-wider">${platform}</span>
           </div>
 
@@ -1104,11 +1313,25 @@
       });
     }
 
+    function triggerFileDownload(url, filename) {
+      if (!url) return;
+      const cleanName = filename || 'lukzi-download.mp4';
+      const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
+      
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = dlUrl;
+      a.download = cleanName;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 500);
+    }
+
     async function generateYouTubeDownload(url) {
       const btn = ytFormat === 'mp4' ? document.getElementById('yt-generate-btn') : document.getElementById('yt-generate-audio-btn');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Generating Link...</span>`;
+        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Downloading...</span>`;
       }
 
       try {
@@ -1120,8 +1343,8 @@
 
         const data = await res.json();
         if (data && data.download_url) {
-          showToast('Download starting!', 'success');
-          window.open(data.download_url, '_blank');
+          showToast('Direct download started!', 'success');
+          triggerFileDownload(data.download_url, ytFormat === 'mp3' ? 'youtube-audio.mp3' : `youtube-${ytQuality}.mp4`);
         } else {
           throw new Error(data.error || 'Could not generate YouTube download');
         }
@@ -1137,27 +1360,14 @@
 
     function directDownload(url, filename, btn) {
       if (!url) return;
-      showToast('Opening download link...', 'success');
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename || 'lukzi-download';
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      showToast('Starting direct download...', 'success');
+      triggerFileDownload(url, filename || 'audio.mp3');
     }
 
     function proxyDownload(url, filename, btn) {
       if (!url) return;
-      showToast('Starting download...', 'success');
-      const dlUrl = `/api/download?url=${encodeURIComponent(url)}`;
-      const a = document.createElement('a');
-      a.href = dlUrl;
-      a.download = filename || 'video.mp4';
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 300);
+      showToast('Starting direct download...', 'success');
+      triggerFileDownload(url, filename || 'video.mp4');
     }
 
     function copyDirectUrl(url) {
@@ -1241,6 +1451,12 @@
       });
 
       getDetailsBtn.addEventListener('click', handleGetDetails);
+
+      window.addEventListener('focus', checkClipboardOnFocus);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) checkClipboardOnFocus();
+      });
+      setTimeout(checkClipboardOnFocus, 1000);
     });
   </script>
 </body>

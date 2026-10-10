@@ -640,7 +640,8 @@ async function extractInstagramDirect(url) {
     }
 
     try {
-      let filename = path.basename(new URL(fileUrl).pathname) || 'download.mp4';
+      let customName = parsedUrl.searchParams.get('filename');
+      let filename = customName || path.basename(new URL(fileUrl).pathname) || 'download.mp4';
       if (!path.extname(filename)) filename += '.mp4';
 
       const response = await fetch(fileUrl, {
