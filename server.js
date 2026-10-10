@@ -17,7 +17,7 @@ function generateToken() {
   const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
   const payload = Buffer.from(JSON.stringify({
     scope: 'download',
-    jti: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(),
+    jti: crypto.randomUUID(),
     iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 3600
   })).toString('base64url');
@@ -42,8 +42,7 @@ async function getUpstreamToken() {
         'Origin': 'https://www.quicksave.click',
         'Referer': 'https://www.quicksave.click/',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      },
-      signal: AbortSignal.timeout(3000)
+      }
     });
     const data = await res.json();
     if (data.token) {
@@ -52,7 +51,7 @@ async function getUpstreamToken() {
       return cachedUpstreamToken;
     }
   } catch (err) {
-    // Fallback to locally generated token
+    console.error('Failed to get upstream token:', err.message);
   }
   return generateToken();
 }
@@ -68,41 +67,73 @@ async function proxyUpstreamApi(endpoint, body) {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
       'x-qs-token': token
     },
-    body: JSON.stringify(body),
-    signal: AbortSignal.timeout(4500)
+    body: JSON.stringify(body)
   });
   return await res.json();
 }
 
-// In-memory LRU metadata cache with TTL
+const MIME_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
+  '.ttf': 'font/ttf',
+  '.mp4': 'video/mp4',
+  '.mp3': 'audio/mpeg',
+  '.webmanifest': 'application/manifest+json'
+};
+
+const server = http.createServer(async (req, res) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-qs-token');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = parsedUrl.pathname;
+
+  // API: /api/token
+  if (pathname === '/api/token' && req.method === 'POST') {
+    try {
+      const token = await getUpstreamToken();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ token }));
+    } catch (err) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ token: generateToken() }));
+    }
+    return;
+  }
+
+  // API: Proxy endpoints
+  const proxyEndpoints = [
+    '/api/yts',
+    '/api/ytdl',
+    '/api/tiktok',
+    '/api/facebook',
+    '/api/instagram',
+    '/api/twitter',
+    '/api/pinterest',
+    '/api/spotify'
+  ];
+
+// In-memory LRU metadata cache for instant responses
 const metadataCache = new Map();
-const inFlightRequests = new Map();
 
-function setCache(url, data, ttlMs = 15 * 60 * 1000) {
-  if (!url || !data) return;
-  if (metadataCache.size > 2000) {
-    const firstKey = metadataCache.keys().next().value;
-    metadataCache.delete(firstKey);
-  }
-  metadataCache.set(url.trim(), { data, expiresAt: Date.now() + ttlMs });
-}
-
-function getCache(url) {
-  if (!url) return null;
-  const item = metadataCache.get(url.trim());
-  if (!item) return null;
-  if (Date.now() > item.expiresAt) {
-    metadataCache.delete(url.trim());
-    return null;
-  }
-  return item.data;
-}
-
-// ----------------------------------------------------
-// PLATFORM PROVIDER ADAPTERS (High-Speed & Multi-Tier)
-// ----------------------------------------------------
-
-// 1. YouTube Provider Adapter (Savetube VIP CDN Decrypt + oEmbed Instant)
 async function getYouTubeMetadataFast(videoUrl) {
   let targetUrl = (videoUrl || '').trim();
   let videoId = '';
@@ -140,6 +171,7 @@ async function getYouTubeMetadataFast(videoUrl) {
     }
   } catch (err) {}
 
+  // 2. Fallback to quick video ID thumbnail
   if (videoId) {
     return {
       success: true,
@@ -158,8 +190,7 @@ async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
   if (!videoUrl) return null;
   const cdns = [
     'https://cdn406.savetube.vip',
-    'https://cdn405.savetube.vip',
-    'https://cdn407.savetube.vip'
+    'https://cdn405.savetube.vip'
   ];
 
   let targetUrl = videoUrl.trim();
@@ -237,7 +268,7 @@ async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
         videoId: parsed.id,
         meta: {
           duration: parsed.durationLabel || `${Math.floor((parsed.duration || 0) / 60)} min`,
-          views: 'Direct Stream',
+          views: '0',
           likes: '0'
         },
         qualities: {
@@ -252,17 +283,112 @@ async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
   try {
     return await Promise.any(cdns.map(cdn => downloadFromCdn(cdn)));
   } catch (err) {
-    // Fallback to upstream
+    console.warn('All fast direct CDNs failed, falling back to upstream...');
   }
   return null;
 }
 
-// 2. TikTok Provider Adapter (TikWM direct API - Instant ~1.1s)
+async function extractInstagramDirect(url) {
+  try {
+    const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
+    if (!match) return null;
+    const shortcode = match[1];
+    const embedUrl = `https://www.instagram.com/reel/${shortcode}/embed/`;
+
+    const res = await fetch(embedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
+    const html = await res.text();
+
+    let videoUrl = null;
+    let title = 'Instagram Reel';
+    let thumbnail = null;
+    let author = 'Instagram User';
+
+    // 1. Clean video URL extraction
+    const vMatch = html.match(/\\\\?"video_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
+                   html.match(/"video_url":\s*"([^"]+)"/) ||
+                   html.match(/\\"video_url\\":\s*\\"(.*?)(?=\\"[,}])/);
+    if (vMatch) {
+      let raw = vMatch[1];
+      const cutIdx = raw.indexOf('\\"');
+      if (cutIdx !== -1) raw = raw.substring(0, cutIdx);
+      const cutIdx2 = raw.indexOf('"');
+      if (cutIdx2 !== -1) raw = raw.substring(0, cutIdx2);
+      videoUrl = raw.replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
+    }
+
+    if (videoUrl) {
+      // 2. Clean thumbnail extraction
+      const tMatch = html.match(/\\\\?"display_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
+                     html.match(/"display_url":\s*"([^"]+)"/) ||
+                     html.match(/\\"display_url\\":\s*\\"(.*?)(?=\\"[,}])/);
+      if (tMatch) {
+        let raw = tMatch[1];
+        const cutIdx = raw.indexOf('\\"');
+        if (cutIdx !== -1) raw = raw.substring(0, cutIdx);
+        const cutIdx2 = raw.indexOf('"');
+        if (cutIdx2 !== -1) raw = raw.substring(0, cutIdx2);
+        thumbnail = raw.replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
+      }
+
+      // 3. Clean caption/title extraction
+      const cMatch = html.match(/\\\\?"edge_media_to_caption\\\\?":\s*\{[^}]*?\\\\?"text\\\\?":\s*\\\\?"([\s\S]*?)(?=\\\\?"\s*\}\s*\])/) ||
+                     html.match(/"text":\s*"([^"]+)"/) ||
+                     html.match(/\\"text\\":\s*\\"(.*?)(?=\\"[,}])/);
+      if (cMatch) {
+        let rawText = cMatch[1];
+        const noisePatterns = ['\\"}}]', '"}]]', '"}]}', '\\"}', '"}'];
+        for (const p of noisePatterns) {
+          const idx = rawText.indexOf(p);
+          if (idx !== -1) rawText = rawText.substring(0, idx);
+        }
+        rawText = rawText.replace(/\\n/g, ' ')
+                         .replace(/\\"/g, '"')
+                         .replace(/\\\\/g, '')
+                         .replace(/\s+/g, ' ')
+                         .trim();
+        if (rawText && rawText.length > 0) {
+          title = rawText;
+        }
+      }
+
+      // 4. Clean author username extraction
+      const uMatch = html.match(/\\\\?"owner\\\\?":\s*\{[^}]*?\\\\?"username\\\\?":\s*\\\\?"([^"\\\\]+)\\\\?"/);
+      if (uMatch) {
+        author = uMatch[1];
+      }
+
+      return {
+        success: true,
+        data: {
+          platform: 'instagram',
+          title: title,
+          thumbnail: thumbnail,
+          meta: {
+            author: author,
+            views: 'Reel Stream'
+          },
+          qualities: {
+            hd: videoUrl,
+            sd: videoUrl
+          }
+        }
+      };
+    }
+  } catch (err) {
+    console.error('Direct Instagram extraction error:', err.message);
+  }
+  return null;
+}
+
 async function extractTikTokDirect(url) {
   try {
     const res = await fetch('https://www.tikwm.com/api/?url=' + encodeURIComponent(url), {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       },
       signal: AbortSignal.timeout(3500)
     });
@@ -296,299 +422,13 @@ async function extractTikTokDirect(url) {
         }
       };
     }
-  } catch (err) {}
-  return null;
-}
-
-// 3. Facebook Provider Adapter (Direct FDown API + Upstream Proxy)
-async function extractFacebookDirect(url) {
-  try {
-    const res = await fetch('https://fdown.co.in/ajax', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Origin': 'https://fdown.co.in',
-        'Referer': 'https://fdown.co.in/',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      },
-      body: JSON.stringify({ url }),
-      signal: AbortSignal.timeout(4500)
-    });
-    const json = await res.json();
-    if (json && json.success && json.links) {
-      const links = json.links;
-      const videoLinks = Object.entries(links).filter(([, val]) => typeof val === 'string' && val.startsWith('http') && !val.includes('facebook.com/watch'));
-      if (videoLinks.length > 0) {
-        const hd = videoLinks.find(([k]) => /hd|1080|720/i.test(k))?.[1] || videoLinks[0][1];
-        const sd = videoLinks.find(([k]) => /sd|360|480/i.test(k))?.[1] || videoLinks[videoLinks.length - 1][1];
-        return {
-          success: true,
-          data: {
-            platform: 'facebook',
-            title: json.title || 'Facebook Video',
-            thumbnail: json.thumbnail || null,
-            meta: {
-              author: 'Facebook Creator',
-              duration: 'HD Video',
-              views: 'Direct Stream'
-            },
-            qualities: {
-              hd: hd,
-              sd: sd
-            }
-          }
-        };
-      }
-    }
-  } catch (err) {}
-  return null;
-}
-
-// 4. Instagram Provider Adapter (Multi-Tier Direct + Upstream Proxy)
-async function extractInstagramDirect(url) {
-  try {
-    const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
-    if (!match) return null;
-    const shortcode = match[1];
-
-    // Try Tier 1: FDownloader API
-    try {
-      const res = await fetch('https://fdown.co.in/ajax', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'https://fdown.co.in',
-          'Referer': 'https://fdown.co.in/',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        body: JSON.stringify({ url }),
-        signal: AbortSignal.timeout(3500)
-      });
-      const json = await res.json();
-      if (json && json.success && json.links) {
-        const links = Object.values(json.links).filter(l => typeof l === 'string' && l.startsWith('http'));
-        if (links.length > 0) {
-          return {
-            success: true,
-            data: {
-              platform: 'instagram',
-              title: json.title || 'Instagram Reel',
-              thumbnail: json.thumbnail || null,
-              meta: { author: 'Instagram Creator', views: 'Reel Stream' },
-              qualities: { hd: links[0], sd: links[links.length - 1] }
-            }
-          };
-        }
-      }
-    } catch (e) {}
-
-    // Try Tier 2: Embed Scraping
-    const embedUrl = `https://www.instagram.com/reel/${shortcode}/embed/captioned/`;
-    const res = await fetch(embedUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9'
-      },
-      signal: AbortSignal.timeout(3000)
-    });
-    const html = await res.text();
-
-    let videoUrl = null;
-    let title = 'Instagram Reel';
-    let thumbnail = null;
-
-    const vMatch = html.match(/\\\\?"video_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
-                   html.match(/"video_url":\s*"([^"]+)"/) ||
-                   html.match(/\\"video_url\\":\s*\\"(.*?)(?=\\"[,}])/);
-    if (vMatch) {
-      let raw = vMatch[1];
-      const cutIdx = raw.indexOf('\\"');
-      if (cutIdx !== -1) raw = raw.substring(0, cutIdx);
-      const cutIdx2 = raw.indexOf('"');
-      if (cutIdx2 !== -1) raw = raw.substring(0, cutIdx2);
-      videoUrl = raw.replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
-    }
-
-    if (videoUrl) {
-      const tMatch = html.match(/\\\\?"display_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
-                     html.match(/"display_url":\s*"([^"]+)"/);
-      if (tMatch) {
-        let raw = tMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
-        thumbnail = raw;
-      }
-
-      const cMatch = html.match(/\\\\?"edge_media_to_caption\\\\?":\s*\{[^}]*?\\\\?"text\\\\?":\s*\\\\?"([\s\S]*?)(?=\\\\?"\s*\}\s*\])/) ||
-                     html.match(/"text":\s*"([^"]+)"/);
-      if (cMatch) {
-        let rawText = cMatch[1].replace(/\\n/g, ' ').replace(/\\"/g, '"').replace(/\s+/g, ' ').trim();
-        if (rawText.length > 0) title = rawText;
-      }
-
-      return {
-        success: true,
-        data: {
-          platform: 'instagram',
-          title: title,
-          thumbnail: thumbnail,
-          meta: { author: 'Instagram Creator', views: 'Reel Stream' },
-          qualities: { hd: videoUrl, sd: videoUrl }
-        }
-      };
-    }
-  } catch (err) {}
-  return null;
-}
-
-// 5. Twitter / X Provider Adapter
-async function extractTwitterDirect(url) {
-  try {
-    const params = new URLSearchParams({ q: url.trim(), lang: 'en', cftoken: '' });
-    const res = await fetch('https://savetwitter.net/api/ajaxSearch', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'origin': 'https://savetwitter.net',
-        'referer': 'https://savetwitter.net/en',
-        'x-requested-with': 'XMLHttpRequest',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      },
-      body: params.toString(),
-      signal: AbortSignal.timeout(4000)
-    });
-    const json = await res.json();
-    if (json && json.status === 'ok' && json.data) {
-      const html = json.data;
-      const mp4Matches = [...html.matchAll(/href="([^"]+\.mp4[^"]*)"/gi)].map(m => m[1]);
-      const imgMatch = html.match(/src="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i);
-      if (mp4Matches.length > 0) {
-        return {
-          success: true,
-          data: {
-            platform: 'twitter',
-            title: 'Twitter Video',
-            thumbnail: imgMatch ? imgMatch[1] : null,
-            meta: { author: 'Twitter User', duration: 'HD' },
-            qualities: {
-              hd: mp4Matches[0],
-              sd: mp4Matches[mp4Matches.length - 1]
-            }
-          }
-        };
-      }
-    }
-  } catch (e) {}
-
-  // VXTwitter fallback
-  try {
-    const tweetId = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/)?.[1];
-    if (tweetId) {
-      const res = await fetch(`https://api.vxtwitter.com/i/status/${tweetId}`, { signal: AbortSignal.timeout(3000) });
-      const d = await res.json();
-      const video = d.media_extended?.find(m => m.type === 'video');
-      if (video && video.url) {
-        return {
-          success: true,
-          data: {
-            platform: 'twitter',
-            title: d.text?.slice(0, 100) || 'Twitter Video',
-            thumbnail: d.media_extended?.[0]?.thumbnail_url || null,
-            meta: { author: d.user_name || 'Twitter User', duration: 'HD' },
-            qualities: { hd: video.url, sd: video.url }
-          }
-        };
-      }
-    }
-  } catch (e) {}
-  return null;
-}
-
-// 6. Generic HTML OpenGraph Resolver
-async function extractGenericOpenGraph(url) {
-  try {
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-      },
-      signal: AbortSignal.timeout(4000)
-    });
-    const html = await res.text();
-
-    const getMeta = (prop) => {
-      const m = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, 'i')) ||
-                html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, 'i'));
-      return m ? m[1].replace(/&amp;/g, '&') : null;
-    };
-
-    const videoUrl = getMeta('og:video') || getMeta('og:video:url') || getMeta('og:video:secure_url') || getMeta('twitter:player:stream');
-    const title = getMeta('og:title') || getMeta('twitter:title') || html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1] || 'Web Video';
-    const thumbnail = getMeta('og:image') || getMeta('twitter:image');
-
-    if (videoUrl) {
-      return {
-        success: true,
-        data: {
-          platform: 'generic',
-          title: title.trim(),
-          thumbnail: thumbnail,
-          meta: { author: 'Media Stream', duration: 'HD', views: 'Web' },
-          qualities: { hd: videoUrl, sd: videoUrl }
-        }
-      };
-    }
-  } catch (e) {}
-  return null;
-}
-
-const MIME_TYPES = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'application/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2',
-  '.woff': 'font/woff',
-  '.ttf': 'font/ttf',
-  '.mp4': 'video/mp4',
-  '.mp3': 'audio/mpeg',
-  '.webmanifest': 'application/manifest+json'
-};
-
-const server = http.createServer(async (req, res) => {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-qs-token');
-
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
+  } catch (err) {
+    console.warn('Direct TikTok extraction error:', err.message);
   }
+  return null;
+}
 
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = parsedUrl.pathname;
-
-  // API: /api/token
-  if (pathname === '/api/token' && req.method === 'POST') {
-    try {
-      const token = await getUpstreamToken();
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ token }));
-    } catch (err) {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ token: generateToken() }));
-    }
-    return;
-  }
-
-  // API: /api/details (Unified metadata fetcher - Ultra Fast with In-Flight Deduplication & RAM Caching)
+  // API: /api/details (Unified metadata fetcher - Ultra Fast)
   if (pathname === '/api/details' && req.method === 'POST') {
     let bodyStr = '';
     req.on('data', chunk => { bodyStr += chunk; });
@@ -603,156 +443,99 @@ const server = http.createServer(async (req, res) => {
         }
 
         // Instant RAM Cache Hit (0ms)
-        const cached = getCache(url);
-        if (cached) {
+        if (metadataCache.has(url)) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(cached));
+          res.end(JSON.stringify(metadataCache.get(url)));
           return;
         }
 
-        // Single-Flight Deduplication
-        if (inFlightRequests.has(url)) {
-          const result = await inFlightRequests.get(url);
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(result));
-          return;
-        }
+        const lower = url.toLowerCase();
+        let platform = 'video';
+        if (lower.includes('youtu.be') || lower.includes('youtube.com')) platform = 'youtube';
+        else if (lower.includes('tiktok.com')) platform = 'tiktok';
+        else if (lower.includes('instagram.com')) platform = 'instagram';
+        else if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) platform = 'facebook';
+        else if (lower.includes('twitter.com') || lower.includes('x.com')) platform = 'twitter';
+        else if (lower.includes('spotify.com') || lower.includes('open.spotify.com')) platform = 'spotify';
+        else if (lower.includes('pinterest.com') || lower.includes('pin.it')) platform = 'pinterest';
 
-        const fetchDetailsPromise = (async () => {
-          const lower = url.toLowerCase();
-          let platform = 'video';
-          if (lower.includes('youtu.be') || lower.includes('youtube.com')) platform = 'youtube';
-          else if (lower.includes('tiktok.com')) platform = 'tiktok';
-          else if (lower.includes('instagram.com')) platform = 'instagram';
-          else if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) platform = 'facebook';
-          else if (lower.includes('twitter.com') || lower.includes('x.com')) platform = 'twitter';
-          else if (lower.includes('spotify.com') || lower.includes('open.spotify.com')) platform = 'spotify';
-          else if (lower.includes('pinterest.com') || lower.includes('pin.it')) platform = 'pinterest';
-
-          // YOUTUBE
-          if (platform === 'youtube') {
-            const fastInfo = await getYouTubeMetadataFast(url);
-            if (fastInfo) {
-              setCache(url, fastInfo);
-              return fastInfo;
-            }
-            const upData = await proxyUpstreamApi('/api/yts', { url });
-            if (upData && (upData.data || upData.title)) {
-              const dataObj = upData.data || upData;
-              const resObj = {
-                success: true,
-                platform: 'youtube',
-                title: dataObj.title || 'YouTube Video',
-                thumbnail: dataObj.thumbnail || '',
-                meta: dataObj.meta || {},
-                duration: dataObj.meta?.duration || dataObj.duration || '',
-                views: dataObj.meta?.views || dataObj.views || '',
-                qualities: {}
-              };
-              setCache(url, resObj);
-              return resObj;
-            }
+        if (platform === 'youtube') {
+          const fastInfo = await getYouTubeMetadataFast(url);
+          if (fastInfo) {
+            metadataCache.set(url, fastInfo);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(fastInfo));
+            return;
           }
-
-          // TIKTOK
-          if (platform === 'tiktok') {
-            const directData = await extractTikTokDirect(url);
-            if (directData && directData.data) {
-              setCache(url, directData.data);
-              return directData.data;
-            }
-            const upData = await proxyUpstreamApi('/api/tiktok', { url });
-            if (upData && (upData.data || upData.success)) {
-              const resData = upData.data || upData;
-              setCache(url, resData);
-              return resData;
-            }
+          const upData = await proxyUpstreamApi('/api/yts', { url });
+          if (upData && (upData.data || upData.title)) {
+            const dataObj = upData.data || upData;
+            const resObj = {
+              success: true,
+              platform: 'youtube',
+              title: dataObj.title || 'YouTube Video',
+              thumbnail: dataObj.thumbnail || '',
+              meta: dataObj.meta || {},
+              duration: dataObj.meta?.duration || dataObj.duration || '',
+              views: dataObj.meta?.views || dataObj.views || '',
+              qualities: {}
+            };
+            metadataCache.set(url, resObj);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(resObj));
+            return;
           }
-
-          // FACEBOOK
-          if (platform === 'facebook') {
-            const fbPromises = [
-              proxyUpstreamApi('/api/facebook', { url }).catch(() => null),
-              extractFacebookDirect(url).catch(() => null)
-            ];
-            const results = await Promise.allSettled(fbPromises);
-            for (const r of results) {
-              if (r.status === 'fulfilled' && r.value) {
-                const val = r.value.data ? r.value.data : r.value;
-                if (val.qualities?.hd || val.qualities?.sd || val.title) {
-                  setCache(url, val);
-                  return val;
-                }
-              }
-            }
+        } else if (platform === 'tiktok') {
+          const directData = await extractTikTokDirect(url);
+          if (directData && directData.data) {
+            metadataCache.set(url, directData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(directData.data));
+            return;
           }
-
-          // INSTAGRAM
-          if (platform === 'instagram') {
-            const igPromises = [
-              extractInstagramDirect(url).catch(() => null),
-              proxyUpstreamApi('/api/instagram', { url }).catch(() => null)
-            ];
-            const results = await Promise.allSettled(igPromises);
-            for (const r of results) {
-              if (r.status === 'fulfilled' && r.value) {
-                const val = r.value.data ? r.value.data : r.value;
-                if (val.qualities?.hd || val.qualities?.sd || val.title) {
-                  setCache(url, val);
-                  return val;
-                }
-              }
-            }
+          const upData = await proxyUpstreamApi('/api/tiktok', { url });
+          if (upData && (upData.data || upData.success)) {
+            const resData = upData.data || upData;
+            metadataCache.set(url, resData);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(resData));
+            return;
           }
-
-          // TWITTER / X
-          if (platform === 'twitter') {
-            const twDirect = await extractTwitterDirect(url);
-            if (twDirect && twDirect.data) {
-              setCache(url, twDirect.data);
-              return twDirect.data;
-            }
-            const upData = await proxyUpstreamApi('/api/twitter', { url });
-            if (upData && (upData.data || upData.success)) {
-              const resData = upData.data || upData;
-              setCache(url, resData);
-              return resData;
-            }
+        } else if (platform === 'instagram') {
+          const directData = await extractInstagramDirect(url);
+          if (directData && directData.data) {
+            metadataCache.set(url, directData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(directData.data));
+            return;
           }
-
-          // GENERAL / OTHER PLATFORMS
-          const ep = `/api/${platform}`;
+          let upData = null;
           try {
-            const upData = await proxyUpstreamApi(ep, { url });
-            if (upData && (upData.data || upData.success)) {
-              const resData = upData.data || upData;
-              setCache(url, resData);
-              return resData;
-            }
+            upData = await proxyUpstreamApi('/api/instagram', { url });
           } catch (e) {}
-
-          // Generic OpenGraph Fallback
-          const ogDirect = await extractGenericOpenGraph(url);
-          if (ogDirect && ogDirect.data) {
-            setCache(url, ogDirect.data);
-            return ogDirect.data;
+          if (upData && upData.success && upData.data) {
+            metadataCache.set(url, upData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(upData.data));
+            return;
           }
-
-          throw new Error('Could not fetch media info. Ensure link is public and valid.');
-        })();
-
-        inFlightRequests.set(url, fetchDetailsPromise);
-        try {
-          const result = await fetchDetailsPromise;
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(result));
-        } catch (fetchErr) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: fetchErr.message || 'Media not found' }));
-        } finally {
-          inFlightRequests.delete(url);
+        } else {
+          // General platforms: facebook, twitter, spotify, pinterest
+          const ep = `/api/${platform}`;
+          const upData = await proxyUpstreamApi(ep, { url });
+          if (upData && (upData.data || upData.success)) {
+            const resData = upData.data || upData;
+            metadataCache.set(url, resData);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(resData));
+            return;
+          }
         }
+
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Could not fetch media info. Ensure link is public and valid.' }));
       } catch (err) {
+        console.error('API details error:', err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message || 'Internal server error' }));
       }
@@ -806,6 +589,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Could not generate YouTube download link. Please try again.' }));
       } catch (err) {
+        console.error('API youtube error:', err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message || 'Internal server error' }));
       }
@@ -813,25 +597,15 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // API: Proxy endpoints
-  const proxyEndpoints = [
-    '/api/yts',
-    '/api/ytdl',
-    '/api/tiktok',
-    '/api/facebook',
-    '/api/instagram',
-    '/api/twitter',
-    '/api/pinterest',
-    '/api/spotify'
-  ];
-
   if (proxyEndpoints.includes(pathname) && req.method === 'POST') {
     let bodyStr = '';
     req.on('data', chunk => { bodyStr += chunk; });
     req.on('end', async () => {
       try {
         const body = bodyStr ? JSON.parse(bodyStr) : {};
+        console.log(`[API Request] ${pathname} with URL:`, body.url);
 
+        // Priority direct YouTube download (solves 502/720p upstream failures)
         if (pathname === '/api/ytdl') {
           const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
           if (directYt) {
@@ -839,6 +613,18 @@ const server = http.createServer(async (req, res) => {
             res.end(JSON.stringify(directYt));
             return;
           }
+        }
+
+        let data = await proxyUpstreamApi(pathname, body);
+
+        if (pathname === '/api/ytdl' && (!data || !data.success || !data.data?.qualities?.hd)) {
+          const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
+          if (directYt) data = directYt;
+        }
+
+        if (pathname === '/api/yts' && (!data || !data.success)) {
+          const directInfo = await getYouTubeInfoDirect(body.url || '');
+          if (directInfo) data = directInfo;
         }
 
         if (pathname === '/api/tiktok') {
@@ -850,157 +636,182 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        if (pathname === '/api/facebook') {
-          const directFB = await extractFacebookDirect(body.url || '');
-          if (directFB) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(directFB));
-            return;
-          }
+        if (pathname === '/api/instagram' && (!data || !data.success || !data.data?.qualities?.hd)) {
+          console.log('Upstream Instagram failed, attempting direct embed extractor...');
+          const directData = await extractInstagramDirect(body.url || '');
+          if (directData) data = directData;
         }
 
-        if (pathname === '/api/instagram') {
-          const directIG = await extractInstagramDirect(body.url || '');
-          if (directIG) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(directIG));
-            return;
-          }
+        if (pathname === '/api/tiktok' && (!data || !data.success || !data.data?.qualities?.hd)) {
+          const directTikTok = await extractTikTokDirect(body.url || '');
+          if (directTikTok) data = directTikTok;
         }
 
-        let data = await proxyUpstreamApi(pathname, body);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(data));
       } catch (err) {
+        if (pathname === '/api/ytdl') {
+          try {
+            const body = bodyStr ? JSON.parse(bodyStr) : {};
+            const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
+            if (directYt) {
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify(directYt));
+              return;
+            }
+          } catch (e) {}
+        }
+        if (pathname === '/api/instagram') {
+          try {
+            const body = bodyStr ? JSON.parse(bodyStr) : {};
+            const directData = await extractInstagramDirect(body.url || '');
+            if (directData) {
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify(directData));
+              return;
+            }
+          } catch (e) {}
+        }
+        console.error(`Error processing ${pathname}:`, err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: err.message || 'Internal server error' }));
+        res.end(JSON.stringify({ success: false, error: err.message || 'Internal Server Error' }));
       }
     });
     return;
   }
 
-  // API: /api/stats
-  if (pathname === '/api/stats' && req.method === 'GET') {
-    const stats = {
-      version: '2.5.0',
-      totalDownloads: 184520 + Math.floor(Date.now() / 100000) % 1000,
-      supportedPlatforms: ['tiktok', 'youtube', 'instagram', 'facebook', 'twitter', 'spotify', 'pinterest'],
-      status: 'operational',
-      uptime: process.uptime()
-    };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(stats));
+  // API: Real-time presence heartbeat
+  if (pathname === '/api/presence' && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', () => {
+      const now = Date.now();
+      let body = {};
+      try { body = bodyStr ? JSON.parse(bodyStr) : {}; } catch (e) {}
+      const sid = body.sid || ('anon_' + Math.random().toString(36).slice(2));
+      if (body.leave) {
+        activePresences.delete(sid);
+      } else {
+        activePresences.set(sid, now);
+      }
+      for (const [id, lastTime] of activePresences.entries()) {
+        if (now - lastTime > 45000) activePresences.delete(id);
+      }
+      const online = Math.max(1, activePresences.size);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, online, sid }));
+    });
     return;
   }
 
-  // API: /api/presence
-  if (pathname === '/api/presence') {
-    const now = Date.now();
-    for (const [id, lastSeen] of activePresences.entries()) {
-      if (now - lastSeen > 45 * 1000) activePresences.delete(id);
-    }
-    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
-    const sessionId = crypto.createHash('md5').update(clientIp + (req.headers['user-agent'] || '')).digest('hex');
-    activePresences.set(sessionId, now);
-
-    const baseOnline = 24;
-    const timeFactor = Math.sin(now / 3600000) * 8;
-    const realCount = activePresences.size;
-    const liveOnline = Math.max(12, Math.round(baseOnline + timeFactor + realCount));
-
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ success: true, onlineUsers: liveOnline, activeSessions: realCount }));
-    return;
-  }
-
-  // API: /api/download (Direct Video Streaming with Attachment Header)
-  if (pathname === '/api/download') {
-    const targetUrl = parsedUrl.searchParams.get('url');
-    let filename = parsedUrl.searchParams.get('filename') || 'LUKZI_video.mp4';
-    filename = filename.replace(/[<>:"/\\|?*\x00-\x1f]/g, '').trim() || 'LUKZI_video.mp4';
-
-    if (!targetUrl) {
-      res.writeHead(400, { 'Content-Type': 'text/plain' });
-      res.end('Missing download URL parameter');
+  // API: /api/download?url=...
+  if (pathname === '/api/download' && (req.method === 'GET' || req.method === 'HEAD')) {
+    const fileUrl = parsedUrl.searchParams.get('url');
+    if (!fileUrl) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'URL parameter is required' }));
       return;
     }
 
     try {
-      const response = await fetch(targetUrl, {
+      let customName = parsedUrl.searchParams.get('filename');
+      let filename = customName || path.basename(new URL(fileUrl).pathname) || 'download.mp4';
+      if (!path.extname(filename)) filename += '.mp4';
+
+      const response = await fetch(fileUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
       });
 
       if (!response.ok) {
-        res.writeHead(response.status, { 'Content-Type': 'text/plain' });
-        res.end(`Upstream server returned ${response.status}`);
+        res.writeHead(response.status, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: `Remote server responded with ${response.status}` }));
         return;
       }
 
-      const contentType = response.headers.get('content-type') || 'video/mp4';
+      let contentType = response.headers.get('content-type') || 'application/octet-stream';
+      if ((!contentType || contentType === 'application/octet-stream') && filename.endsWith('.mp4')) {
+        contentType = 'video/mp4';
+      } else if ((!contentType || contentType === 'application/octet-stream') && filename.endsWith('.mp3')) {
+        contentType = 'audio/mpeg';
+      }
       const contentLength = response.headers.get('content-length');
 
       const headers = {
-        'Content-Type': contentType,
         'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Type': contentType,
         'Access-Control-Allow-Origin': '*'
       };
       if (contentLength) headers['Content-Length'] = contentLength;
 
       res.writeHead(200, headers);
 
-      const reader = response.body.getReader();
-      const pump = async () => {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const ok = res.write(Buffer.from(value));
-            if (!ok) await new Promise(r => res.once('drain', r));
-          }
-          res.end();
-        } catch (streamErr) {
-          res.end();
-        }
-      };
-      pump();
-    } catch (err) {
-      if (!res.headersSent) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('Failed to proxy video stream: ' + err.message);
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
       }
+
+      const reader = response.body.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+      res.end();
+    } catch (err) {
+      console.error('Download stream error:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to download file' }));
     }
     return;
   }
 
-  // Static File Serving
+
+  // Static files and pages
   let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
-  if (!filePath.startsWith(PUBLIC_DIR)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('Forbidden');
-    return;
+
+  // If path doesn't have an extension, try appending .html
+  if (!path.extname(filePath)) {
+    if (fs.existsSync(filePath + '.html')) {
+      filePath += '.html';
+    } else if (fs.existsSync(path.join(filePath, 'index.html'))) {
+      filePath = path.join(filePath, 'index.html');
+    }
   }
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      filePath = path.join(PUBLIC_DIR, 'index.html');
-    }
-    const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-
-    fs.readFile(filePath, (readErr, content) => {
-      if (readErr) {
+      // 404 fallback
+      const notFoundPath = path.join(PUBLIC_DIR, '404.html');
+      if (fs.existsSync(notFoundPath)) {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        fs.createReadStream(notFoundPath).pipe(res);
+      } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404 Not Found');
-        return;
       }
-      res.writeHead(200, { 'Content-Type': contentType });
-      res.end(content);
-    });
+      return;
+    }
+
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const responseHeaders = { 'Content-Type': contentType };
+    if (ext === '.html' || ext === '.js') {
+      responseHeaders['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+      responseHeaders['Pragma'] = 'no-cache';
+      responseHeaders['Expires'] = '0';
+    }
+    res.writeHead(200, responseHeaders);
+    fs.createReadStream(filePath).pipe(res);
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`[LUKZI VS SOCIAL MEDIA] Server running on http://localhost:${PORT}`);
+  console.log(`=======================================================`);
+  console.log(`🚀 QuickSave Clone Server is LIVE at: http://localhost:${PORT}`);
+  console.log(`   - 100% Real-Time Video Downloader`);
+  console.log(`   - All Platforms (YouTube, TikTok, Insta, FB, etc.)`);
+  console.log(`   - Subpages: /about, /guaid, /contact, /apis`);
+  console.log(`=======================================================`);
 });

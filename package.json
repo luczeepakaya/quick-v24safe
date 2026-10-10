@@ -21,9 +21,11 @@
   "license": "MIT",
   "dependencies": {
     "@mrnima/instagram-downloader": "^1.0.0",
+    "@sasmeee/igdl": "^0.0.1-security",
     "@xct007/frieren-scraper": "^0.0.2",
     "btch-downloader": "^6.4.0",
     "instagram-url-direct": "^2.0.7",
-    "rahad-all-downloader-v2": "^2.4.0"
+    "rahad-all-downloader-v2": "^2.4.0",
+    "ruhend-scraper": "^10.0.3"
   }
 }

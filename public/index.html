@@ -1307,12 +1307,26 @@
       }
     }
 
-    function playInAppPreview(videoUrl) {
+    function playInAppPreview(videoUrl, platform, ytVideoId) {
       const box = document.getElementById('media-preview-box');
-      if (!box || !videoUrl) return;
-      box.innerHTML = `
-        <video src="${videoUrl}" controls autoplay playsinline class="w-full h-full object-cover rounded-2xl bg-black"></video>
-      `;
+      if (!box) return;
+      if (platform === 'youtube' && ytVideoId) {
+        box.innerHTML = `
+          <iframe src="https://www.youtube-nocookie.com/embed/${ytVideoId}?autoplay=1&playsinline=1" class="w-full h-full rounded-2xl border-0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        `;
+      } else if (videoUrl) {
+        box.innerHTML = `
+          <video src="${videoUrl}" controls autoplay playsinline class="w-full h-full object-cover rounded-2xl bg-black"></video>
+        `;
+      } else if (platform === 'youtube') {
+        const match = originalUrl.match(/(?:youtu\.be\/|v=|\/shorts\/)([A-Za-z0-9_-]{11})/);
+        const vId = match ? match[1] : '';
+        if (vId) {
+          box.innerHTML = `
+            <iframe src="https://www.youtube-nocookie.com/embed/${vId}?autoplay=1&playsinline=1" class="w-full h-full rounded-2xl border-0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+          `;
+        }
+      }
     }
 
     async function saveVideoToDeviceGallery(videoUrl, filename, title, btn) {
@@ -1576,9 +1590,9 @@
       container.innerHTML = `
         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
           <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center group" id="media-preview-box">
-            <img id="media-thumb-img" src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
-            ${hdUrl && platform !== 'youtube' ? `
-              <button type="button" onclick="playInAppPreview('${hdUrl}')" title="Play Preview" class="absolute inset-0 m-auto w-11 h-11 rounded-full bg-cyan-500/90 hover:bg-cyan-400 text-white flex items-center justify-center shadow-xl shadow-cyan-500/40 transition-transform group-hover:scale-110">
+            <img id="media-thumb-img" src="${thumbnail}" alt="Thumbnail" referrerpolicy="no-referrer" loading="lazy" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
+            ${(hdUrl || platform === 'youtube') ? `
+              <button type="button" onclick="playInAppPreview('${hdUrl}', '${platform}', '${data.videoId || ''}')" title="Play Video Preview" class="absolute inset-0 m-auto w-11 h-11 rounded-full bg-cyan-500/90 hover:bg-cyan-400 text-white flex items-center justify-center shadow-xl shadow-cyan-500/40 transition-transform group-hover:scale-110 cursor-pointer">
                 <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               </button>
             ` : ''}
