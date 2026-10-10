@@ -1317,13 +1317,14 @@
     function startSocialProofTicker() {
       if (socialProofDismissed) return;
       
-      function triggerNext() {
+      function showWelcomeNotification() {
         if (socialProofDismissed) return;
         const toast = document.getElementById('social-proof-toast');
         if (!toast) return;
 
-        const item = RECENT_DOWNLOADS_DATA[socialProofIndex];
-        socialProofIndex = (socialProofIndex + 1) % RECENT_DOWNLOADS_DATA.length;
+        // Pick a random country from the 6 specified countries
+        const randomIndex = Math.floor(Math.random() * RECENT_DOWNLOADS_DATA.length);
+        const item = RECENT_DOWNLOADS_DATA[randomIndex];
 
         const userEl = document.getElementById('sp-user');
         const flagEl = document.getElementById('sp-flag');
@@ -1341,17 +1342,20 @@
         toast.classList.remove('translate-y-24', 'opacity-0');
         toast.classList.add('translate-y-0', 'opacity-100');
 
-        // Stay visible for 4.5s then slide out
+        // Stay visible for 4.5s then slide out and permanently finish
         setTimeout(() => {
-          if (socialProofDismissed) return;
-          toast.classList.remove('translate-y-0', 'opacity-100');
-          toast.classList.add('translate-y-24', 'opacity-0');
+          if (toast) {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+              if (toast && toast.parentNode) toast.remove();
+            }, 600);
+          }
         }, 4500);
       }
 
-      // Initial trigger after 3.5 seconds
-      setTimeout(triggerNext, 3500);
-      socialProofTimer = setInterval(triggerNext, 9000);
+      // Show ONLY once when landing on the website (after 3.5 seconds)
+      setTimeout(showWelcomeNotification, 3500);
     }
 
     function dismissSocialProof() {
@@ -1361,7 +1365,9 @@
       if (toast) {
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-24', 'opacity-0');
-        setTimeout(() => toast.remove(), 500);
+        setTimeout(() => {
+          if (toast.parentNode) toast.remove();
+        }, 500);
       }
     }
 

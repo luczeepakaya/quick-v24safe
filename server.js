@@ -271,8 +271,7 @@ async function getYouTubeInfoDirect(videoUrl) {
 async function extractInstagramDirect(url) {
   try {
     const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
-    if (!match) return null;
-    const shortcode = match[1];
+    const shortcode = match ? match[1] : 'Reel_' + Math.floor(Math.random() * 10000);
     const embedUrl = `https://www.instagram.com/reel/${shortcode}/embed/`;
 
     const res = await fetch(embedUrl, {
@@ -284,13 +283,13 @@ async function extractInstagramDirect(url) {
     const vMatch = html.match(/\\"video_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
     if (vMatch) {
       const videoUrl = vMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
-      let title = 'Instagram Reel';
+      let title = `Instagram Reel [${shortcode}]`;
       const capMatch = html.match(/\\"edge_media_to_caption\\":\{\\"edges\\":\[\{\\"node\\":\{\\"text\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
       if (capMatch) {
         try {
-          title = JSON.parse(`"${capMatch[1]}"`);
+          title = JSON.parse(`"${capMatch[1]}"`).slice(0, 80);
         } catch (e) {
-          title = capMatch[1];
+          title = capMatch[1].slice(0, 80);
         }
       }
       let author = 'Instagram User';
@@ -305,23 +304,123 @@ async function extractInstagramDirect(url) {
 
       return {
         success: true,
-        data: {
-          platform: 'instagram',
-          title: title,
-          thumbnail: thumbnail,
-          meta: {
-            author: author,
-            views: ''
-          },
-          qualities: {
-            hd: videoUrl,
-            sd: videoUrl
-          }
-        }
+        platform: 'instagram',
+        title: title,
+        thumbnail: thumbnail || 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop',
+        author: author,
+        duration: '',
+        views: '',
+        qualities: {
+          hd: videoUrl,
+          sd: videoUrl,
+          audio: videoUrl
+        },
+        download_url: videoUrl
       };
     }
   } catch (err) {
     console.warn('Direct Instagram extraction error:', err.message);
+  }
+
+  // Fallback to OpenGraph scraper
+  return await scrapeOpenGraph(url, 'Instagram', 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop');
+}
+
+// OpenGraph & HTML Scraper (Mirrors Android VideoResolver.kt scrapeOpenGraph)
+async function scrapeOpenGraph(url, defaultPlatform = 'Media', defaultThumbnail = null) {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    });
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    // Extract Title
+    let title = `${defaultPlatform} Video`;
+    const titleMatch = html.match(/<title>(.*?)<\/title>/i) || html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i);
+    if (titleMatch && titleMatch[1]) {
+      title = titleMatch[1].replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"').trim().slice(0, 80);
+    }
+
+    // Extract Video Stream URL
+    const videoPatterns = [
+      /<meta[^>]+property=["']og:video["'][^>]+content=["']([^"']+)["']/i,
+      /<meta[^>]+property=["']og:video:secure_url["'][^>]+content=["']([^"']+)["']/i,
+      /<meta[^>]+name=["']twitter:player:stream["'][^>]+content=["']([^"']+)["']/i,
+      /"browser_native_hd_url":"([^"]+)"/i,
+      /"browser_native_sd_url":"([^"]+)"/i,
+      /<video[^>]+src=["']([^"']+)["']/i
+    ];
+
+    let videoStreamUrl = null;
+    for (const p of videoPatterns) {
+      const m = html.match(p);
+      if (m && m[1]) {
+        let found = m[1].replace(/\\\//g, '/').replace(/&amp;/g, '&');
+        if (found.startsWith('http')) {
+          videoStreamUrl = found;
+          break;
+        }
+      }
+    }
+
+    // Extract Thumbnail Image
+    const imgMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) || html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
+    let thumbnail = defaultThumbnail;
+    if (imgMatch && imgMatch[1]) {
+      thumbnail = imgMatch[1].replace(/&amp;/g, '&');
+    }
+
+    if (videoStreamUrl) {
+      return {
+        success: true,
+        platform: defaultPlatform.toLowerCase(),
+        title: title,
+        thumbnail: thumbnail,
+        author: `${defaultPlatform} Creator`,
+        duration: '',
+        views: '',
+        qualities: {
+          hd: videoStreamUrl,
+          sd: videoStreamUrl,
+          audio: videoStreamUrl
+        },
+        download_url: videoStreamUrl
+      };
+    }
+  } catch (e) {
+    console.warn('OpenGraph scraper error:', e.message);
+  }
+  return null;
+}
+
+// Generic & Direct File Detector (Mirrors Android VideoResolver.kt resolveGenericOrDirect)
+function resolveDirectFileUrl(url) {
+  const cleanUrl = url.split('?')[0];
+  const fileName = cleanUrl.substring(cleanUrl.lastIndexOf('/') + 1) || 'download';
+  const isVideo = /\.(mp4|webm|mov|mkv)$/i.test(fileName);
+  const isAudio = /\.(mp3|m4a|wav|ogg|flac|aac)$/i.test(fileName);
+
+  if (isVideo || isAudio) {
+    const format = isAudio ? 'mp3' : 'mp4';
+    return {
+      success: true,
+      platform: isAudio ? 'audio' : 'video',
+      title: decodeURIComponent(fileName),
+      thumbnail: isAudio ? '/spotify.png' : '/lukzi-logo.png',
+      author: 'Direct Media Source',
+      duration: '',
+      views: '',
+      qualities: {
+        hd: url,
+        sd: url,
+        audio: isAudio ? url : null
+      },
+      download_url: url
+    };
   }
   return null;
 }
@@ -373,7 +472,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // API: /api/details (Unified Details Extractor)
+  // API: /api/details (Unified Details Extractor - VideoResolver Engine)
   if (pathname === '/api/details' && req.method === 'POST') {
     let bodyStr = '';
     req.on('data', chunk => { bodyStr += chunk; });
@@ -387,9 +486,17 @@ const server = http.createServer(async (req, res) => {
           return;
         }
 
+        // Direct file link check (.mp4, .mp3, etc.)
+        const directFile = resolveDirectFileUrl(url);
+        if (directFile) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(directFile));
+          return;
+        }
+
         const lower = url.toLowerCase();
 
-        // 1. TikTok
+        // 1. TikTok (TikWM direct API)
         if (lower.includes('tiktok.com')) {
           const tikData = await extractTikTok(url);
           if (tikData) {
@@ -415,7 +522,7 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        // 2. YouTube
+        // 2. YouTube (SaveTube direct + oEmbed)
         if (lower.includes('youtube.com') || lower.includes('youtu.be')) {
           const ytDirect = await getYouTubeInfoDirect(url);
           if (ytDirect && ytDirect.success) {
@@ -455,22 +562,12 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        // 3. Instagram
+        // 3. Instagram (Direct Embed / OpenGraph / Upstream)
         if (lower.includes('instagram.com')) {
           const instaDirect = await extractInstagramDirect(url);
           if (instaDirect && instaDirect.success) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
-              success: true,
-              platform: 'instagram',
-              title: instaDirect.data.title,
-              thumbnail: instaDirect.data.thumbnail,
-              author: instaDirect.data.meta?.author || '',
-              duration: '',
-              views: '',
-              qualities: instaDirect.data.qualities,
-              download_url: instaDirect.data.qualities.hd
-            }));
+            res.end(JSON.stringify(instaDirect));
             return;
           }
           const upstream = await proxyUpstreamApi('/api/instagram', { url });
@@ -491,8 +588,14 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        // 4. Facebook
+        // 4. Facebook (OpenGraph / Upstream)
         if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) {
+          const fbDirect = await scrapeOpenGraph(url, 'Facebook', 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop');
+          if (fbDirect && fbDirect.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(fbDirect));
+            return;
+          }
           const upstream = await proxyUpstreamApi('/api/facebook', { url });
           if (upstream && upstream.success) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -513,6 +616,12 @@ const server = http.createServer(async (req, res) => {
 
         // 5. Twitter / X
         if (lower.includes('twitter.com') || lower.includes('x.com')) {
+          const twDirect = await scrapeOpenGraph(url, 'Twitter', '/twitter.png');
+          if (twDirect && twDirect.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(twDirect));
+            return;
+          }
           const upstream = await proxyUpstreamApi('/api/twitter', { url });
           if (upstream && upstream.success) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -551,24 +660,12 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        // 7. Pinterest
-        if (lower.includes('pinterest.com') || lower.includes('pin.it')) {
-          const upstream = await proxyUpstreamApi('/api/pinterest', { url });
-          if (upstream && upstream.success) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
-              success: true,
-              platform: 'pinterest',
-              title: upstream.data?.title || 'Pinterest Media',
-              thumbnail: upstream.data?.thumbnail || '/Pintarest.png',
-              author: upstream.data?.meta?.author || '',
-              duration: '',
-              views: '',
-              qualities: upstream.data?.qualities || {},
-              download_url: upstream.data?.qualities?.hd || ''
-            }));
-            return;
-          }
+        // 7. Pinterest & Generic Scraper
+        const genericOg = await scrapeOpenGraph(url, 'Media');
+        if (genericOg && genericOg.success) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(genericOg));
+          return;
         }
 
         // Fallback to /api/yts
