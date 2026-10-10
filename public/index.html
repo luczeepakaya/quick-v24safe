@@ -933,7 +933,17 @@
       if (!container) return;
 
       const platform = (data.platform || detectPlatformFromUrl(originalUrl) || 'video').toLowerCase();
-      const title = data.title || data.meta?.title || 'Social Media Video / Audio';
+      let rawTitle = data.title || data.meta?.title || 'Social Media Video / Audio';
+      if (typeof rawTitle === 'string') {
+        const noisePatterns = ['"}]},"count"', '"}]]', '"}]}', '\\"}', '"}', '"}]'];
+        for (const p of noisePatterns) {
+          const idx = rawTitle.indexOf(p);
+          if (idx !== -1) rawTitle = rawTitle.substring(0, idx);
+        }
+        rawTitle = rawTitle.replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      const title = rawTitle || 'Social Media Video / Audio';
+
       const thumbnail = data.thumbnail || data.meta?.thumbnail || '/lukzi-logo.png';
       const author = data.author || data.meta?.author || data.meta?.uploader || '';
       const duration = data.duration || data.meta?.duration || '';
@@ -945,7 +955,7 @@
       let badgesHtml = '';
       if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
       if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">⏱️ ${duration}</span>`;
-      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${Number(views).toLocaleString()}</span>`;
+      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${isNaN(views) ? views : Number(views).toLocaleString()}</span>`;
 
       let actionsHtml = '';
 
@@ -1140,7 +1150,14 @@
     function proxyDownload(url, filename, btn) {
       if (!url) return;
       showToast('Starting download...', 'success');
-      window.open(url, '_blank');
+      const dlUrl = `/api/download?url=${encodeURIComponent(url)}`;
+      const a = document.createElement('a');
+      a.href = dlUrl;
+      a.download = filename || 'video.mp4';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 300);
     }
 
     function copyDirectUrl(url) {

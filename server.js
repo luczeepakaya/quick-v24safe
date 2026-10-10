@@ -297,31 +297,68 @@ async function extractInstagramDirect(url) {
 
     const res = await fetch(embedUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       }
     });
     const html = await res.text();
-    const vMatch = html.match(/\\"video_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
+
+    let videoUrl = null;
+    let title = 'Instagram Reel';
+    let thumbnail = null;
+    let author = 'Instagram User';
+
+    // 1. Clean video URL extraction
+    const vMatch = html.match(/\\\\?"video_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
+                   html.match(/"video_url":\s*"([^"]+)"/) ||
+                   html.match(/\\"video_url\\":\s*\\"(.*?)(?=\\"[,}])/);
     if (vMatch) {
-      const videoUrl = vMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
-      let title = 'Instagram Reel';
-      const capMatch = html.match(/\\"edge_media_to_caption\\":\{\\"edges\\":\[\{\\"node\\":\{\\"text\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
-      if (capMatch) {
-        try {
-          title = JSON.parse(`"${capMatch[1]}"`);
-        } catch (e) {
-          title = capMatch[1];
+      let raw = vMatch[1];
+      const cutIdx = raw.indexOf('\\"');
+      if (cutIdx !== -1) raw = raw.substring(0, cutIdx);
+      const cutIdx2 = raw.indexOf('"');
+      if (cutIdx2 !== -1) raw = raw.substring(0, cutIdx2);
+      videoUrl = raw.replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
+    }
+
+    if (videoUrl) {
+      // 2. Clean thumbnail extraction
+      const tMatch = html.match(/\\\\?"display_url\\\\?":\s*\\\\?"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)\\\\?"/) ||
+                     html.match(/"display_url":\s*"([^"]+)"/) ||
+                     html.match(/\\"display_url\\":\s*\\"(.*?)(?=\\"[,}])/);
+      if (tMatch) {
+        let raw = tMatch[1];
+        const cutIdx = raw.indexOf('\\"');
+        if (cutIdx !== -1) raw = raw.substring(0, cutIdx);
+        const cutIdx2 = raw.indexOf('"');
+        if (cutIdx2 !== -1) raw = raw.substring(0, cutIdx2);
+        thumbnail = raw.replace(/\\u0026/g, '&').replace(/\\\//g, '/').replace(/\\/g, '');
+      }
+
+      // 3. Clean caption/title extraction
+      const cMatch = html.match(/\\\\?"edge_media_to_caption\\\\?":\s*\{[^}]*?\\\\?"text\\\\?":\s*\\\\?"([\s\S]*?)(?=\\\\?"\s*\}\s*\])/) ||
+                     html.match(/"text":\s*"([^"]+)"/) ||
+                     html.match(/\\"text\\":\s*\\"(.*?)(?=\\"[,}])/);
+      if (cMatch) {
+        let rawText = cMatch[1];
+        const noisePatterns = ['\\"}}]', '"}]]', '"}]}', '\\"}', '"}'];
+        for (const p of noisePatterns) {
+          const idx = rawText.indexOf(p);
+          if (idx !== -1) rawText = rawText.substring(0, idx);
+        }
+        rawText = rawText.replace(/\\n/g, ' ')
+                         .replace(/\\"/g, '"')
+                         .replace(/\\\\/g, '')
+                         .replace(/\s+/g, ' ')
+                         .trim();
+        if (rawText && rawText.length > 0) {
+          title = rawText;
         }
       }
-      let author = 'Instagram User';
-      const userMatch = html.match(/\\"owner\\":\{[^}]*?\\"username\\":\\"([^"\\]*)\\"/);
-      if (userMatch) author = userMatch[1];
-      let views = null;
-      // Thumbnail
-      let thumbnail = null;
-      const tMatch = html.match(/\\"display_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
-      if (tMatch) {
-        thumbnail = tMatch[1].replace(/\\u0026/g, '&').replace(/\\/g, '');
+
+      // 4. Clean author username extraction
+      const uMatch = html.match(/\\\\?"owner\\\\?":\s*\{[^}]*?\\\\?"username\\\\?":\s*\\\\?"([^"\\\\]+)\\\\?"/);
+      if (uMatch) {
+        author = uMatch[1];
       }
 
       return {
@@ -332,7 +369,7 @@ async function extractInstagramDirect(url) {
           thumbnail: thumbnail,
           meta: {
             author: author,
-            views: views
+            views: 'Reel Stream'
           },
           qualities: {
             hd: videoUrl,
