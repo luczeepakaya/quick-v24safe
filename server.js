@@ -707,9 +707,9 @@ async function extractTikTokDirect(url) {
   // API: /api/download?url=...
   if (pathname === '/api/download' && (req.method === 'GET' || req.method === 'HEAD')) {
     const fileUrl = parsedUrl.searchParams.get('url');
-    if (!fileUrl) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'URL parameter is required' }));
+    if (!fileUrl || !fileUrl.startsWith('http')) {
+      res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+      res.end('Error: Valid HTTP URL parameter is required');
       return;
     }
 

@@ -1272,7 +1272,10 @@
     }
 
     async function saveToPhotosOrGallery(url, filename, title) {
-      if (!url) return;
+      if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+        showToast('⚠️ Video download link is unavailable. Please check if the post is public.', 'error');
+        return;
+      }
       const dev = getDeviceInfo();
       const cleanName = filename || (dev.isIOS ? 'video.mp4' : 'download.mp4');
 
@@ -1292,7 +1295,7 @@
       currentShareAbortController = new AbortController();
       const timeoutId = setTimeout(() => {
         if (currentShareAbortController) currentShareAbortController.abort();
-      }, 30000);
+      }, 35000);
 
       try {
         const proxyDlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
@@ -1300,7 +1303,17 @@
         clearTimeout(timeoutId);
 
         if (!res.ok) throw new Error('Video download stream failed');
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Direct media stream not found');
+        }
+
         const blob = await res.blob();
+        if (!blob || blob.size < 500) {
+          throw new Error('Downloaded file is too small or invalid');
+        }
+
         const videoFile = new File([blob], cleanName, { type: 'video/mp4', lastModified: Date.now() });
 
         showDownloadProgressModal(false);
@@ -1329,6 +1342,7 @@
           triggerFileDownload(url, cleanName);
           showToast('Direct download started!', 'info');
         } else if (!err.message?.includes('Abort') && !err.message?.includes('cancel') && !err.message?.includes('Canceled')) {
+          console.warn('Share error fallback:', err.message);
           triggerFileDownload(url, cleanName);
           openGalleryGuideModal(dev.isIOS ? 'ios' : 'android');
         }
@@ -1594,7 +1608,10 @@
     }
 
     function triggerFileDownload(url, filename) {
-      if (!url) return;
+      if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+        showToast('⚠️ Download link is unavailable. Please ensure post is public.', 'error');
+        return;
+      }
       const cleanName = filename || 'lukzi-download.mp4';
       const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
       
@@ -1639,13 +1656,19 @@
     }
 
     function directDownload(url, filename, btn) {
-      if (!url) return;
+      if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+        showToast('⚠️ Media link is unavailable.', 'error');
+        return;
+      }
       showToast('Starting direct download...', 'success');
       triggerFileDownload(url, filename || 'audio.mp3');
     }
 
     function proxyDownload(url, filename, btn) {
-      if (!url) return;
+      if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+        showToast('⚠️ Video link is unavailable.', 'error');
+        return;
+      }
       showToast('Starting direct download...', 'success');
       triggerFileDownload(url, filename || 'video.mp4');
     }

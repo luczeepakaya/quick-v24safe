@@ -631,13 +631,27 @@ exports.handler = async (event, context) => {
 
   if (path === '/api/download' && (event.httpMethod === 'GET' || event.httpMethod === 'HEAD')) {
     const fileUrl = event.queryStringParameters?.url;
-    if (!fileUrl) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'URL required' }) };
+    if (!fileUrl || !fileUrl.startsWith('http')) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: 'Error: Valid HTTP URL required'
+      };
+    }
+    const filename = event.queryStringParameters?.filename || 'video.mp4';
+    let mimeType = 'video/mp4';
+    if (filename.endsWith('.mp3')) {
+      mimeType = 'audio/mpeg';
     }
     return {
       statusCode: 302,
       headers: {
         'Location': fileUrl,
+        'Content-Type': mimeType,
+        'Content-Disposition': `attachment; filename="${filename}"`,
         'Access-Control-Allow-Origin': '*'
       },
       body: ''
