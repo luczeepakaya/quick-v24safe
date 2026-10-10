@@ -57,86 +57,60 @@ async function getUpstreamToken() {
 }
 
 async function proxyUpstreamApi(endpoint, body) {
-  const token = await getUpstreamToken();
-  const res = await fetch(`https://www.quicksave.click${endpoint}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Origin': 'https://www.quicksave.click',
-      'Referer': 'https://www.quicksave.click/',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'x-qs-token': token
-    },
-    body: JSON.stringify(body)
-  });
-  return await res.json();
+  try {
+    const token = await getUpstreamToken();
+    const res = await fetch(`https://www.quicksave.click${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://www.quicksave.click',
+        'Referer': 'https://www.quicksave.click/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'x-qs-token': token
+      },
+      body: JSON.stringify(body)
+    });
+    return await res.json();
+  } catch (err) {
+    console.warn(`Proxy upstream error on ${endpoint}:`, err.message);
+    return null;
+  }
 }
 
-const MIME_TYPES = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'application/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2',
-  '.woff': 'font/woff',
-  '.ttf': 'font/ttf',
-  '.mp4': 'video/mp4',
-  '.mp3': 'audio/mpeg',
-  '.webmanifest': 'application/manifest+json'
-};
-
-const server = http.createServer(async (req, res) => {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-qs-token');
-
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
-
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = parsedUrl.pathname;
-
-  // API: /api/token
-  if (pathname === '/api/token' && req.method === 'POST') {
-    try {
-      const token = await getUpstreamToken();
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ token }));
-    } catch (err) {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ token: generateToken() }));
+// Direct TikTok Extractor (tikwm.com API - fast, no watermark)
+async function extractTikTok(url) {
+  try {
+    const res = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url.trim())}`);
+    const json = await res.json();
+    if (json && json.code === 0 && json.data) {
+      const d = json.data;
+      return {
+        success: true,
+        platform: 'tiktok',
+        title: d.title || 'TikTok Video',
+        thumbnail: d.cover || d.origin_cover || '/tiktok.png',
+        author: d.author?.nickname || d.author?.unique_id || 'TikTok User',
+        duration: d.duration ? `${d.duration}s` : '',
+        views: d.play_count ? String(d.play_count) : '',
+        qualities: {
+          hd: d.play || d.wmplay,
+          no_watermark: d.play || d.wmplay,
+          sd: d.wmplay || d.play,
+          audio: d.music || null
+        },
+        download_url: d.play || d.wmplay
+      };
     }
-    return;
+  } catch (e) {
+    console.warn('TikWM extractor failed:', e.message);
   }
+  return null;
+}
 
-  // API: Proxy endpoints
-  const proxyEndpoints = [
-    '/api/yts',
-    '/api/ytdl',
-    '/api/tiktok',
-    '/api/facebook',
-    '/api/instagram',
-    '/api/twitter',
-    '/api/pinterest',
-    '/api/spotify'
-  ];
-
+// Direct YouTube Downloader & Info
 async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
   if (!videoUrl) return null;
-  const cdns = [
-    'https://cdn405.savetube.vip',
-    'https://cdn.savetube.vip'
-  ];
+  const cdns = ['https://cdn405.savetube.vip', 'https://cdn.savetube.vip'];
 
   let targetUrl = videoUrl.trim();
   try {
@@ -231,10 +205,7 @@ async function downloadYouTubeDirect(videoUrl, type = 'mp4', quality = '720p') {
 
 async function getYouTubeInfoDirect(videoUrl) {
   if (!videoUrl) return null;
-  const cdns = [
-    'https://cdn405.savetube.vip',
-    'https://cdn.savetube.vip'
-  ];
+  const cdns = ['https://cdn405.savetube.vip', 'https://cdn.savetube.vip'];
 
   let targetUrl = videoUrl.trim();
   try {
@@ -296,6 +267,7 @@ async function getYouTubeInfoDirect(videoUrl) {
   return null;
 }
 
+// Direct Instagram Reel / Post Extractor
 async function extractInstagramDirect(url) {
   try {
     const match = url.match(/\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
@@ -324,8 +296,7 @@ async function extractInstagramDirect(url) {
       let author = 'Instagram User';
       const userMatch = html.match(/\\"owner\\":\{[^}]*?\\"username\\":\\"([^"\\]*)\\"/);
       if (userMatch) author = userMatch[1];
-      let views = null;
-      // Thumbnail
+      
       let thumbnail = null;
       const tMatch = html.match(/\\"display_url\\":\\"([^"\\]*(?:\\.[^"\\]*)*)\\"/);
       if (tMatch) {
@@ -340,7 +311,7 @@ async function extractInstagramDirect(url) {
           thumbnail: thumbnail,
           meta: {
             author: author,
-            views: views
+            views: ''
           },
           qualities: {
             hd: videoUrl,
@@ -350,20 +321,333 @@ async function extractInstagramDirect(url) {
       };
     }
   } catch (err) {
-    console.error('Direct Instagram extraction error:', err.message);
+    console.warn('Direct Instagram extraction error:', err.message);
   }
   return null;
 }
 
-  if (proxyEndpoints.includes(pathname) && req.method === 'POST') {
+const MIME_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
+  '.ttf': 'font/ttf',
+  '.mp4': 'video/mp4',
+  '.mp3': 'audio/mpeg',
+  '.webmanifest': 'application/manifest+json'
+};
+
+const server = http.createServer(async (req, res) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-qs-token');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = parsedUrl.pathname;
+
+  // API: /api/token
+  if (pathname === '/api/token' && req.method === 'POST') {
+    try {
+      const token = await getUpstreamToken();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ token }));
+    } catch (err) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ token: generateToken() }));
+    }
+    return;
+  }
+
+  // API: /api/details (Unified Details Extractor)
+  if (pathname === '/api/details' && req.method === 'POST') {
     let bodyStr = '';
     req.on('data', chunk => { bodyStr += chunk; });
     req.on('end', async () => {
       try {
         const body = bodyStr ? JSON.parse(bodyStr) : {};
-        console.log(`[API Request] ${pathname} with URL:`, body.url);
+        const url = (body.url || '').trim();
+        if (!url) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Please enter a valid video or audio URL' }));
+          return;
+        }
 
-        // Priority direct YouTube download (solves 502/720p upstream failures)
+        const lower = url.toLowerCase();
+
+        // 1. TikTok
+        if (lower.includes('tiktok.com')) {
+          const tikData = await extractTikTok(url);
+          if (tikData) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(tikData));
+            return;
+          }
+          const upstream = await proxyUpstreamApi('/api/tiktok', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'tiktok',
+              title: upstream.data?.title || 'TikTok Video',
+              thumbnail: upstream.data?.thumbnail || '/tiktok.png',
+              author: upstream.data?.meta?.author || 'TikTok User',
+              duration: upstream.data?.meta?.duration || '',
+              views: upstream.data?.meta?.views || '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || upstream.data?.qualities?.no_watermark || ''
+            }));
+            return;
+          }
+        }
+
+        // 2. YouTube
+        if (lower.includes('youtube.com') || lower.includes('youtu.be')) {
+          const ytDirect = await getYouTubeInfoDirect(url);
+          if (ytDirect && ytDirect.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'youtube',
+              title: ytDirect.data.title,
+              thumbnail: ytDirect.data.thumbnail,
+              author: 'YouTube Creator',
+              duration: ytDirect.data.meta?.duration || '',
+              views: '',
+              qualities: {
+                hd: '',
+                sd: '',
+                audio: ''
+              },
+              download_url: ''
+            }));
+            return;
+          }
+          const upstream = await proxyUpstreamApi('/api/yts', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'youtube',
+              title: upstream.data?.title || 'YouTube Video',
+              thumbnail: upstream.data?.thumbnail || '/yt.png',
+              author: upstream.data?.meta?.author || 'YouTube Creator',
+              duration: upstream.data?.meta?.duration || '',
+              views: upstream.data?.meta?.views || '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || ''
+            }));
+            return;
+          }
+        }
+
+        // 3. Instagram
+        if (lower.includes('instagram.com')) {
+          const instaDirect = await extractInstagramDirect(url);
+          if (instaDirect && instaDirect.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'instagram',
+              title: instaDirect.data.title,
+              thumbnail: instaDirect.data.thumbnail,
+              author: instaDirect.data.meta?.author || '',
+              duration: '',
+              views: '',
+              qualities: instaDirect.data.qualities,
+              download_url: instaDirect.data.qualities.hd
+            }));
+            return;
+          }
+          const upstream = await proxyUpstreamApi('/api/instagram', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'instagram',
+              title: upstream.data?.title || 'Instagram Post / Reel',
+              thumbnail: upstream.data?.thumbnail || '/insta.png',
+              author: upstream.data?.meta?.author || '',
+              duration: upstream.data?.meta?.duration || '',
+              views: upstream.data?.meta?.views || '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || ''
+            }));
+            return;
+          }
+        }
+
+        // 4. Facebook
+        if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) {
+          const upstream = await proxyUpstreamApi('/api/facebook', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'facebook',
+              title: upstream.data?.title || 'Facebook Video',
+              thumbnail: upstream.data?.thumbnail || '/fb.png',
+              author: upstream.data?.meta?.author || '',
+              duration: upstream.data?.meta?.duration || '',
+              views: upstream.data?.meta?.views || '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || upstream.data?.qualities?.sd || ''
+            }));
+            return;
+          }
+        }
+
+        // 5. Twitter / X
+        if (lower.includes('twitter.com') || lower.includes('x.com')) {
+          const upstream = await proxyUpstreamApi('/api/twitter', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'twitter',
+              title: upstream.data?.title || 'Twitter / X Video',
+              thumbnail: upstream.data?.thumbnail || '/twitter.png',
+              author: upstream.data?.meta?.author || '',
+              duration: upstream.data?.meta?.duration || '',
+              views: upstream.data?.meta?.views || '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || ''
+            }));
+            return;
+          }
+        }
+
+        // 6. Spotify
+        if (lower.includes('spotify.com')) {
+          const upstream = await proxyUpstreamApi('/api/spotify', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'spotify',
+              title: upstream.data?.title || 'Spotify Track',
+              thumbnail: upstream.data?.thumbnail || '/spotify.png',
+              author: upstream.data?.meta?.artist || upstream.data?.meta?.author || '',
+              duration: upstream.data?.meta?.duration || '',
+              views: '',
+              qualities: { audio: upstream.data?.download_url || upstream.data?.qualities?.audio || '' },
+              download_url: upstream.data?.download_url || upstream.data?.qualities?.audio || ''
+            }));
+            return;
+          }
+        }
+
+        // 7. Pinterest
+        if (lower.includes('pinterest.com') || lower.includes('pin.it')) {
+          const upstream = await proxyUpstreamApi('/api/pinterest', { url });
+          if (upstream && upstream.success) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              platform: 'pinterest',
+              title: upstream.data?.title || 'Pinterest Media',
+              thumbnail: upstream.data?.thumbnail || '/Pintarest.png',
+              author: upstream.data?.meta?.author || '',
+              duration: '',
+              views: '',
+              qualities: upstream.data?.qualities || {},
+              download_url: upstream.data?.qualities?.hd || ''
+            }));
+            return;
+          }
+        }
+
+        // Fallback to /api/yts
+        const genUpstream = await proxyUpstreamApi('/api/yts', { url });
+        if (genUpstream && genUpstream.success) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(genUpstream.data || genUpstream));
+          return;
+        }
+
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Could not fetch media for this URL. Please verify the link is public and accessible.' }));
+      } catch (err) {
+        console.error('Error in /api/details:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message || 'Internal error processing link' }));
+      }
+    });
+    return;
+  }
+
+  // API: /api/youtube (YouTube Link Generator)
+  if (pathname === '/api/youtube' && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', async () => {
+      try {
+        const body = bodyStr ? JSON.parse(bodyStr) : {};
+        const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
+        if (directYt && directYt.success && directYt.data) {
+          const dlUrl = directYt.data.qualities?.hd || directYt.data.qualities?.audio || '';
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, download_url: dlUrl }));
+          return;
+        }
+        const upstream = await proxyUpstreamApi('/api/ytdl', body);
+        if (upstream && upstream.success) {
+          const dlUrl = upstream.data?.qualities?.hd || upstream.data?.qualities?.audio || upstream.data?.download_url || '';
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, download_url: dlUrl }));
+          return;
+        }
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Could not generate YouTube download link. Please try a different quality or format.' }));
+      } catch (err) {
+        console.error('Error in /api/youtube:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message || 'Server busy' }));
+      }
+    });
+    return;
+  }
+
+  // API: Legacy Proxy Endpoints
+  const legacyProxyEndpoints = [
+    '/api/yts',
+    '/api/ytdl',
+    '/api/tiktok',
+    '/api/facebook',
+    '/api/instagram',
+    '/api/twitter',
+    '/api/pinterest',
+    '/api/spotify'
+  ];
+
+  if (legacyProxyEndpoints.includes(pathname) && req.method === 'POST') {
+    let bodyStr = '';
+    req.on('data', chunk => { bodyStr += chunk; });
+    req.on('end', async () => {
+      try {
+        const body = bodyStr ? JSON.parse(bodyStr) : {};
+        if (pathname === '/api/tiktok') {
+          const tik = await extractTikTok(body.url || '');
+          if (tik) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(tik));
+            return;
+          }
+        }
         if (pathname === '/api/ytdl') {
           const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
           if (directYt) {
@@ -372,53 +656,12 @@ async function extractInstagramDirect(url) {
             return;
           }
         }
-
-        let data = await proxyUpstreamApi(pathname, body);
-
-        if (pathname === '/api/ytdl' && (!data || !data.success || !data.data?.qualities?.hd)) {
-          const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
-          if (directYt) data = directYt;
-        }
-
-        if (pathname === '/api/yts' && (!data || !data.success)) {
-          const directInfo = await getYouTubeInfoDirect(body.url || '');
-          if (directInfo) data = directInfo;
-        }
-
-        if (pathname === '/api/instagram' && (!data || !data.success || !data.data?.qualities?.hd)) {
-          console.log('Upstream Instagram failed, attempting direct embed extractor...');
-          const directData = await extractInstagramDirect(body.url || '');
-          if (directData) data = directData;
-        }
-
+        const data = await proxyUpstreamApi(pathname, body);
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(data));
+        res.end(JSON.stringify(data || { success: false, error: 'Upstream unavailable' }));
       } catch (err) {
-        if (pathname === '/api/ytdl') {
-          try {
-            const body = bodyStr ? JSON.parse(bodyStr) : {};
-            const directYt = await downloadYouTubeDirect(body.url, body.type, body.quality);
-            if (directYt) {
-              res.writeHead(200, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify(directYt));
-              return;
-            }
-          } catch (e) {}
-        }
-        if (pathname === '/api/instagram') {
-          try {
-            const body = bodyStr ? JSON.parse(bodyStr) : {};
-            const directData = await extractInstagramDirect(body.url || '');
-            if (directData) {
-              res.writeHead(200, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify(directData));
-              return;
-            }
-          } catch (e) {}
-        }
-        console.error(`Error processing ${pathname}:`, err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: false, error: err.message || 'Internal Server Error' }));
+        res.end(JSON.stringify({ success: false, error: err.message }));
       }
     });
     return;
@@ -510,11 +753,9 @@ async function extractInstagramDirect(url) {
     return;
   }
 
-
   // Static files and pages
   let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
 
-  // If path doesn't have an extension, try appending .html
   if (!path.extname(filePath)) {
     if (fs.existsSync(filePath + '.html')) {
       filePath += '.html';
@@ -525,7 +766,6 @@ async function extractInstagramDirect(url) {
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      // 404 fallback
       const notFoundPath = path.join(PUBLIC_DIR, '404.html');
       if (fs.existsSync(notFoundPath)) {
         res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -552,9 +792,9 @@ async function extractInstagramDirect(url) {
 
 server.listen(PORT, () => {
   console.log(`=======================================================`);
-  console.log(`🚀 QuickSave Clone Server is LIVE at: http://localhost:${PORT}`);
+  console.log(`🚀 LUKZI VS SOCIAL MEDIA Server is LIVE at: http://localhost:${PORT}`);
   console.log(`   - 100% Real-Time Video Downloader`);
-  console.log(`   - All Platforms (YouTube, TikTok, Insta, FB, etc.)`);
-  console.log(`   - Subpages: /about, /guaid, /contact, /apis`);
+  console.log(`   - Unified /api/details & /api/youtube`);
+  console.log(`   - All Platforms (TikTok, YouTube, Insta, FB, etc.)`);
   console.log(`=======================================================`);
 });
