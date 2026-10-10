@@ -1351,9 +1351,20 @@
       }
     }
 
-    async function shareMediaNative(url, title) {
+    function shareMediaNative(url, title) {
       if (!url) return;
-      saveToPhotosOrGallery(url, 'video.mp4', title);
+      if (navigator.share) {
+        navigator.share({
+          title: title || 'LUKZI Video Downloader 🇱🇰',
+          url: url
+        }).catch(err => {
+          if (err.name !== 'AbortError') {
+            copyDirectUrl(url);
+          }
+        });
+      } else {
+        copyDirectUrl(url);
+      }
     }
 
     function renderResultCard(data) {
@@ -1382,6 +1393,9 @@
       const sdUrl = data.qualities?.sd || hdUrl;
       const audioUrl = data.qualities?.audio || (platform === 'spotify' ? hdUrl : '');
       const cleanSafeTitle = title.replace(/'/g, "\\'");
+      const cleanFilename = (platform || 'video') + '-video.mp4';
+      const directDlUrl = hdUrl ? `/api/download?url=${encodeURIComponent(hdUrl)}&filename=${encodeURIComponent(cleanFilename)}` : '';
+      const audioDlUrl = audioUrl ? `/api/download?url=${encodeURIComponent(audioUrl)}&filename=${encodeURIComponent((platform || 'audio') + '-audio.mp3')}` : '';
 
       let badgesHtml = '';
       if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
@@ -1421,97 +1435,44 @@
       } else if (platform === 'spotify') {
         actionsHtml = `
           <div class="w-full flex flex-col gap-2">
-            <button type="button" onclick="directDownload('${audioUrl}', 'spotify-track.mp3', this)" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
+            <a href="${directDlUrl || audioDlUrl}" download="spotify-track.mp3" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all text-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
               <span>Download Spotify Audio (MP3)</span>
-            </button>
-          </div>
-        `;
-      } else if (platform === 'tiktok') {
-        const noWm = data.qualities?.no_watermark || hdUrl;
-        actionsHtml = `
-          <div class="w-full flex flex-col gap-2">
-            ${dev.isIOS ? `
-              <button type="button" onclick="saveToPhotosOrGallery('${noWm}', 'tiktok-video.mp4', '${cleanSafeTitle}')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-cyan-500/30 flex flex-col items-center justify-center gap-0.5 cursor-pointer transition-all">
-                <div class="flex items-center gap-2">
-                  <span class="text-base">📸</span>
-                  <span>Save to iPhone Photos</span>
-                </div>
-                <span class="text-[10px] text-cyan-100 font-normal">Opens iOS Share Sheet ➔ Tap "Save Video"</span>
-              </button>
-              <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Direct File Download (No Watermark)</span>
-              </button>
-            ` : dev.isAndroid ? `
-              <button type="button" onclick="saveToPhotosOrGallery('${noWm}', 'tiktok-video.mp4', '${cleanSafeTitle}')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-500/30 flex flex-col items-center justify-center gap-0.5 cursor-pointer transition-all">
-                <div class="flex items-center gap-2">
-                  <span class="text-base">🖼️</span>
-                  <span>Save to Gallery / Photos</span>
-                </div>
-                <span class="text-[10px] text-emerald-100 font-normal">Direct to Gallery, Google Photos or WhatsApp</span>
-              </button>
-              <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Direct File Download (No Watermark)</span>
-              </button>
-            ` : `
-              <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Download Video (No Watermark)</span>
-              </button>
-            `}
-
-            ${audioUrl ? `
-            <button type="button" onclick="proxyDownload('${audioUrl}', 'tiktok-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700/80 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>🎵 Extract MP3 Audio (320kbps)</span>
-            </button>` : ''}
+            </a>
           </div>
         `;
       } else {
+        // Universal Handler for TikTok, Instagram, Facebook, Twitter, Pinterest, etc.
         actionsHtml = `
-          <div class="w-full flex flex-col gap-2">
-            ${dev.isIOS ? `
-              <button type="button" onclick="saveToPhotosOrGallery('${hdUrl}', '${platform}-video.mp4', '${cleanSafeTitle}')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-cyan-500/30 flex flex-col items-center justify-center gap-0.5 cursor-pointer transition-all">
-                <div class="flex items-center gap-2">
-                  <span class="text-base">📸</span>
-                  <span>Save to iPhone Photos</span>
-                </div>
-                <span class="text-[10px] text-cyan-100 font-normal">Opens iOS Share Sheet ➔ Tap "Save Video"</span>
-              </button>
-              <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Direct File Download (HD MP4)</span>
-              </button>
-            ` : dev.isAndroid ? `
-              <button type="button" onclick="saveToPhotosOrGallery('${hdUrl}', '${platform}-video.mp4', '${cleanSafeTitle}')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-500/30 flex flex-col items-center justify-center gap-0.5 cursor-pointer transition-all">
-                <div class="flex items-center gap-2">
-                  <span class="text-base">🖼️</span>
-                  <span>Save to Gallery / Photos</span>
-                </div>
-                <span class="text-[10px] text-emerald-100 font-normal">Direct to Gallery, Google Photos or WhatsApp</span>
-              </button>
-              <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Direct File Download (HD MP4)</span>
-              </button>
+          <div class="w-full flex flex-col gap-2.5">
+            ${directDlUrl ? `
+              <!-- Main Direct High-Speed Download Button -->
+              <a href="${directDlUrl}" download="${cleanFilename}" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] text-center">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>⬇️ Download HD Video (${platform === 'tiktok' ? 'No Watermark' : 'MP4'})</span>
+              </a>
+
+              <!-- Mobile Friendly Helper Row (Save to Photos / Watch Stream) -->
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="openGalleryGuideModal('${dev.isIOS ? 'ios' : 'android'}')" class="w-full py-2.5 px-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
+                  <span>📸 ${dev.isIOS ? 'Save to Photos' : 'Save to Gallery'}</span>
+                </button>
+                <a href="${hdUrl}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center">
+                  <span>🎥 Open Video</span>
+                </a>
+              </div>
             ` : `
-              <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>Download HD Video</span>
-              </button>
+              <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs text-center font-medium">
+                ⚠️ Direct download stream is unavailable for this specific post. Please make sure the account is public.
+              </div>
             `}
 
-            ${sdUrl && sdUrl !== hdUrl && !dev.isMobile ? `
-            <button type="button" onclick="proxyDownload('${sdUrl}', '${platform}-sd.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
-              <span>Download SD (Faster)</span>
-            </button>` : ''}
-
-            <button type="button" onclick="proxyDownload('${audioUrl || hdUrl}', '${platform}-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/80 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
-              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>🎵 Extract MP3 Audio (320kbps)</span>
-            </button>
+            ${audioDlUrl ? `
+              <a href="${audioDlUrl}" download="${platform}-audio.mp3" class="w-full py-2.5 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/80 font-semibold text-xs flex items-center justify-center gap-2 transition-all text-center">
+                <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                <span>🎵 Extract MP3 Audio (320kbps)</span>
+              </a>
+            ` : ''}
           </div>
         `;
       }
@@ -1526,7 +1487,7 @@
           </button>
 
           <div class="flex items-center gap-2">
-            <button type="button" onclick="saveToPhotosOrGallery('${qrTargetUrl}', 'video.mp4', '${cleanSafeTitle}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-400 text-xs font-bold transition-all" title="Share via Phone">
+            <button type="button" onclick="shareMediaNative('${qrTargetUrl}', '${cleanSafeTitle}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-400 text-xs font-bold transition-all" title="Share via Phone">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
               <span>Share</span>
             </button>
@@ -1614,21 +1575,14 @@
       }
       const cleanName = filename || 'lukzi-download.mp4';
       const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
-      
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = dlUrl;
-      a.download = cleanName;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 500);
+      window.location.href = dlUrl;
     }
 
     async function generateYouTubeDownload(url) {
       const btn = ytFormat === 'mp4' ? document.getElementById('yt-generate-btn') : document.getElementById('yt-generate-audio-btn');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Downloading...</span>`;
+        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Generating Download...</span>`;
       }
 
       try {
@@ -1641,7 +1595,9 @@
         const data = await res.json();
         if (data && data.download_url) {
           showToast('Direct download started!', 'success');
-          triggerFileDownload(data.download_url, ytFormat === 'mp3' ? 'youtube-audio.mp3' : `youtube-${ytQuality}.mp4`);
+          const cleanName = ytFormat === 'mp3' ? 'youtube-audio.mp3' : `youtube-${ytQuality}.mp4`;
+          const dlUrl = `/api/download?url=${encodeURIComponent(data.download_url)}&filename=${encodeURIComponent(cleanName)}`;
+          window.location.href = dlUrl;
         } else {
           throw new Error(data.error || 'Could not generate YouTube download');
         }
