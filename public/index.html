@@ -93,15 +93,6 @@
       box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.25);
     }
 
-    :root {
-      --orbit-radius: 105px;
-    }
-    @media (min-width: 640px) {
-      :root {
-        --orbit-radius: 140px;
-      }
-    }
-
     /* === 3D Orbiting Social Media Loader & Pure Pitch Dark Stage === */
     #lukzi-3d-loader {
       position: fixed;
@@ -116,8 +107,8 @@
     }
     .orbit-stage {
       position: relative;
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
       transform-style: preserve-3d;
       transform: rotateX(62deg) rotateZ(0deg);
     }
@@ -267,56 +258,56 @@
         <!-- Orbiting Rotator for 8 Social Media Icons -->
         <div class="orbit-rotator">
           <!-- 1. YouTube (0 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(0deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(0deg) translateX(140px);">
             <div class="orbit-item-inner border-red-500/50 shadow-red-500/30">
               <img src="/yt.png" alt="YouTube" class="w-5 h-5 object-contain" />
             </div>
           </div>
 
           <!-- 2. TikTok (45 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(45deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(45deg) translateX(140px);">
             <div class="orbit-item-inner border-cyan-400/50 shadow-cyan-400/30">
               <img src="/tiktok.png" alt="TikTok" class="w-5 h-5 object-contain" />
             </div>
           </div>
 
           <!-- 3. Instagram (90 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(90deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(90deg) translateX(140px);">
             <div class="orbit-item-inner border-pink-500/50 shadow-pink-500/30">
               <img src="/insta.png" alt="Instagram" class="w-5 h-5 object-contain" />
             </div>
           </div>
 
           <!-- 4. Facebook (135 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(135deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(135deg) translateX(140px);">
             <div class="orbit-item-inner border-blue-500/50 shadow-blue-500/30">
               <img src="/fb.png" alt="Facebook" class="w-5 h-5 object-contain" />
             </div>
           </div>
 
           <!-- 5. X / Twitter (180 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(180deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(180deg) translateX(140px);">
             <div class="orbit-item-inner border-slate-400/50 shadow-white/20">
               <img src="/twitter.png" alt="X" class="w-5 h-5 object-contain" />
             </div>
           </div>
 
           <!-- 6. Snapchat (225 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(225deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(225deg) translateX(140px);">
             <div class="orbit-item-inner border-yellow-400/50 shadow-yellow-400/30">
               <svg class="w-5 h-5 fill-yellow-400" viewBox="0 0 24 24"><path d="M12.002 2c-3.87 0-6.104 2.766-6.104 5.378 0 1.256.49 2.457 1.053 3.328.163.253.22.428.14.656-.12.344-.457.728-.868.835-.494.13-1.077-.145-1.455-.383-.343-.217-.61-.318-.847-.184-.282.16-.328.53-.162.946.223.558.742 1.11 1.454 1.432.19.086.31.25.328.455.034.402.164.74.453 1.01.408.384.975.52 1.637.382.433-.09.77-.07 1.04.145.31.246.467.625.59 1.037.165.556.398.972.827 1.255.433.284.982.355 1.62.22.378-.08.777-.288 1.144-.488.337-.183.702-.27 1.082-.27.378 0 .742.087 1.08.27.366.2.766.408 1.144.488.638.135 1.187.064 1.62-.22.43-.283.662-.7.827-1.255.123-.412.28-.79.59-1.037.27-.216.608-.236 1.04-.145.663.138 1.23-.002 1.638-.382.29-.27.42-.608.453-1.01.018-.205.138-.37.328-.455.712-.322 1.23-.874 1.454-1.432.166-.416.12-.786-.162-.946-.237-.134-.504-.033-.847.184-.378.238-.96.513-1.455.383-.41-.107-.748-.49-.868-.835-.08-.228-.023-.403.14-.656.563-.87 1.053-2.072 1.053-3.328C18.106 4.766 15.872 2 12.002 2z"/></svg>
             </div>
           </div>
 
           <!-- 7. Telegram (270 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(270deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(270deg) translateX(140px);">
             <div class="orbit-item-inner border-sky-400/50 shadow-sky-400/30">
               <svg class="w-5 h-5 fill-cyan-400" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
             </div>
           </div>
 
           <!-- 8. WhatsApp (315 deg) -->
-          <div class="orbit-item" style="transform: rotateZ(315deg) translateX(var(--orbit-radius));">
+          <div class="orbit-item" style="transform: rotateZ(315deg) translateX(140px);">
             <div class="orbit-item-inner border-emerald-400/50 shadow-emerald-400/30">
               <svg class="w-5 h-5 fill-emerald-400" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             </div>
@@ -894,7 +885,7 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- 📢 Live Recent Downloads Ticker (Social Proof Popup at Bottom-Left) -->
-  <div id="social-proof-toast" class="fixed bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm z-40 pointer-events-auto transform translate-y-24 opacity-0 transition-all duration-500 select-none">
+  <div id="social-proof-toast" class="fixed bottom-6 left-6 z-40 max-w-xs sm:max-w-sm pointer-events-auto transform translate-y-24 opacity-0 transition-all duration-500 select-none">
     <div class="glass-card rounded-2xl p-3 sm:p-3.5 shadow-2xl border border-cyan-500/30 flex items-center gap-3 backdrop-blur-xl">
       <div class="relative shrink-0">
         <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center p-1.5 shadow-md">
@@ -1317,14 +1308,13 @@
     function startSocialProofTicker() {
       if (socialProofDismissed) return;
       
-      function showWelcomeNotification() {
+      function triggerNext() {
         if (socialProofDismissed) return;
         const toast = document.getElementById('social-proof-toast');
         if (!toast) return;
 
-        // Pick a random country from the 6 specified countries
-        const randomIndex = Math.floor(Math.random() * RECENT_DOWNLOADS_DATA.length);
-        const item = RECENT_DOWNLOADS_DATA[randomIndex];
+        const item = RECENT_DOWNLOADS_DATA[socialProofIndex];
+        socialProofIndex = (socialProofIndex + 1) % RECENT_DOWNLOADS_DATA.length;
 
         const userEl = document.getElementById('sp-user');
         const flagEl = document.getElementById('sp-flag');
@@ -1342,20 +1332,17 @@
         toast.classList.remove('translate-y-24', 'opacity-0');
         toast.classList.add('translate-y-0', 'opacity-100');
 
-        // Stay visible for 4.5s then slide out and permanently finish
+        // Stay visible for 4.5s then slide out
         setTimeout(() => {
-          if (toast) {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-              if (toast && toast.parentNode) toast.remove();
-            }, 600);
-          }
+          if (socialProofDismissed) return;
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-24', 'opacity-0');
         }, 4500);
       }
 
-      // Show ONLY once when landing on the website (after 3.5 seconds)
-      setTimeout(showWelcomeNotification, 3500);
+      // Initial trigger after 3.5 seconds
+      setTimeout(triggerNext, 3500);
+      socialProofTimer = setInterval(triggerNext, 9000);
     }
 
     function dismissSocialProof() {
@@ -1365,9 +1352,7 @@
       if (toast) {
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-24', 'opacity-0');
-        setTimeout(() => {
-          if (toast.parentNode) toast.remove();
-        }, 500);
+        setTimeout(() => toast.remove(), 500);
       }
     }
 
@@ -1581,25 +1566,17 @@
       showToast('✨ DOWNLOAD COMPLETE — Starting File Save...', 'success');
       const a = document.createElement('a');
       a.href = url;
-      a.download = filename || 'lukzi-download.mp3';
+      a.download = filename || 'lukzi-download';
       a.target = '_blank';
-      a.rel = 'noopener noreferrer';
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => a.remove(), 250);
+      a.remove();
     }
 
     function proxyDownload(url, filename, btn) {
       if (!url) return;
-      showToast('✨ High-Speed Download Starting...', 'success');
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename || 'lukzi-download.mp4';
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 250);
+      showToast('✨ DOWNLOAD COMPLETE — Starting High Speed Download...', 'success');
+      window.open(url, '_blank');
     }
 
     function copyDirectUrl(url) {
@@ -1634,10 +1611,8 @@
       const loader = document.getElementById('lukzi-3d-loader');
       const mainContent = document.getElementById('lukzi-main-content');
       
-      // Restore normal page scroll for iOS and mobile
+      // Restore normal page scroll
       document.body.classList.remove('overflow-hidden');
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
       
       // Smoothly fade-in & unblur full website content
       if (mainContent) {
@@ -1649,11 +1624,11 @@
       if (loader) {
         loader.style.opacity = '0';
         loader.style.pointerEvents = 'none';
-        loader.style.transform = 'scale(1.03)';
+        loader.style.transform = 'scale(1.04)';
         setTimeout(() => {
           loader.style.display = 'none';
           if (loader.parentNode) loader.remove();
-        }, 500);
+        }, 650);
       }
     }
 
@@ -1663,19 +1638,19 @@
       let progress = 0;
 
       const timer = setInterval(() => {
-        progress += Math.floor(Math.random() * 14) + 10;
+        progress += Math.floor(Math.random() * 8) + 4;
         if (progress > 100) progress = 100;
         if (progressBar) progressBar.style.width = progress + '%';
         if (percentText) percentText.textContent = progress + '%';
 
         if (progress >= 100) {
           clearInterval(timer);
-          setTimeout(dismiss3dLoader, 200);
+          setTimeout(dismiss3dLoader, 350);
         }
-      }, 45);
+      }, 70);
 
       // Failsafe timer (never blocks permanently)
-      setTimeout(dismiss3dLoader, 1400);
+      setTimeout(dismiss3dLoader, 2800);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
