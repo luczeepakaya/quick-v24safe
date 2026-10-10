@@ -27,8 +27,9 @@
 
 [[redirects]]
   from = "/guaid"
-  to = "/guaid.html"
-  status = 200
+  to = "/"
+  status = 301
+
 
 [[redirects]]
   from = "/*"
