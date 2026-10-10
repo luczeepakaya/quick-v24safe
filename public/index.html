@@ -1315,66 +1315,21 @@
       `;
     }
 
-    async function saveVideoToDeviceGallery(videoUrl, filename, title, btn) {
+    function saveVideoToDeviceGallery(videoUrl, filename, title, btn) {
       if (!videoUrl) return;
       const cleanFilename = (filename || 'lukzi-video.mp4').replace(/[^\w.-]/g, '_');
-      const origHtml = btn ? btn.innerHTML : '';
 
-      if (device.canShareFiles) {
-        try {
-          if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline mr-1.5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Preparing Video...</span>`;
-          }
-          showToast('Preparing video for Photos / Gallery...', 'info');
-
-          let blob = null;
-          try {
-            const directRes = await fetch(videoUrl);
-            if (directRes.ok) blob = await directRes.blob();
-          } catch(e) {}
-          if (!blob) {
-            const dlUrl = `/api/download?url=${encodeURIComponent(videoUrl)}&filename=${encodeURIComponent(cleanFilename)}`;
-            const res = await fetch(dlUrl);
-            if (res.ok) blob = await res.blob();
-          }
-          if (!blob) throw new Error('Could not fetch video file');
-
-          const file = new File([blob], cleanFilename, { type: 'video/mp4' });
-
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: title || 'LUKZI Video',
-              text: 'LUKZI VS SOCIAL MEDIA Downloader 🇱🇰'
-            });
-            showToast(device.isIOS ? '✨ Select "Save Video" in the Share Sheet to save to Apple Photos!' : '✨ Select Photos / Gallery to save video!', 'success');
-            if (btn) {
-              btn.disabled = false;
-              btn.innerHTML = origHtml;
-            }
-            return;
-          }
-        } catch (err) {
-          if (err.name !== 'AbortError') {
-            console.warn('Share file fallback:', err.message);
-          }
-        } finally {
-          if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = origHtml;
-          }
-        }
-      }
-
-      // Direct download fallback
+      // 1. Instant direct download trigger (0ms latency, zero freezing)
       triggerFileDownload(videoUrl, cleanFilename);
-      showToast(device.isIOS ? 'Download started! Follow the iOS Guide to save to Photos.' : 'Download started! File will appear in Gallery / Downloads.', 'success');
 
+      // 2. Clear success notification
+      showToast(device.isIOS ? '✨ Download started! Tap below to see how to save to Apple Photos.' : '✨ Download started! File will appear in your Gallery / Photos.', 'success');
+
+      // 3. Automatically open visual gallery guide
       if (device.isIOS || device.isAndroid) {
         setTimeout(() => {
           openGalleryGuideModal(device.isIOS ? 'ios' : 'android');
-        }, 1200);
+        }, 800);
       }
     }
 
