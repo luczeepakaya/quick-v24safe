@@ -384,50 +384,6 @@ async function extractInstagramDirect(url) {
   return null;
 }
 
-async function extractTikTokDirect(url) {
-  try {
-    const res = await fetch('https://www.tikwm.com/api/?url=' + encodeURIComponent(url), {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      },
-      signal: AbortSignal.timeout(3500)
-    });
-    const json = await res.json();
-    if (json && json.code === 0 && json.data) {
-      const d = json.data;
-      const playUrl = d.play.startsWith('http') ? d.play : ('https://www.tikwm.com' + d.play);
-      const hdUrl = d.hdplay ? (d.hdplay.startsWith('http') ? d.hdplay : ('https://www.tikwm.com' + d.hdplay)) : playUrl;
-      const musicUrl = d.music ? (d.music.startsWith('http') ? d.music : ('https://www.tikwm.com' + d.music)) : null;
-      const coverUrl = d.cover ? (d.cover.startsWith('http') ? d.cover : ('https://www.tikwm.com' + d.cover)) : null;
-
-      return {
-        success: true,
-        data: {
-          platform: 'tiktok',
-          title: d.title || 'TikTok Video',
-          thumbnail: coverUrl,
-          author: d.author?.nickname || d.author?.unique_id || 'TikTok Creator',
-          meta: {
-            author: d.author?.nickname || d.author?.unique_id,
-            duration: d.duration ? `${d.duration}s` : 'HD',
-            views: d.play_count ? String(d.play_count) : 'Direct Stream',
-            likes: d.digg_count ? String(d.digg_count) : '0'
-          },
-          qualities: {
-            hd: hdUrl,
-            sd: playUrl,
-            no_watermark: playUrl,
-            audio: musicUrl
-          }
-        }
-      };
-    }
-  } catch (err) {
-    console.warn('Direct TikTok extraction error:', err.message);
-  }
-  return null;
-}
-
   // API: /api/details (Unified metadata fetcher - Ultra Fast)
   if (pathname === '/api/details' && req.method === 'POST') {
     let bodyStr = '';
@@ -485,30 +441,7 @@ async function extractTikTokDirect(url) {
             res.end(JSON.stringify(resObj));
             return;
           }
-        } else if (platform === 'tiktok') {
-          const directData = await extractTikTokDirect(url);
-          if (directData && directData.data) {
-            metadataCache.set(url, directData.data);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(directData.data));
-            return;
-          }
-          const upData = await proxyUpstreamApi('/api/tiktok', { url });
-          if (upData && (upData.data || upData.success)) {
-            const resData = upData.data || upData;
-            metadataCache.set(url, resData);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(resData));
-            return;
-          }
         } else if (platform === 'instagram') {
-          const directData = await extractInstagramDirect(url);
-          if (directData && directData.data) {
-            metadataCache.set(url, directData.data);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(directData.data));
-            return;
-          }
           let upData = null;
           try {
             upData = await proxyUpstreamApi('/api/instagram', { url });
@@ -519,8 +452,15 @@ async function extractTikTokDirect(url) {
             res.end(JSON.stringify(upData.data));
             return;
           }
+          const directData = await extractInstagramDirect(url);
+          if (directData && directData.data) {
+            metadataCache.set(url, directData.data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(directData.data));
+            return;
+          }
         } else {
-          // General platforms: facebook, twitter, spotify, pinterest
+          // General platforms: tiktok, facebook, twitter, spotify, pinterest
           const ep = `/api/${platform}`;
           const upData = await proxyUpstreamApi(ep, { url });
           if (upData && (upData.data || upData.success)) {
@@ -627,24 +567,10 @@ async function extractTikTokDirect(url) {
           if (directInfo) data = directInfo;
         }
 
-        if (pathname === '/api/tiktok') {
-          const directTikTok = await extractTikTokDirect(body.url || '');
-          if (directTikTok) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(directTikTok));
-            return;
-          }
-        }
-
         if (pathname === '/api/instagram' && (!data || !data.success || !data.data?.qualities?.hd)) {
           console.log('Upstream Instagram failed, attempting direct embed extractor...');
           const directData = await extractInstagramDirect(body.url || '');
           if (directData) data = directData;
-        }
-
-        if (pathname === '/api/tiktok' && (!data || !data.success || !data.data?.qualities?.hd)) {
-          const directTikTok = await extractTikTokDirect(body.url || '');
-          if (directTikTok) data = directTikTok;
         }
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
