@@ -741,7 +741,9 @@ async function extractTikTokDirect(url) {
       const headers = {
         'Content-Disposition': `attachment; filename="${filename}"`,
         'Content-Type': contentType,
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Expose-Headers': 'Content-Disposition, Content-Length, Content-Type',
+        'Accept-Ranges': 'bytes'
       };
       if (contentLength) headers['Content-Length'] = contentLength;
 
