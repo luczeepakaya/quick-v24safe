@@ -1,7 +1,10 @@
-/api/*   /.netlify/functions/api/:splat   200
-/about   /about.html                      200
-/contact /contact.html                    200
-/apis    /apis.html                       200
-/guaid   /                                301
-/guaid.html /                             301
-/*       /404.html                        404
+/api/*       /.netlify/functions/api/:splat   200
+/about       /about.html                      200
+/developer   /developer.html                  200
+/contact     /contact.html                    200
+/apis        /developer                       301!
+/apis.html   /developer                       301!
+/guaid       /                                301!
+/guaid/*     /                                301!
+/guaid.html  /                                301!
+/*           /404.html                        404

@@ -1,84 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full antialiased dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>404 — Page Not Found | LUKZI VS SOCIAL MEDIA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Page Not Found (404) • LUKZI VS SOCIAL MEDIA</title>
+  <meta name="theme-color" content="#06b6d4"/>
   <link rel="icon" href="/lukzi-logo.png" type="image/png"/>
-  <link rel="stylesheet" href="/style.css"/>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    (function(){
-      try {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (!prefersDark) document.documentElement.classList.remove('dark');
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
+          }
         }
-      } catch (e) {
-        document.documentElement.classList.add('dark');
       }
-    })();
+    }
   </script>
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Outfit', sans-serif; }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
 </head>
-<body class="min-h-full flex flex-col font-sans transition-colors duration-300">
-  <div class="relative min-h-screen font-sans flex items-center justify-center overflow-hidden">
-    <!-- Background Image -->
-    <div aria-hidden="true" class="fixed inset-0 -z-10 bg-[url('/bg-light.png')] bg-cover bg-center bg-no-repeat transition-opacity duration-500 dark:bg-[url('/bg-dark.png')]"></div>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col items-center justify-center p-4 antialiased text-center">
 
-    <!-- Glow Orbs -->
-    <div class="absolute inset-0 -z-5 overflow-hidden">
-      <div class="absolute top-20 left-10 w-64 h-64 bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-10 w-80 h-80 bg-pink-500/10 dark:bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-    </div>
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"></div>
+  </div>
 
-    <!-- Center Card -->
-    <div class="max-w-2xl mx-auto px-4 text-center relative z-10 py-16">
-      <div class="flex justify-center mb-6">
-        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="w-24 h-24 rounded-full object-cover border-2 border-cyan-400 shadow-xl shadow-cyan-500/40 hover:scale-110 transition-transform duration-500" />
-      </div>
-
-      <h1 class="text-6xl md:text-7xl font-extrabold mb-2 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-        404
-      </h1>
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-        Page Not Found
-      </h2>
-      <p class="text-lg text-gray-600 dark:text-slate-300 max-w-md mx-auto mb-8">
-        Oops! The page you're looking for doesn't exist or has been moved.
-      </p>
-
-      <!-- Action Buttons -->
-      <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-        <a href="/" class="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-[1.05] hover:shadow-xl hover:shadow-cyan-500/40 active:scale-[0.95]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-          <span>Go Home</span>
-        </a>
-        <button onclick="history.back()" type="button" class="group flex items-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-6 py-3 font-semibold text-slate-700 backdrop-blur-md transition-all duration-300 hover:scale-[1.05] hover:bg-cyan-50 hover:border-cyan-300 dark:border-white/10 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-700 active:scale-[0.95]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
-          <span>Go Back</span>
-        </button>
-      </div>
-
-      <!-- Quick Links -->
-      <p class="text-sm text-gray-500 dark:text-slate-400 mb-4">Try these popular pages:</p>
-      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
-        <a href="/" class="text-cyan-400 hover:underline">Home</a>
-        <span class="text-gray-300 dark:text-slate-600">•</span>
-        <a href="/about" class="text-cyan-400 hover:underline">About &amp; Guide</a>
-        <span class="text-gray-300 dark:text-slate-600">•</span>
-        <a href="/about" class="text-cyan-400 hover:underline">About</a>
-        <span class="text-gray-300 dark:text-slate-600">•</span>
-        <a href="/contact" class="text-cyan-400 hover:underline">Contact (070 185 4805)</a>
-        <span class="text-gray-300 dark:text-slate-600">•</span>
-        <a href="/apis" class="text-cyan-400 hover:underline">API</a>
-      </div>
-
-      <p class="mt-8 text-xs text-slate-500 dark:text-slate-400">LUKZI VS SOCIAL MEDIA • 070 185 4805 • Made with ❤️ by LUKZI DEV</p>
-    </div>
+  <div class="glass-card max-w-md w-full rounded-3xl p-8 sm:p-10 shadow-2xl">
+    <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-16 w-16 rounded-full mx-auto mb-6 ring-2 ring-cyan-400 shadow-lg shadow-cyan-500/30 object-cover" />
+    <span class="text-cyan-400 font-display font-black text-6xl block mb-2">404</span>
+    <h1 class="font-display font-bold text-2xl text-white mb-2">Page Not Found</h1>
+    <p class="text-slate-400 text-sm mb-8 leading-relaxed">The page you were looking for might have been moved or does not exist.</p>
+    <a href="/" class="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/30 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      <span>Back to Downloader</span>
+    </a>
   </div>
 </body>
 </html>

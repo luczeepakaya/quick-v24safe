@@ -539,7 +539,13 @@ async function extractInstagramDirect(url) {
 
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    res.writeHead(200, { 'Content-Type': contentType });
+    const responseHeaders = { 'Content-Type': contentType };
+    if (ext === '.html' || ext === '.js') {
+      responseHeaders['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+      responseHeaders['Pragma'] = 'no-cache';
+      responseHeaders['Expires'] = '0';
+    }
+    res.writeHead(200, responseHeaders);
     fs.createReadStream(filePath).pipe(res);
   });
 });
