@@ -1,10 +1,10 @@
 {
   "name": "LUKZI VS SOCIAL MEDIA Downloader",
   "short_name": "LUKZI Downloader",
-  "description": "Download videos and audios from YouTube, TikTok, Instagram, Facebook, and more in 1080p HD without watermarks.",
+  "description": "Download videos and audio from YouTube, TikTok, Instagram, and Facebook in 1080p HD without watermarks.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#090d16",
+  "background_color": "#080c14",
   "theme_color": "#06b6d4",
   "icons": [
     {

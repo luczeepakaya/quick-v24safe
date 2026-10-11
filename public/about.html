@@ -4,9 +4,10 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
   <title>About & How to Use • LUKZI VS SOCIAL MEDIA 🇱🇰</title>
-  <meta name="description" content="Learn how to download videos and audio from YouTube, TikTok, Instagram, Facebook, and more using LUKZI Downloader."/>
+  <meta name="description" content="Learn how to download videos and audio from YouTube, TikTok, Instagram, and Facebook on Android, iOS, and PC using LUKZI Downloader."/>
   <meta name="theme-color" content="#06b6d4"/>
   <link rel="icon" href="/lukzi-logo.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="/lukzi-logo.png"/>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +30,7 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body {
       width: 100%;
       max-width: 100vw;
@@ -37,20 +38,28 @@
       margin: 0;
       padding: 0;
     }
-
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080c14; }
     h1, h2, h3, .font-display { font-family: 'Outfit', sans-serif; }
     .glass-nav {
-      background: rgba(17, 24, 39, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
+    html:not(.dark) .glass-nav {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
     .glass-card {
-      background: rgba(17, 24, 39, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    html:not(.dark) .glass-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
     }
   </style>
 
@@ -66,33 +75,31 @@
     })();
   </script>
 </head>
-<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased">
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased">
 
   <!-- Ambient Glow -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-    <div class="absolute -top-40 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl"></div>
+    <div class="absolute -top-40 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
   </div>
 
   <!-- Header -->
   <header class="sticky top-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4">
-    <div class="mx-auto max-w-7xl">
-      <div class="glass-nav rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-xl">
-        <a href="/" class="flex items-center gap-3 shrink-0">
-          <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-10 w-10 rounded-full object-cover ring-2 ring-cyan-400" />
+    <div class="mx-auto max-w-6xl">
+      <div class="glass-nav rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-xl">
+        <a href="/" class="flex items-center gap-2.5 shrink-0">
+          <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-9 w-9 rounded-full object-cover ring-2 ring-cyan-400" />
           <span class="font-display font-extrabold text-base sm:text-lg bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">LUKZI VS SOCIAL MEDIA</span>
         </a>
 
         <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
           <a href="/" class="text-slate-300 hover:text-cyan-400 transition-colors">Home</a>
           <a href="/about" class="text-cyan-400 transition-colors">How to Use</a>
-          <a href="/developer" class="text-slate-300 hover:text-cyan-400 transition-colors">Developer</a>
+          <a href="/developer" class="text-slate-300 hover:text-cyan-400 transition-colors">Developer 🇱🇰</a>
           <a href="/contact" class="text-slate-300 hover:text-cyan-400 transition-colors">Contact</a>
         </nav>
 
-        <div class="flex items-center gap-3">
-          <a href="/" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold shadow-md shadow-cyan-500/20 hover:scale-105 transition-all">Start Downloading</a>
-        </div>
+        <a href="/" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold shadow-md shadow-cyan-500/20 hover:scale-105 active:scale-95 transition-all">Start Downloading</a>
       </div>
     </div>
   </header>
@@ -104,67 +111,87 @@
         <span>📖 User Guide & About</span>
       </div>
       <h1 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">How to Use LUKZI Downloader</h1>
-      <p class="text-slate-400 text-sm sm:text-base mt-2">Comprehensive guide for downloading social media media in full HD quality</p>
+      <p class="text-slate-400 text-sm sm:text-base mt-2">Complete guide for downloading from YouTube, TikTok, Instagram, and Facebook on Android, iOS, and PC</p>
     </div>
 
     <!-- Guide Cards -->
-    <div class="space-y-6">
+    <div class="space-y-5">
       <!-- YouTube Guide -->
-      <div class="glass-card rounded-3xl p-6 sm:p-8">
-        <div class="flex items-center gap-3 mb-4">
+      <div class="glass-card rounded-2xl p-5 sm:p-7">
+        <div class="flex items-center gap-3 mb-3">
           <img src="/yt.png" alt="YouTube" class="w-7 h-7 object-contain" />
-          <h2 class="font-display font-bold text-xl text-white">YouTube & Shorts Video/Audio Download</h2>
+          <h2 class="font-display font-bold text-lg sm:text-xl text-white">1. YouTube Videos, Shorts & MP3</h2>
         </div>
-        <p class="text-slate-300 text-sm leading-relaxed mb-4">
-          LUKZI allows you to extract YouTube videos in multiple resolutions including 1080p, 720p HD, 480p, and MP3 high quality audio.
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+          Download high-definition 1080p, 720p, 480p videos or convert to 320kbps MP3 audio seamlessly.
         </p>
-        <ol class="list-decimal list-inside space-y-2 text-slate-400 text-sm">
-          <li>Copy the URL of the YouTube video or Short from your browser or the YouTube mobile app.</li>
-          <li>Paste the link into the downloader input on the homepage.</li>
-          <li>Select MP4 Video (and choose resolution) or MP3 Audio, then click Download.</li>
+        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 text-xs sm:text-sm">
+          <li>Copy the URL of the YouTube video or Short from the YouTube app or browser.</li>
+          <li>Paste the link into the search box on the homepage.</li>
+          <li>Select MP4 Video (choose resolution) or MP3 Audio, then tap Download.</li>
         </ol>
       </div>
 
       <!-- TikTok Guide -->
-      <div class="glass-card rounded-3xl p-6 sm:p-8">
-        <div class="flex items-center gap-3 mb-4">
+      <div class="glass-card rounded-2xl p-5 sm:p-7">
+        <div class="flex items-center gap-3 mb-3">
           <img src="/tiktok.png" alt="TikTok" class="w-7 h-7 object-contain" />
-          <h2 class="font-display font-bold text-xl text-white">TikTok Video Download (No Watermark)</h2>
+          <h2 class="font-display font-bold text-lg sm:text-xl text-white">2. TikTok Videos (No Watermark)</h2>
         </div>
-        <p class="text-slate-300 text-sm leading-relaxed mb-4">
-          Download high-definition TikTok videos completely free of the bouncing watermark logo.
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+          Extract pure HD MP4 video streams without the floating watermark logo.
         </p>
-        <ol class="list-decimal list-inside space-y-2 text-slate-400 text-sm">
-          <li>Tap the "Share" icon on any TikTok video and tap "Copy Link".</li>
+        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 text-xs sm:text-sm">
+          <li>Tap the "Share" button on TikTok and tap "Copy Link".</li>
           <li>Paste the link into LUKZI VS SOCIAL MEDIA.</li>
-          <li>Click "Download Video (No Watermark)" to save the pure MP4 video directly.</li>
+          <li>Click "Download TikTok (No Watermark)" to save directly to your gallery.</li>
         </ol>
       </div>
 
-      <!-- Instagram & FB Guide -->
-      <div class="glass-card rounded-3xl p-6 sm:p-8">
-        <div class="flex items-center gap-3 mb-4">
+      <!-- Instagram Guide -->
+      <div class="glass-card rounded-2xl p-5 sm:p-7">
+        <div class="flex items-center gap-3 mb-3">
           <img src="/insta.png" alt="Instagram" class="w-7 h-7 object-contain" />
-          <h2 class="font-display font-bold text-xl text-white">Instagram Reels, Stories & Facebook Videos</h2>
+          <h2 class="font-display font-bold text-lg sm:text-xl text-white">3. Instagram Reels & Videos</h2>
         </div>
-        <p class="text-slate-300 text-sm leading-relaxed mb-4">
-          Save public Instagram reels, stories, photos, and Facebook high-definition videos with a single click.
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+          Download Instagram Reels and Videos in original studio quality with audio.
         </p>
+        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 text-xs sm:text-sm">
+          <li>Tap the three dots (⋯) or Share icon on the Instagram post and choose "Copy link".</li>
+          <li>Paste the link into the downloader.</li>
+          <li>Tap "Download Instagram HD Reel" to save it immediately.</li>
+        </ol>
+      </div>
+
+      <!-- Facebook Guide -->
+      <div class="glass-card rounded-2xl p-5 sm:p-7">
+        <div class="flex items-center gap-3 mb-3">
+          <img src="/fb.png" alt="Facebook" class="w-7 h-7 object-contain" />
+          <h2 class="font-display font-bold text-lg sm:text-xl text-white">4. Facebook Videos & Reels</h2>
+        </div>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+          Save public Facebook Watch videos and reels in crystal-clear HD or fast SD.
+        </p>
+        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 text-xs sm:text-sm">
+          <li>Click "Share" on any public Facebook post and tap "Copy Link".</li>
+          <li>Paste the link into LUKZI VS SOCIAL MEDIA.</li>
+          <li>Click "Download Facebook HD Video".</li>
+        </ol>
       </div>
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="mt-auto border-t border-slate-800 bg-slate-950/80 py-8 px-4 text-center">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+  <footer class="mt-auto border-t border-slate-800 bg-slate-950/80 py-6 px-4 text-center">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
       <div class="flex items-center gap-2">
-        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-6 w-6 rounded-full" />
+        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-5 w-5 rounded-full" />
         <span class="font-bold text-slate-200">LUKZI VS SOCIAL MEDIA</span>
         <span>•</span>
         <span class="text-cyan-400 font-semibold">DEVELOPED IN SRI LANKA 🇱🇰</span>
       </div>
       <div>
-        <span>WhatsApp Support: </span>
+        <span>WhatsApp: </span>
         <a href="https://wa.me/94701854805" target="_blank" class="text-emerald-400 font-bold hover:underline">070 185 4805</a>
       </div>
     </div>

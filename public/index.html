@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-  <title>LUKZI VS SOCIAL MEDIA 🇱🇰 Video & Audio Downloader • DEVELOPED IN SRI LANKA</title>
-  <meta name="description" content="Free high-speed social media video and audio downloader for YouTube, TikTok, Instagram, Facebook, Twitter, Spotify, and Pinterest. 1080p Full HD, No Watermark."/>
-  <meta name="keywords" content="LUKZI,video downloader,social media downloader,YouTube downloader,TikTok downloader no watermark,Instagram downloader,Facebook downloader,Twitter downloader,Spotify downloader,Sri Lanka"/>
+  <title>LUKZI VS SOCIAL MEDIA 🇱🇰 Video & Audio Downloader • YouTube • TikTok • Instagram • Facebook</title>
+  <meta name="description" content="Free high-speed social media video and audio downloader for YouTube, TikTok, Instagram, and Facebook. 1080p Full HD, No Watermark. Works on Android, iOS, and PC."/>
+  <meta name="keywords" content="LUKZI,video downloader,social media downloader,YouTube downloader,TikTok downloader no watermark,Instagram downloader,Facebook downloader,Sri Lanka,Android,iOS,PC"/>
   <meta name="theme-color" content="#06b6d4"/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <meta http-equiv="Pragma" content="no-cache"/>
@@ -42,13 +42,13 @@
     "@type": "WebApplication",
     "name": "LUKZI VS SOCIAL MEDIA Downloader",
     "url": "https://lukzi-socialmedia-dowloader.netlify.app",
-    "description": "Download 1080p HD videos and audio from YouTube, TikTok, Instagram, Facebook without watermark.",
+    "description": "Download 1080p HD videos and audio from YouTube, TikTok, Instagram, and Facebook without watermark.",
     "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "All",
+    "operatingSystem": "All (Android, iOS, Windows, macOS, Linux)",
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "ratingCount": "1280",
+      "ratingCount": "1850",
       "bestRating": "5"
     },
     "offers": {
@@ -60,9 +60,10 @@
   </script>
 
   <style>
-    /* Absolute Zero-Overflow Rules */
+    /* Absolute Zero-Overflow & Mobile Touch Rules */
     *, *::before, *::after {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
     html, body {
       width: 100%;
@@ -82,20 +83,26 @@
       font-family: 'Outfit', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif;
     }
 
+    /* Prevent iOS Safari input auto-zoom glitch */
+    input, select, textarea, button {
+      font-size: 16px;
+      touch-action: manipulation;
+    }
+
     /* Glassmorphism Classes with Hardware Acceleration */
     .glass-nav {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       transform: translateZ(0);
     }
     html:not(.dark) .glass-nav {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border: 1px solid rgba(0, 0, 0, 0.08);
     }
     .glass-card {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -107,7 +114,7 @@
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
     }
     .custom-glow {
-      box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.22);
+      box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.25);
     }
     /* Touch Scrolling Optimization */
     .no-scrollbar::-webkit-scrollbar {
@@ -134,7 +141,7 @@
 </head>
 <body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white transition-colors duration-200">
 
-  <!-- Ambient Glow Background Orbs (Strictly contained to prevent mobile overflow) -->
+  <!-- Ambient Glow Background Orbs -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10 w-full h-full">
     <div class="absolute -top-32 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
     <div class="absolute top-1/3 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
@@ -188,17 +195,17 @@
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span id="live-online-count" class="text-emerald-400 font-mono">14</span>
+            <span id="live-online-count" class="text-emerald-400 font-mono">18</span>
             <span class="text-slate-400 text-[10px]" data-i18n="online_text">Online</span>
           </div>
 
           <!-- Dark/Light Mode Switcher -->
-          <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-1.5 sm:p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 transition-all">
+          <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
           </button>
 
           <!-- Mobile Hamburger Toggle -->
-          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="lg:hidden p-1.5 sm:p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300">
+          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="lg:hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
           </button>
         </div>
@@ -219,33 +226,33 @@
   </header>
 
   <!-- Main Container -->
-  <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 pt-6 sm:pt-10 pb-16 flex flex-col items-center overflow-x-hidden">
+  <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 pt-5 sm:pt-9 pb-16 flex flex-col items-center overflow-x-hidden">
 
     <!-- Hero Title & Subtitle -->
-    <div class="text-center max-w-2xl w-full mb-6 sm:mb-8">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
+    <div class="text-center max-w-2xl w-full mb-5 sm:mb-7">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-2.5 shadow-sm">
         <span data-i18n="badge_hero">✨ 100% Free & Unlimited Fast Downloader</span>
       </div>
 
-      <h1 class="font-display font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white mb-3 leading-tight">
+      <h1 class="font-display font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white mb-2.5 leading-tight">
         <span data-i18n="hero_title_1">Download</span> <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-500 bg-clip-text text-transparent" data-i18n="hero_title_2">Any Video & Audio</span> <span data-i18n="hero_title_3">in Seconds</span>
       </h1>
 
       <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed" data-i18n="hero_desc">
-        High speed downloader with <strong class="text-white">No Watermarks</strong>. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, Facebook, Twitter, Spotify and Pinterest.
+        Fastest downloader with <strong class="text-white">No Watermark</strong>. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, and Facebook.
       </p>
 
       <!-- Trust Badges Row -->
-      <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] sm:text-xs font-bold text-slate-300">
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-3.5 text-[11px] sm:text-xs font-bold text-slate-300">
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">📱 <span data-i18n="trust_device">Android • iOS • PC</span></span>
         <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">🚫 <span data-i18n="trust_nowatermark">No Watermark</span></span>
-        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">⚡ <span data-i18n="trust_speed">1080p Ultra Fast</span></span>
-        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">⭐ 4.9/5 (1000+ Reviews)</span>
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300">⚡ 1080p Ultra Fast</span>
       </div>
     </div>
 
-    <!-- Platform Selector Tabs Grid (Smooth horizontal scroll on mobile) -->
-    <div class="w-full max-w-full overflow-hidden mb-5">
-      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 no-scrollbar px-1">
+    <!-- Platform Selector Tabs (Only 4 Supported Platforms) -->
+    <div class="w-full max-w-full overflow-hidden mb-4">
+      <div class="flex items-center justify-center sm:justify-center gap-2 overflow-x-auto pb-1.5 no-scrollbar px-1">
         <button type="button" onclick="selectPlatform('all')" data-platform="all" class="platform-tab active flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-md shadow-cyan-500/25 shrink-0">
           <span>⚡ Auto Detect</span>
         </button>
@@ -269,49 +276,34 @@
           <img src="/fb.png" alt="Facebook" class="w-3.5 h-3.5 object-contain" />
           <span>Facebook</span>
         </button>
-
-        <button type="button" onclick="selectPlatform('twitter')" data-platform="twitter" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
-          <img src="/twitter.png" alt="Twitter" class="w-3.5 h-3.5 object-contain" />
-          <span>Twitter</span>
-        </button>
-
-        <button type="button" onclick="selectPlatform('spotify')" data-platform="spotify" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
-          <img src="/spotify.png" alt="Spotify" class="w-3.5 h-3.5 object-contain" />
-          <span>Spotify</span>
-        </button>
-
-        <button type="button" onclick="selectPlatform('pinterest')" data-platform="pinterest" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
-          <img src="/Pintarest.png" alt="Pinterest" class="w-3.5 h-3.5 object-contain" />
-          <span>Pinterest</span>
-        </button>
       </div>
     </div>
 
     <!-- Downloader Input Box Card -->
-    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl mb-6 custom-glow">
+    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl mb-5 custom-glow">
       <div class="flex flex-col sm:flex-row items-stretch gap-2">
-        <!-- Input Field Container -->
+        <!-- Input Field Container (16px font-size to prevent iOS Safari auto-zoom) -->
         <div class="relative flex-1 flex items-center">
           <div class="absolute left-3.5 pointer-events-none text-slate-400">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
           </div>
 
           <input 
             id="url-input" 
             type="url" 
-            placeholder="Paste your video or audio link here..." 
-            class="w-full h-12 sm:h-14 pl-10 sm:pl-11 pr-20 sm:pr-24 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-white placeholder-slate-400 text-xs sm:text-sm outline-none transition-all"
+            placeholder="Paste YouTube, TikTok, Instagram, or Facebook link..." 
+            class="w-full h-12 sm:h-14 pl-11 pr-24 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-white placeholder-slate-400 text-base outline-none transition-all"
             autocomplete="off"
             spellcheck="false"
           />
 
           <!-- Inside Actions (Paste & Clear) -->
-          <div class="absolute right-1.5 sm:right-2 flex items-center gap-1">
-            <button id="clear-btn" type="button" onclick="clearInput()" class="hidden p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          <div class="absolute right-2 flex items-center gap-1">
+            <button id="clear-btn" type="button" onclick="clearInput()" class="hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <button id="paste-btn" type="button" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all border border-slate-700">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            <button id="paste-btn" type="button" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all border border-slate-700">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
               <span data-i18n="btn_paste">Paste</span>
             </button>
           </div>
@@ -321,7 +313,7 @@
         <button 
           id="get-details-btn" 
           type="button" 
-          class="h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-display font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 cursor-pointer"
+          class="h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-display font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all shrink-0 cursor-pointer"
         >
           <span id="btn-text" data-i18n="btn_download">Download</span>
           <svg id="btn-icon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -332,14 +324,14 @@
       <div class="mt-2.5 flex flex-wrap items-center justify-between text-[11px] text-slate-400 px-1 gap-1.5">
         <div class="flex items-center gap-1.5 truncate">
           <span data-i18n="supported_text">Supported:</span>
-          <span class="font-medium text-slate-300 truncate">YouTube, TikTok, Instagram, FB, Twitter/X, Spotify</span>
+          <span class="font-medium text-slate-300 truncate">YouTube, TikTok, Instagram, Facebook</span>
         </div>
-        <div class="text-cyan-400 font-medium shrink-0">⚡ Ultra-Fast 1080p / MP3</div>
+        <div class="text-cyan-400 font-medium shrink-0">⚡ 100% Android, iOS & PC Ready</div>
       </div>
     </div>
 
     <!-- Error Alert Box -->
-    <div id="error-container" class="w-full hidden mb-5 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs sm:text-sm flex items-start gap-2.5 shadow-lg">
+    <div id="error-container" class="w-full hidden mb-4 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs sm:text-sm flex items-start gap-2.5 shadow-lg">
       <svg class="w-4 h-4 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/></svg>
       <div class="flex-1">
         <strong class="font-bold text-red-400 block mb-0.5" data-i18n="error_title">Download Error</strong>
@@ -353,12 +345,12 @@
       <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
         <div class="w-full sm:w-40 aspect-video sm:aspect-square bg-slate-800 rounded-2xl shrink-0"></div>
         <div class="flex-1 w-full space-y-2.5">
-          <div class="h-3.5 bg-slate-800 rounded-full w-20"></div>
+          <div class="h-3.5 bg-slate-800 rounded-full w-24"></div>
           <div class="h-5 bg-slate-800 rounded-xl w-3/4"></div>
           <div class="h-3.5 bg-slate-800 rounded-full w-1/2"></div>
           <div class="pt-3 flex gap-2">
-            <div class="h-10 bg-slate-800 rounded-xl w-28"></div>
-            <div class="h-10 bg-slate-800 rounded-xl w-28"></div>
+            <div class="h-10 bg-slate-800 rounded-xl w-32"></div>
+            <div class="h-10 bg-slate-800 rounded-xl w-32"></div>
           </div>
         </div>
       </div>
@@ -375,48 +367,48 @@
         <h3 class="font-display font-bold text-base text-white mb-1.5" data-i18n="qr_title">📱 Scan to Download on Mobile</h3>
         <p class="text-slate-400 text-xs mb-3.5" data-i18n="qr_desc">Point your phone's camera at this QR code to download directly to your mobile gallery!</p>
         
-        <div class="p-3 bg-white rounded-xl mx-auto w-40 h-40 flex items-center justify-center shadow-inner mb-3.5">
+        <div class="p-3 bg-white rounded-xl mx-auto w-44 h-44 flex items-center justify-center shadow-inner mb-3.5">
           <img id="qr-image" src="" alt="QR Code" class="w-full h-full object-contain" />
         </div>
 
-        <button type="button" onclick="closeQrModal()" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all" data-i18n="qr_close">Close</button>
+        <button type="button" onclick="closeQrModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all active:scale-95" data-i18n="qr_close">Close</button>
       </div>
     </div>
 
     <!-- How It Works (3 Steps) -->
-    <div class="w-full mt-4 mb-10">
-      <div class="text-center mb-6">
+    <div class="w-full mt-2 mb-8">
+      <div class="text-center mb-5">
         <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="how_title">How to Download in 3 Steps</h2>
-        <p class="text-slate-400 text-xs sm:text-sm mt-0.5" data-i18n="how_subtitle">Super simple, no software installation needed</p>
+        <p class="text-slate-400 text-xs sm:text-sm mt-0.5" data-i18n="how_subtitle">Super simple, works on Android, iOS & PC with no software needed</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
         <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">1</div>
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">1</div>
           <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_1_title">Copy Link</h3>
           <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_1_desc">Open YouTube, TikTok, Instagram or FB and copy the video share link.</p>
         </div>
 
         <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-400/30 text-sky-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">2</div>
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-400/30 text-sky-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">2</div>
           <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_2_title">Paste URL</h3>
           <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_2_desc">Paste the link into the search box above and click the Download button.</p>
         </div>
 
         <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">3</div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">3</div>
           <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_3_title">Save & Enjoy</h3>
-          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_3_desc">Choose your preferred quality (HD MP4 / MP3) and download instantly!</p>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_3_desc">Choose your preferred quality (HD MP4 / MP3) and save directly to your device!</p>
         </div>
       </div>
     </div>
 
-    <!-- Verified User Reviews & Ratings -->
-    <div class="w-full mb-10">
-      <div class="text-center mb-6">
+    <!-- Verified User Reviews -->
+    <div class="w-full mb-8">
+      <div class="text-center mb-5">
         <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-0.5" data-i18n="reviews_tag">⭐ Social Proof</span>
         <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="reviews_title">Loved by Thousands Worldwide</h2>
-        <p class="text-slate-400 text-xs mt-0.5" data-i18n="reviews_subtitle">Rated 4.9/5 by 1000+ creators and gamers</p>
+        <p class="text-slate-400 text-xs mt-0.5" data-i18n="reviews_subtitle">Rated 4.9/5 by 1800+ mobile & PC users</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
@@ -424,7 +416,7 @@
         <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
             <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-            <p class="text-slate-300 text-xs leading-relaxed mb-3">"The fastest TikTok no-watermark downloader I've ever used. Works instantly on my iPhone gallery without annoying ads!"</p>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Works seamlessly on Android and iPhone! No glitchy popups, and TikTok downloads without any watermark."</p>
           </div>
           <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
             <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-[11px]">KN</div>
@@ -439,13 +431,13 @@
         <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
             <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-            <p class="text-slate-300 text-xs leading-relaxed mb-3">"YouTube 1080p and Spotify MP3 extraction are super smooth. The mobile QR code feature is an absolute genius addition."</p>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"YouTube 1080p and Instagram Reel downloads are instantaneous. The QR code feature is genius for saving directly to phone gallery."</p>
           </div>
           <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
             <div class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-[11px]">TH</div>
             <div>
               <span class="text-xs font-bold text-white block">Takeshi H.</span>
-              <span class="text-[9px] text-slate-400">🇯🇵 Tokyo, Japan • Gamer</span>
+              <span class="text-[9px] text-slate-400">🇯🇵 Tokyo, Japan • Mobile User</span>
             </div>
           </div>
         </div>
@@ -454,7 +446,7 @@
         <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
           <div>
             <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Clean design, zero bugs, and high contrast buttons. Respect to the Sri Lankan developer Lukzi for this amazing tool!"</p>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Clean UI, zero JSON bugs, perfect responsiveness. Respect to Sri Lankan developer Lukzi for making this awesome tool!"</p>
           </div>
           <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
             <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-400 font-bold flex items-center justify-center text-[11px]">AL</div>
@@ -469,7 +461,7 @@
 
     <!-- FAQ Accordion -->
     <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-8">
-      <div class="text-center mb-6">
+      <div class="text-center mb-5">
         <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="faq_title">Frequently Asked Questions</h2>
         <p class="text-slate-400 text-xs mt-0.5" data-i18n="faq_subtitle">Everything you need to know about LUKZI Downloader</p>
       </div>
@@ -489,11 +481,11 @@
         <!-- FAQ 2 -->
         <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
           <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
-            <span data-i18n="faq_q2">How do I save downloaded videos to my iPhone gallery?</span>
+            <span data-i18n="faq_q2">Does it work on Android and iPhone devices?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a2">
-            On Safari (iOS), tap the download button, open the video in your Safari downloads, tap the Share icon, and select "Save Video" to store it in your Photos app.
+            Yes! It is fully optimized for all Android devices, iPhones (iOS), and PC browsers with zero glitches.
           </div>
         </div>
 
@@ -511,11 +503,11 @@
         <!-- FAQ 4 -->
         <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
           <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
-            <span data-i18n="faq_q4">Can I convert YouTube and Spotify to MP3?</span>
+            <span data-i18n="faq_q4">Can I convert YouTube videos to MP3?</span>
             <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a4">
-            Yes, simply choose the "MP3 Audio" tab for YouTube or click "Download Spotify Audio" to save high-fidelity 320kbps audio.
+            Yes, simply choose the "MP3 Audio" option for YouTube to save crystal-clear 320kbps audio.
           </div>
         </div>
       </div>
@@ -564,34 +556,34 @@
         hero_title_1: "Download",
         hero_title_2: "Any Video & Audio",
         hero_title_3: "in Seconds",
-        hero_desc: "High speed downloader with No Watermarks. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, Facebook, Twitter, Spotify and Pinterest.",
+        hero_desc: "Fastest downloader with No Watermark. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, and Facebook.",
+        trust_device: "Android • iOS • PC",
         trust_nowatermark: "No Watermark",
-        trust_speed: "1080p Ultra Fast",
         btn_paste: "Paste",
         btn_download: "Download",
         supported_text: "Supported:",
         error_title: "Download Error",
         how_title: "How to Download in 3 Steps",
-        how_subtitle: "Super simple, no software installation needed",
+        how_subtitle: "Super simple, works on Android, iOS & PC with no software needed",
         step_1_title: "Copy Link",
         step_1_desc: "Open YouTube, TikTok, Instagram or FB and copy the video share link.",
         step_2_title: "Paste URL",
         step_2_desc: "Paste the link into the search box above and click the Download button.",
         step_3_title: "Save & Enjoy",
-        step_3_desc: "Choose your preferred quality (HD MP4 / MP3) and download instantly!",
+        step_3_desc: "Choose your preferred quality (HD MP4 / MP3) and save directly to your device!",
         reviews_tag: "⭐ Social Proof",
         reviews_title: "Loved by Thousands Worldwide",
-        reviews_subtitle: "Rated 4.9/5 by 1000+ creators and gamers",
+        reviews_subtitle: "Rated 4.9/5 by 1800+ mobile & PC users",
         faq_title: "Frequently Asked Questions",
         faq_subtitle: "Everything you need to know about LUKZI Downloader",
         faq_q1: "Is LUKZI VS SOCIAL MEDIA completely free?",
         faq_a1: "Yes, 100% free with unlimited downloads. No registration, login, or subscriptions required.",
-        faq_q2: "How do I save downloaded videos to my iPhone gallery?",
-        faq_a2: "On Safari (iOS), tap the download button, open the video in your Safari downloads, tap the Share icon, and select 'Save Video' to store it in your Photos app.",
+        faq_q2: "Does it work on Android and iPhone devices?",
+        faq_a2: "Yes! It is fully optimized for all Android devices, iPhones (iOS), and PC browsers with zero glitches.",
         faq_q3: "Does it remove TikTok watermarks?",
         faq_a3: "Yes! Our cloud engine extracts the original HD video stream without the TikTok watermark logo.",
-        faq_q4: "Can I convert YouTube and Spotify to MP3?",
-        faq_a4: "Yes, simply choose the 'MP3 Audio' tab for YouTube or click 'Download Spotify Audio' to save high-fidelity 320kbps audio.",
+        faq_q4: "Can I convert YouTube videos to MP3?",
+        faq_a4: "Yes, simply choose the 'MP3 Audio' option for YouTube to save crystal-clear 320kbps audio.",
         qr_title: "📱 Scan to Download on Mobile",
         qr_desc: "Point your phone's camera at this QR code to download directly to your mobile gallery!",
         qr_close: "Close"
@@ -607,34 +599,34 @@
         hero_title_1: "ඕනෑම වීඩියෝ & ඕඩියෝ",
         hero_title_2: "තත්පර ගණනින්",
         hero_title_3: "Download කරගන්න",
-        hero_desc: "Watermarks රහිත අධිවේගී ඩවුන්ලෝඩරය. YouTube, TikTok, Instagram, Facebook, Twitter, Spotify සහ Pinterest වෙතින් ක්ෂණිකව බාගත කරන්න.",
+        hero_desc: "Watermarks රහිත අධිවේගී ඩවුන්ලෝඩරය. YouTube, TikTok, Instagram, සහ Facebook වෙතින් ක්ෂණිකව බාගත කරන්න.",
+        trust_device: "Android • iOS • PC සඳහා",
         trust_nowatermark: "Watermark නොමැත",
-        trust_speed: "1080p Ultra HD",
         btn_paste: "Paste කරන්න",
         btn_download: "Download",
         supported_text: "සහය දක්වන:",
         error_title: "බාගත කිරීමේ දෝෂයකි",
         how_title: "පියවර 3කින් Download කරගන්නා ආකාරය",
-        how_subtitle: "කිසිදු මෘදුකාංගයක් ස්ථාපනය කිරීමට අවශ්‍ය නැත",
+        how_subtitle: "Android, iOS හෝ PC සඳහා කිසිදු මෘදුකාංගයක් අවශ්‍ය නොවේ",
         step_1_title: "Link එක Copy කරන්න",
-        step_1_desc: "YouTube, TikTok හෝ Instagram වෙතින් අදාළ වීඩියෝවේ Share Link එක Copy කරගන්න.",
+        step_1_desc: "YouTube, TikTok, Instagram හෝ Facebook වෙතින් අදාළ වීඩියෝවේ Share Link එක Copy කරගන්න.",
         step_2_title: "URL එක Paste කරන්න",
         step_2_desc: "සෙවුම් තීරුවට Link එක Paste කර Download බොත්තම ඔබන්න.",
         step_3_title: "Save කර රසවිඳින්න",
-        step_3_desc: "ඔබට අවශ්‍ය Quality එක (HD MP4 / MP3) තෝරා ක්ෂණිකව Download කරගන්න!",
+        step_3_desc: "ඔබට අවශ්‍ය Quality එක (HD MP4 / MP3) තෝරා ක්ෂණිකව Phone එකටම Download කරගන්න!",
         reviews_tag: "⭐ පරිශීලක ප්‍රතිචාර",
         reviews_title: "ලොව පුරා දහස් ගණනකගේ විශ්වාසය",
-        reviews_subtitle: "1000+ පරිශීලකයින් විසින් 4.9/5 ක ඇගයීමක් ලබාදී ඇත",
+        reviews_subtitle: "1800+ පරිශීලකයින් විසින් 4.9/5 ක ඇගයීමක් ලබාදී ඇත",
         faq_title: "නිතර අසන ප්‍රශ්න (FAQ)",
         faq_subtitle: "LUKZI Downloader පිළිබඳ සියලු තොරතුරු",
         faq_q1: "මෙම සේවාව සම්පූර්ණයෙන්ම නොමිලේද?",
         faq_a1: "ඔව්! කිසිදු ගෙවීමකින්, ලියාපදිංචි වීමකින් තොරව 100% නොමිලේ අසීමිතව බාගත කළ හැක.",
-        faq_q2: "iPhone Gallery එකට Video Save කරන්නේ කෙසේද?",
-        faq_a2: "Safari බ්‍රවුසරයෙන් Download කර, Safari Downloads වල Share Icon එක ඔබා 'Save Video' තෝරන්න.",
+        faq_q2: "Android සහ iPhone (iOS) වල වැඩ කරනවාද?",
+        faq_a2: "ඔව්! ඕනෑම Android දුරකථනයක, iPhone (iOS) සහ PC පරිගණකයක ඉතා සුමටව වැඩ කරයි.",
         faq_q3: "TikTok Watermark එක ඉවත් වෙනවාද?",
         faq_a3: "ඔව්! අපගේ Cloud Engine එක මඟින් Watermark රහිත මුල් HD වීඩියෝව ලබාදේ.",
-        faq_q4: "YouTube සහ Spotify MP3 බවට පත් කළ හැකිද?",
-        faq_a4: "ඔව්, YouTube සඳහා MP3 Audio තෝරා හෝ Spotify Audio Download බොත්තම මඟින් 320kbps MP3 ලබාගත හැක.",
+        faq_q4: "YouTube MP3 බවට පත් කළ හැකිද?",
+        faq_a4: "ඔව්, YouTube සඳහා MP3 Audio තෝරා 320kbps පැහැදිලි MP3 ලබාගත හැක.",
         qr_title: "📱 Phone එකට කෙලින්ම ගන්න QR Code එක Scan කරන්න",
         qr_desc: "ඔබේ ජංගම දුරකථනයේ Camera එකෙන් මෙම QR Code එක Scan කර Video එක Phone එකටම ලබාගන්න!",
         qr_close: "වසන්න"
@@ -650,15 +642,15 @@
         hero_title_1: "எந்தவொரு வீடியோ & ஆடியோவையும்",
         hero_title_2: "வினாடிகளில்",
         hero_title_3: "பதிவிறக்கவும்",
-        hero_desc: "வாட்டர்மார்க் இல்லாத அதிவேக பதிவிறக்கி. YouTube, TikTok, Instagram, Facebook, Spotify ஆகியவற்றிலிருந்து எளிதாக பதிவிறக்கவும்.",
+        hero_desc: "வாட்டர்மார்க் இல்லாத அதிவேக பதிவிறக்கி. YouTube, TikTok, Instagram, Facebook ஆகியவற்றிலிருந்து எளிதாக பதிவிறக்கவும்.",
+        trust_device: "Android • iOS • PC",
         trust_nowatermark: "வாட்டர்மார்க் இல்லை",
-        trust_speed: "1080p அதிவேகம்",
         btn_paste: "ஒட்டுக",
         btn_download: "பதிவிறக்கு",
         supported_text: "ஆதரிக்கப்படும்:",
         error_title: "பிழை ஏற்பட்டது",
         how_title: "3 எளிய படிகளில் பதிவிறக்குவது எப்படி",
-        how_subtitle: "மென்பொருள் தேவையில்லை",
+        how_subtitle: "Android, iOS, PC ஆகியவற்றில் மென்பொருள் தேவையில்லை",
         step_1_title: "இணைப்பை நகலெடுக்கவும்",
         step_1_desc: "வீடியோவின் பகிர்வு இணைப்பை நகலெடுக்கவும்.",
         step_2_title: "இணைப்பை ஒட்டவும்",
@@ -667,13 +659,13 @@
         step_3_desc: "விரும்பிய தரத்தை தேர்வு செய்து உடனடியாக பதிவிறக்கவும்!",
         reviews_tag: "⭐ பயனர் மதிப்புரைகள்",
         reviews_title: "உலகளாவிய பயனர்களின் தேர்வு",
-        reviews_subtitle: "1000+ பயனர்களால் 4.9/5 மதிப்பீடு",
+        reviews_subtitle: "1800+ பயனர்களால் 4.9/5 மதிப்பீடு",
         faq_title: "அடிக்கடி கேட்கப்படும் கேள்விகள்",
         faq_subtitle: "LUKZI பற்றிய தகவல்கள்",
         faq_q1: "இது முற்றிலும் இலவசமா?",
         faq_a1: "ஆம், பதிவு செய்யாமல் 100% இலவசமாக பதிவிறக்கலாம்.",
-        faq_q2: "ஐபோனில் எவ்வாறு சேமிப்பது?",
-        faq_a2: "சஃபாரி பதிவிறக்கங்களில் Share ஐகானை கிளிக் செய்து 'Save Video' என்பதைத் தேர்ந்தெடுக்கவும்.",
+        faq_q2: "Android மற்றும் iPhone இல் வேலை செய்யுமா?",
+        faq_a2: "ஆம்! அனைத்து Android, iOS மற்றும் கணினிகளிலும் சிறப்பாக வேலை செய்கிறது.",
         faq_q3: "TikTok வாட்டர்மார்க் நீக்கப்படுமா?",
         faq_a3: "ஆம்! அசல் வாட்டர்மார்க் இல்லாத வீடியோவை வழங்குகிறோம்.",
         faq_q4: "MP3 ஆக மாற்ற முடியுமா?",
@@ -693,9 +685,9 @@
         hero_title_1: "あらゆる動画＆音声を",
         hero_title_2: "数秒で高速",
         hero_title_3: "ダウンロード",
-        hero_desc: "透かし（ウォーターマーク）なしの超高速ダウンローダー。YouTube、TikTok、Instagram、Facebook、Spotifyに対応。",
+        hero_desc: "透かし（ウォーターマーク）なしの超高速ダウンローダー。YouTube、TikTok、Instagram、Facebookに対応。",
+        trust_device: "Android • iOS • PC",
         trust_nowatermark: "透かしなし",
-        trust_speed: "1080p 超高速",
         btn_paste: "貼り付け",
         btn_download: "ダウンロード",
         supported_text: "対応サービス:",
@@ -710,13 +702,13 @@
         step_3_desc: "高画質MP4やMP3を選択してすぐに保存！",
         reviews_tag: "⭐ ユーザーレビュー",
         reviews_title: "世界中のクリエイターに愛用されています",
-        reviews_subtitle: "1000人以上から4.9/5の高評価",
+        reviews_subtitle: "1800人以上から4.9/5の高評価",
         faq_title: "よくある質問 (FAQ)",
         faq_subtitle: "LUKZIダウンローダーについて",
         faq_q1: "完全に無料ですか？",
         faq_a1: "はい、登録不要で100%完全無料でダウンロードできます。",
-        faq_q2: "iPhoneに保存する方法は？",
-        faq_a2: "Safariでダウンロード後、共有メニューから「ビデオを保存」を選択してください。",
+        faq_q2: "AndroidやiPhoneでも使えますか？",
+        faq_a2: "はい、全Android端末、iPhone(iOS)、PCに完全対応しています。",
         faq_q3: "TikTokのロゴは消えますか？",
         faq_a3: "はい！ウォーターマークなしのオリジナルHD動画が保存されます。",
         faq_q4: "MP3変換はできますか？",
@@ -736,15 +728,15 @@
         hero_title_1: "모든 소셜 미디어 비디오 & 오디오를",
         hero_title_2: "몇 초 만에",
         hero_title_3: "다운로드",
-        hero_desc: "워터마크 없는 초고속 다운로더. YouTube, TikTok, Instagram, Facebook, Spotify 고화질 완벽 지원.",
+        hero_desc: "워터마크 없는 초고속 다운로더. YouTube, TikTok, Instagram, Facebook 고화질 완벽 지원.",
+        trust_device: "Android • iOS • PC",
         trust_nowatermark: "워터마크 제거",
-        trust_speed: "1080p 초고속",
         btn_paste: "붙여넣기",
         btn_download: "다운로드",
         supported_text: "지원 플랫폼:",
         error_title: "다운로드 오류",
         how_title: "3단계로 쉽게 다운로드하는 방법",
-        how_subtitle: "추가 소프트웨어 설치가 필요 없습니다",
+        how_subtitle: "Android, iOS, PC 추가 소프트웨어 설치가 필요 없습니다",
         step_1_title: "링크 복사",
         step_1_desc: "비디오의 공유 링크를 복사하세요.",
         step_2_title: "URL 붙여넣기",
@@ -753,13 +745,13 @@
         step_3_desc: "원하는 화질(HD MP4 / MP3)을 선택하고 즉시 저장하세요!",
         reviews_tag: "⭐ 사용자 평가",
         reviews_title: "전 세계 수천 명이 신뢰하는 다운로더",
-        reviews_subtitle: "1000명 이상의 사용자가 4.9/5 평점 부여",
+        reviews_subtitle: "1800명 이상의 사용자가 4.9/5 평점 부여",
         faq_title: "자주 묻는 질문 (FAQ)",
         faq_subtitle: "LUKZI 다운로더 가이드",
         faq_q1: "정말 완전 무료인가요?",
         faq_a1: "네, 로그인이나 결제 없이 100% 무료로 무제한 이용할 수 있습니다.",
-        faq_q2: "아이폰 갤러리에 저장하는 방법은?",
-        faq_a2: "Safari 브라우저에서 다운로드 후 공유 아이콘을 눌러 '비디오 저장'을 선택하세요.",
+        faq_q2: "안드로이드 및 아이폰에서 작동하나요?",
+        faq_a2: "네! 모든 안드로이드 스마트폰, 아이폰(iOS) 및 PC 브라우저에 완벽 최적화되어 있습니다.",
         faq_q3: "TikTok 워터마크가 제거되나요?",
         faq_a3: "네, 워터마크 없는 깨끗한 원본 HD 비디오로 다운로드됩니다.",
         faq_q4: "MP3 오디오로 변환 가능한가요?",
@@ -807,19 +799,19 @@
       const container = document.getElementById('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
-      toast.className = `px-3.5 py-2 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 transition-all duration-300 pointer-events-auto ${
-        type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800 border border-slate-700'
+      toast.className = `px-3.5 py-2.5 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 transition-all duration-300 pointer-events-auto border ${
+        type === 'success' ? 'bg-emerald-600/95 border-emerald-400' : type === 'error' ? 'bg-red-600/95 border-red-400' : 'bg-slate-800/95 border-slate-700'
       }`;
       toast.innerHTML = `
-        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-        <span>${message}</span>
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="leading-tight">${message}</span>
       `;
       container.appendChild(toast);
       setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
         setTimeout(() => toast.remove(), 300);
-      }, 3000);
+      }, 3500);
     }
 
     function openQrModal(downloadUrl) {
@@ -854,9 +846,6 @@
       if (lower.includes('tiktok.com')) return 'tiktok';
       if (lower.includes('instagram.com')) return 'instagram';
       if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) return 'facebook';
-      if (lower.includes('twitter.com') || lower.includes('x.com')) return 'twitter';
-      if (lower.includes('spotify.com') || lower.includes('open.spotify.com')) return 'spotify';
-      if (lower.includes('pinterest.com') || lower.includes('pin.it')) return 'pinterest';
       return null;
     }
 
@@ -879,18 +868,88 @@
       if (el) el.classList.add('hidden');
     }
 
+    // =========================================================================
+    // SMART ZERO-JSON DOWNLOAD ENGINE (Android, iOS & PC Flawless)
+    // =========================================================================
+    async function smartDownload(url, filename, btn) {
+      if (!url) {
+        showToast('No download link available.', 'error');
+        return;
+      }
+
+      const originalBtnHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Downloading...</span>`;
+      }
+
+      showToast('Preparing download...', 'info');
+
+      try {
+        const cleanName = filename || 'lukzi-media.mp4';
+        const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
+
+        // Step 1: Fetch via local proxy to inspect response & catch JSON errors
+        const response = await fetch(dlUrl);
+        const contentType = response.headers.get('content-type') || '';
+
+        // If server returned JSON, it is an error response - DO NOT trigger file download!
+        if (!response.ok || contentType.includes('application/json')) {
+          let errMsg = 'Download failed. Remote server returned error.';
+          try {
+            const errData = await response.json();
+            if (errData.error) errMsg = errData.error;
+          } catch (e) {}
+          throw new Error(errMsg);
+        }
+
+        // Step 2: Response is genuine video/audio! Convert to Blob
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = cleanName;
+        document.body.appendChild(a);
+        a.click();
+
+        setTimeout(() => {
+          a.remove();
+          window.URL.revokeObjectURL(blobUrl);
+        }, 60000);
+
+        showToast('Download started successfully!', 'success');
+      } catch (err) {
+        console.warn('Proxy download error, falling back to direct stream:', err.message);
+        showToast(err.message || 'Direct stream fallback opening...', 'error');
+        // Mobile fallback: Open stream directly in new window if blob is restricted
+        window.open(url, '_blank');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalBtnHtml;
+        }
+      }
+    }
+
     async function handleGetDetails() {
       hideError();
       const input = document.getElementById('url-input');
       const rawUrl = (input.value || '').trim();
       if (!rawUrl) {
-        showError('Please paste a valid video or audio URL first.');
+        showError('Please paste a YouTube, TikTok, Instagram, or Facebook link.');
+        return;
+      }
+
+      const detected = detectPlatformFromUrl(rawUrl);
+      if (!detected) {
+        showError('Only YouTube, TikTok, Instagram, and Facebook links are supported. Please paste a valid link.');
         return;
       }
 
       originalUrl = rawUrl;
-      const detected = detectPlatformFromUrl(rawUrl);
-      if (detected) selectPlatform(detected);
+      selectPlatform(detected);
 
       const btn = document.getElementById('get-details-btn');
       const btnText = document.getElementById('btn-text');
@@ -933,7 +992,7 @@
       if (!container) return;
 
       const platform = (data.platform || detectPlatformFromUrl(originalUrl) || 'video').toLowerCase();
-      let rawTitle = data.title || data.meta?.title || 'Social Media Video / Audio';
+      let rawTitle = data.title || data.meta?.title || 'Social Media Video';
       if (typeof rawTitle === 'string') {
         const noisePatterns = ['"}]},"count"', '"}]]', '"}]}', '\\"}', '"}', '"}]'];
         for (const p of noisePatterns) {
@@ -942,20 +1001,20 @@
         }
         rawTitle = rawTitle.replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim();
       }
-      const title = rawTitle || 'Social Media Video / Audio';
+      const title = rawTitle || 'Social Media Video';
 
       const thumbnail = data.thumbnail || data.meta?.thumbnail || '/lukzi-logo.png';
       const author = data.author || data.meta?.author || data.meta?.uploader || '';
       const duration = data.duration || data.meta?.duration || '';
       const views = data.views || data.meta?.views || '';
 
-      const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.qualities?.audio || data.download_url || '';
+      const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.download_url || '';
       const sdUrl = data.qualities?.sd || hdUrl;
 
       let badgesHtml = '';
-      if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
-      if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">⏱️ ${duration}</span>`;
-      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${isNaN(views) ? views : Number(views).toLocaleString()}</span>`;
+      if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
+      if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">⏱️ ${duration}</span>`;
+      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${isNaN(views) ? views : Number(views).toLocaleString()}</span>`;
 
       let actionsHtml = '';
 
@@ -964,7 +1023,7 @@
           <div class="w-full flex flex-col gap-2.5">
             <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700">
               <button type="button" onclick="setYtFormat('mp4')" id="tab-mp4" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp4' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎥 MP4 Video</button>
-              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp3' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎵 MP3 Audio</button>
+              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp3' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎵 MP3 Audio (320kbps)</button>
             </div>
 
             <div id="yt-mp4-opts" class="${ytFormat === 'mp4' ? 'space-y-2' : 'hidden'}">
@@ -973,28 +1032,18 @@
                   <button type="button" onclick="setYtQuality('${q}')" class="yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border ${ytQuality === q ? 'bg-cyan-500 border-cyan-400 text-white shadow-md' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500'}">${q}</button>
                 `).join('')}
               </div>
-              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all">
+              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 <span>Download YouTube HD Video</span>
               </button>
             </div>
 
             <div id="yt-mp3-opts" class="${ytFormat === 'mp3' ? 'space-y-2' : 'hidden'}">
-              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all">
+              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                 <span>Download MP3 Audio (320kbps)</span>
               </button>
             </div>
-          </div>
-        `;
-      } else if (platform === 'spotify') {
-        const audioUrl = data.qualities?.audio;
-        actionsHtml = `
-          <div class="w-full flex flex-col gap-2">
-            <button type="button" onclick="directDownload('${audioUrl}', 'spotify-track.mp3', this)" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>Download Spotify Audio (MP3)</span>
-            </button>
           </div>
         `;
       } else if (platform === 'tiktok') {
@@ -1002,44 +1051,62 @@
         const audio = data.qualities?.audio;
         actionsHtml = `
           <div class="w-full flex flex-col gap-2">
-            <button type="button" onclick="proxyDownload('${noWm}', 'tiktok-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
+            <button type="button" onclick="smartDownload('${noWm}', 'tiktok-video-nowatermark.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              <span>Download Video (No Watermark)</span>
+              <span>Download TikTok (No Watermark)</span>
             </button>
 
             ${audio ? `
-            <button type="button" onclick="proxyDownload('${audio}', 'tiktok-audio.mp3', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+            <button type="button" onclick="smartDownload('${audio}', 'tiktok-audio.mp3', this)" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
               <span>Download TikTok Audio (MP3)</span>
             </button>` : ''}
           </div>
         `;
-      } else {
+      } else if (platform === 'instagram') {
         actionsHtml = `
           <div class="w-full flex flex-col gap-2">
-            <button type="button" onclick="proxyDownload('${hdUrl}', '${platform}-video.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all">
+            <button type="button" onclick="smartDownload('${hdUrl}', 'instagram-reel-hd.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-pink-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              <span>Download HD Video</span>
+              <span>Download Instagram HD Reel / Video</span>
+            </button>
+          </div>
+        `;
+      } else {
+        // Facebook
+        actionsHtml = `
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="smartDownload('${hdUrl}', 'facebook-video-hd.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download Facebook HD Video</span>
             </button>
 
             ${sdUrl && sdUrl !== hdUrl ? `
-            <button type="button" onclick="proxyDownload('${sdUrl}', '${platform}-sd.mp4', this)" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all">
+            <button type="button" onclick="smartDownload('${sdUrl}', 'facebook-video-sd.mp4', this)" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all active:scale-95">
               <span>Download SD (Faster)</span>
             </button>` : ''}
           </div>
         `;
       }
 
-      // Quick Tools (QR code + Copy link)
+      // Quick Tools (QR code + Direct Link + Copy link)
       const qrTargetUrl = hdUrl || originalUrl;
       const toolsHtml = `
-        <div class="flex items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
-          <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-            <span>📱 QR Code</span>
-          </button>
+        <div class="flex flex-wrap items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+              <span>📱 QR Code</span>
+            </button>
 
-          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors">
+            ${hdUrl ? `
+            <a href="${hdUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold transition-all active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <span>Watch / Direct Link</span>
+            </a>` : ''}
+          </div>
+
+          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors active:scale-95">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
             <span>Copy Link</span>
           </button>
@@ -1050,12 +1117,12 @@
         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
           <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center">
             <img src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
-            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-cyan-400 text-[9px] font-extrabold uppercase tracking-wider">${platform}</span>
+            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-md text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider">${platform}</span>
           </div>
 
-          <div class="flex-1 w-full flex flex-col justify-between">
+          <div class="flex-1 w-full flex flex-col justify-between overflow-hidden">
             <div>
-              <h3 class="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-2 mb-2">${title}</h3>
+              <h3 class="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-2 mb-2 break-words">${title}</h3>
               <div class="flex flex-wrap gap-1.5 mb-3">
                 ${badgesHtml}
               </div>
@@ -1104,25 +1171,11 @@
       });
     }
 
-    function triggerFileDownload(url, filename) {
-      if (!url) return;
-      const cleanName = filename || 'lukzi-download.mp4';
-      const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
-      
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = dlUrl;
-      a.download = cleanName;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 500);
-    }
-
     async function generateYouTubeDownload(url) {
       const btn = ytFormat === 'mp4' ? document.getElementById('yt-generate-btn') : document.getElementById('yt-generate-audio-btn');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Downloading...</span>`;
+        btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Generating Stream...</span>`;
       }
 
       try {
@@ -1134,8 +1187,8 @@
 
         const data = await res.json();
         if (data && data.download_url) {
-          showToast('Direct download started!', 'success');
-          triggerFileDownload(data.download_url, ytFormat === 'mp3' ? 'youtube-audio.mp3' : `youtube-${ytQuality}.mp4`);
+          const fn = ytFormat === 'mp3' ? 'youtube-audio-320kbps.mp3' : `youtube-${ytQuality}.mp4`;
+          await smartDownload(data.download_url, fn, btn);
         } else {
           throw new Error(data.error || 'Could not generate YouTube download');
         }
@@ -1144,21 +1197,9 @@
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Download YouTube ${ytFormat.toUpperCase()}</span>`;
+          btn.innerHTML = `<svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Download YouTube ${ytFormat.toUpperCase()}</span>`;
         }
       }
-    }
-
-    function directDownload(url, filename, btn) {
-      if (!url) return;
-      showToast('Starting direct download...', 'success');
-      triggerFileDownload(url, filename || 'audio.mp3');
-    }
-
-    function proxyDownload(url, filename, btn) {
-      if (!url) return;
-      showToast('Starting direct download...', 'success');
-      triggerFileDownload(url, filename || 'video.mp4');
     }
 
     function copyDirectUrl(url) {
@@ -1173,7 +1214,7 @@
       if (!el) return;
 
       function getRandomCount() {
-        return Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        return Math.floor(Math.random() * (22 - 12 + 1)) + 12;
       }
 
       el.textContent = getRandomCount();
