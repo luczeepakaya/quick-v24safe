@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lukzi-cache-v2';
+const CACHE_NAME = 'lukzi-cache-v3';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -13,8 +13,12 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Always Network First for HTML and fresh content
+// Pass API and download requests directly to network without service worker caching
 self.addEventListener('fetch', (event) => {
+  const url = event.request.url;
+  if (url.includes('/api/')) {
+    return;
+  }
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
   );
