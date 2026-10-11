@@ -1,1516 +1,1267 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full antialiased dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>LUKZI VS SOCIAL MEDIA 🇱🇰 DEVELOPED IN SRI LANKA • RESPECT LUKZI</title>
-  <meta name="description" content="LUKZI VS SOCIAL MEDIA helps you download videos and content from your favorite social media platforms in just a few clicks."/>
-  <meta name="keywords" content="LUKZI,LUKZI DEV,LUKZI VS SOCIAL MEDIA,video downloader,social media downloader,YouTube downloader,TikTok downloader,Instagram downloader,Facebook downloader,Twitter downloader,Pinterest downloader,Spotify downloader"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <title>LUKZI VS SOCIAL MEDIA 🇱🇰 Video & Audio Downloader • YouTube • TikTok • Instagram • Facebook</title>
+  <meta name="description" content="Free high-speed social media video and audio downloader for YouTube, TikTok, Instagram, and Facebook. 1080p Full HD, No Watermark. Works on Android, iOS, and PC."/>
+  <meta name="keywords" content="LUKZI,video downloader,social media downloader,YouTube downloader,TikTok downloader no watermark,Instagram downloader,Facebook downloader,Sri Lanka,Android,iOS,PC"/>
   <meta name="theme-color" content="#06b6d4"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
   <link rel="icon" href="/lukzi-logo.png" type="image/png"/>
   <link rel="apple-touch-icon" href="/lukzi-logo.png"/>
-  <link rel="stylesheet" href="/style.css"/>
+  <link rel="manifest" href="/manifest.json"/>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Sinhala"', '"Noto Sans Tamil"', '"Noto Sans JP"', '"Noto Sans KR"', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans Sinhala"', '"Noto Sans JP"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google SEO Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LUKZI VS SOCIAL MEDIA Downloader",
+    "url": "https://lukzi-socialmedia-dowloader.netlify.app",
+    "description": "Download 1080p HD videos and audio from YouTube, TikTok, Instagram, and Facebook without watermark.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All (Android, iOS, Windows, macOS, Linux)",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "1850",
+      "bestRating": "5"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <style>
+    /* Absolute Zero-Overflow & Mobile Touch Rules */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif;
+      background-color: #080c14;
+    }
+    h1, h2, h3, .font-display {
+      font-family: 'Outfit', 'Noto Sans Sinhala', 'Noto Sans JP', sans-serif;
+    }
+
+    /* Prevent iOS Safari input auto-zoom glitch */
+    input, select, textarea, button {
+      font-size: 16px;
+      touch-action: manipulation;
+    }
+
+    /* Glassmorphism Classes with Hardware Acceleration */
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: translateZ(0);
+    }
+    html:not(.dark) .glass-nav {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transform: translateZ(0);
+    }
+    html:not(.dark) .glass-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
+    }
+    .custom-glow {
+      box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.25);
+    }
+    /* Touch Scrolling Optimization */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
 
   <script>
     (function(){
       try {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (!prefersDark) {
-            document.documentElement.classList.remove('dark');
-          }
-        }
+        if (savedTheme === 'light') document.documentElement.classList.remove('dark');
+        else document.documentElement.classList.add('dark');
       } catch (e) {
         document.documentElement.classList.add('dark');
       }
     })();
   </script>
 </head>
-<body class="min-h-full flex flex-col font-sans transition-colors duration-300">
-  <div class="relative min-h-screen">
-    <!-- Background Image -->
-    <div aria-hidden="true" class="fixed inset-0 -z-10 bg-[url('/bg-light.png')] bg-cover bg-center bg-no-repeat transition-opacity duration-500 dark:bg-[url('/bg-dark.png')]"></div>
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white transition-colors duration-200">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-      <div id="header-container" class="relative mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-[24px] border px-4 sm:px-6 backdrop-blur-2xl transition-all duration-300 sm:h-[78px] border-white/10 bg-slate-900/80 shadow-xl shadow-black/40">
+  <!-- Ambient Glow Background Orbs -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10 w-full h-full">
+    <div class="absolute -top-32 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-50 px-2 sm:px-4 md:px-6 pt-2 sm:pt-4 w-full max-w-full">
+    <div class="mx-auto max-w-6xl w-full">
+      <div class="glass-nav rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between shadow-xl w-full">
+        
         <!-- Logo & Brand Name -->
-        <a href="/" aria-label="LUKZI VS SOCIAL MEDIA Home" class="z-10 flex items-center gap-2.5 shrink-0">
-          <img id="nav-logo" src="/lukzi-logo.png" alt="LUKZI Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border-2 border-cyan-400 shadow-md shadow-cyan-500/40 transition-transform duration-300 ease-out hover:scale-105" />
-          <span class="text-sm sm:text-base md:text-lg font-extrabold bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-500 bg-clip-text text-transparent tracking-wide uppercase truncate max-w-[170px] sm:max-w-none">LUKZI VS SOCIAL MEDIA</span>
+        <a href="/" class="flex items-center gap-2 sm:gap-2.5 group shrink-0 max-w-[55%] sm:max-w-none">
+          <div class="relative shrink-0">
+            <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-cyan-400 group-hover:scale-105 transition-all duration-300" />
+            <span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#080c14]"></span>
+          </div>
+          <div class="flex flex-col truncate">
+            <div class="flex items-center gap-1 truncate">
+              <span class="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-400 bg-clip-text text-transparent truncate">LUKZI</span>
+              <span class="font-display font-extrabold text-sm sm:text-base tracking-tight text-white hidden sm:inline truncate">VS SOCIAL MEDIA</span>
+              <span class="text-[11px] shrink-0">🇱🇰</span>
+            </div>
+            <span class="text-[9px] text-cyan-400/80 font-semibold tracking-wider uppercase hidden md:block" data-i18n="tagline">Official Downloader • Respect Lukzi</span>
+          </div>
         </a>
 
-        <!-- Desktop Navigation (Non-overlapping Flex Layout) -->
-        <nav class="hidden lg:flex items-center gap-5 xl:gap-8">
-          <a href="/" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Home</a>
-          <a href="/about" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">About</a>
-          <a href="/guaid" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">How to Use</a>
-          <a href="/contact" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">Contact</a>
-          <a href="/apis" class="nav-link relative whitespace-nowrap px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">API</a>
-
-          <!-- Platforms Dropdown -->
-          <div class="platforms-dropdown relative inline-block">
-            <button id="platforms-btn" type="button" class="nav-link flex items-center gap-1 px-1 py-2 text-sm font-semibold transition-colors duration-300 text-slate-200 hover:text-white after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-500 after:transition-all after:duration-300 hover:after:w-full">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
-              <span>Platforms</span>
-              <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
-            </button>
-            <div id="platforms-menu" class="absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-xl shadow-black/40">
-              <a href="#" onclick="selectPlatformByName('YouTube'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
-              </a>
-              <a href="#" onclick="selectPlatformByName('TikTok'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
-              </a>
-              <a href="#" onclick="selectPlatformByName('Instagram'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
-              </a>
-              <a href="#" onclick="selectPlatformByName('Facebook'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
-              </a>
-              <a href="#" onclick="selectPlatformByName('Twitter'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
-              </a>
-              <a href="#" onclick="selectPlatformByName('Pinterest'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
-              </a>
-              <a href="#" onclick="selectPlatformByName('Spotify'); return false;" class="dropdown-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02] text-slate-200 hover:bg-white/10 hover:text-white">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
-              </a>
-            </div>
-          </div>
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-5 text-sm font-semibold">
+          <a href="/" class="text-cyan-400 transition-colors" data-i18n="nav_home">Home</a>
+          <a href="/about" class="text-slate-300 hover:text-cyan-400 transition-colors" data-i18n="nav_guide">How to Use</a>
+          <a href="/developer" class="text-slate-300 hover:text-cyan-400 transition-colors font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400" data-i18n="nav_developer">Developer 🇱🇰</a>
+          <a href="/contact" class="text-slate-300 hover:text-cyan-400 transition-colors" data-i18n="nav_contact">Contact</a>
         </nav>
 
-        <!-- Right Side: Sri Lanka Badge, Contact Badge, Theme Toggle & Mobile Menu -->
-        <div class="z-10 flex items-center gap-2 sm:gap-2.5 shrink-0">
-          <!-- Sri Lanka Developer Tag -->
-          <div class="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-yellow-400/40 bg-yellow-500/10 px-2.5 py-1.5 text-[11px] md:text-xs font-black tracking-wide text-yellow-300 shadow-sm shadow-yellow-500/10">
-            <span>🇱🇰</span>
-            <span class="hidden md:inline">DEVELOPED IN SRI LANKA • </span><span>RESPECT LUKZI</span>
+        <!-- Right Side: Language Select + Online Count + Theme Toggle + Mobile Menu -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <!-- Language Selector -->
+          <div class="relative">
+            <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-slate-800/90 text-slate-200 border border-slate-700/80 text-[11px] sm:text-xs font-bold rounded-xl px-2 py-1.5 outline-none cursor-pointer hover:border-cyan-400 transition-all">
+              <option value="en">🌐 English</option>
+              <option value="si">🇱🇰 Sinhala</option>
+              <option value="ta">🇮🇳 Tamil</option>
+              <option value="ja">🇯🇵 Japanese</option>
+              <option value="ko">🇰🇷 Korean</option>
+            </select>
           </div>
 
-          <!-- Direct Call/WhatsApp Badge (shown on XL screens to keep layout clean) -->
-          <a href="https://wa.me/94701854805" target="_blank" rel="noopener noreferrer" class="hidden xl:flex items-center gap-1.5 rounded-xl border border-cyan-400/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-bold text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/20 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span>070 185 4805</span>
-          </a>
-
-          <!-- Theme Toggle -->
-          <button id="theme-toggle-btn" type="button" aria-label="Toggle theme" class="group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-yellow-300/20 bg-slate-800 text-yellow-300 hover:border-yellow-300/50 hover:shadow-[0_0_20px_rgba(253,224,71,0.4)]">
-            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:rotate-180 rotate-0 scale-100 opacity-100"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
-            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-all duration-500 group-hover:-rotate-12 -rotate-90 scale-0 opacity-0"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
-          </button>
-
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-btn" type="button" aria-label="Open navigation menu" class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border transition-all duration-300 hover:scale-105 active:scale-95 lg:hidden border-white/10 bg-slate-800 text-white hover:bg-slate-700">
-            <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
-            <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile Navigation Drawer -->
-      <div id="mobile-menu" class="mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0">
-        <nav id="mobile-nav" class="rounded-[24px] border p-2.5 backdrop-blur-2xl border-white/10 bg-slate-900/95 shadow-xl shadow-black/40">
-          <div class="flex items-center justify-center gap-1.5 px-3 py-2 mb-2 rounded-xl border border-yellow-400/30 bg-yellow-500/10 text-xs font-black tracking-wide text-yellow-300 text-center">
-            <span>🇱🇰</span>
-            <span>DEVELOPED IN SRI LANKA • RESPECT LUKZI ...</span>
-          </div>
-          <div class="space-y-1">
-            <a href="/" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
-              <span class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                </span>Home
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
-            </a>
-            <a href="/about" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
-              <span class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-                </span>About
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
-            </a>
-            <a href="/guaid" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
-              <span class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
-                </span>How to Use
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
-            </a>
-            <a href="/contact" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
-              <span class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path></svg>
-                </span>Contact (070 185 4805)
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
-            </a>
-            <a href="/apis" class="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10 hover:text-white">
-              <span class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-cyan-300 group-hover:scale-110">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
-                </span>API
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-slate-500"><path d="m9 18 6-6-6-6"></path></svg>
-            </a>
-          </div>
-
-          <!-- Mobile Platforms Accordion -->
-          <div class="mt-2 border-t border-slate-200/50 dark:border-white/5 pt-2">
-            <button id="mobile-platforms-toggle" class="w-full flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 text-slate-200 hover:bg-white/10">
-              <span class="flex items-center gap-3">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-cyan-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
-                </span>Platforms
-              </span>
-              <svg id="mobile-platforms-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300"><path d="m6 9 6 6 6-6"></path></svg>
-            </button>
-            <div id="mobile-platforms-sub" class="overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
-              <div class="space-y-1 px-2 pb-2">
-                <a href="#" onclick="selectPlatformByName('YouTube'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/yt.png" alt="YouTube" class="h-5 w-5 object-contain" /></span>YouTube
-                </a>
-                <a href="#" onclick="selectPlatformByName('TikTok'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/tiktok.png" alt="TikTok" class="h-5 w-5 object-contain" /></span>TikTok
-                </a>
-                <a href="#" onclick="selectPlatformByName('Instagram'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/insta.png" alt="Instagram" class="h-5 w-5 object-contain" /></span>Instagram
-                </a>
-                <a href="#" onclick="selectPlatformByName('Facebook'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/fb.png" alt="Facebook" class="h-5 w-5 object-contain" /></span>Facebook
-                </a>
-                <a href="#" onclick="selectPlatformByName('Twitter'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/twitter.png" alt="Twitter" class="h-5 w-5 object-contain" /></span>Twitter
-                </a>
-                <a href="#" onclick="selectPlatformByName('Pinterest'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/Pintarest.png" alt="Pinterest" class="h-5 w-5 object-contain" /></span>Pinterest
-                </a>
-                <a href="#" onclick="selectPlatformByName('Spotify'); toggleMobileMenu(false); return false;" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-300 text-slate-200 hover:bg-white/10">
-                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><img src="/spotify.png" alt="Spotify" class="h-5 w-5 object-contain" /></span>Spotify
-                </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 pt-12 pb-20 text-center">
-      <!-- Title & Hero -->
-      <div class="transition-all duration-700 opacity-100 translate-y-0">
-        <!-- Sri Lanka Developer National Pride Tag -->
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-yellow-500/40 bg-yellow-500/10 text-yellow-600 dark:text-yellow-300 font-extrabold text-xs sm:text-sm tracking-wide mb-3 shadow-lg shadow-yellow-500/10">
-          <span>🇱🇰</span>
-          <span>DEVELOPED IN SRI LANKA • RESPECT LUKZI ...</span>
-        </div>
-        <br/>
-
-        <!-- Live Real-Time Visitor Stats Badge (100% Real) -->
-        <div class="inline-flex items-center gap-3.5 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-lg shadow-cyan-500/10 mb-6 transition-all duration-300 hover:border-cyan-400">
-          <!-- Real-Time Online Presence -->
-          <div class="flex items-center gap-2">
-            <span class="relative flex h-2.5 w-2.5">
+          <!-- Real-Time Online Presence Pill -->
+          <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs font-bold text-slate-200 shadow-inner">
+            <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Online Now:</span>
-            <span id="live-online-count" class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 font-mono tracking-wide">1</span>
-          </div>
-          
-          <span class="h-3.5 w-px bg-slate-300 dark:bg-slate-700"></span>
-          
-          <!-- Total Real Visits -->
-          <div class="flex items-center gap-1.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500 dark:text-cyan-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Visits:</span>
-            <span id="live-total-count" class="text-xs font-extrabold text-cyan-600 dark:text-cyan-400 font-mono tracking-wide">...</span>
-          </div>
-        </div>
-
-        <!-- Target Line -->
-        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 sm:mb-6 tracking-tight leading-tight">
-          <span class="text-gray-900 dark:text-white">Download. </span>
-          <span class="text-purple-600 dark:text-purple-400">Save. </span>
-          <span class="text-pink-500 dark:text-pink-400">Enjoy </span>
-          <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent block sm:inline mt-1 sm:mt-0">&amp; Respect LUKZI</span>
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-slate-300 max-w-2xl mx-auto mb-6 px-2">
-          <strong class="text-cyan-400 font-bold">LUKZI VS SOCIAL MEDIA</strong> helps you download videos and audio from your favorite social media platforms in just a single click.
-        </p>
-
-        <!-- Feature Badges -->
-        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 text-gray-700 dark:text-slate-300">
-          <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-cyan-500 dark:text-cyan-400"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            <span>Fast</span>
-            <span class="text-gray-300 dark:text-slate-600 ml-2">|</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-500 dark:text-purple-400"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            <span>Easy</span>
-            <span class="text-gray-300 dark:text-slate-600 ml-2">|</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-pink-500 dark:text-pink-400"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            <span>High Quality</span>
-            <span class="text-gray-300 dark:text-slate-600 ml-2">|</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-green-500 dark:text-green-400"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            <span>Free Forever</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Downloader Card -->
-      <div class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-2xl shadow-cyan-500/10 dark:shadow-black/40 p-5 sm:p-8 border border-white dark:border-white/10 transition-all duration-700">
-        <!-- Steps Header -->
-        <div class="flex flex-col md:flex-row justify-between mb-6 gap-4">
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">1</span>
-            <span class="font-semibold text-gray-800 dark:text-slate-200">Choose Platform</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">2</span>
-            <span class="font-semibold text-gray-800 dark:text-slate-200">Paste Link &amp; Download</span>
-          </div>
-        </div>
-
-        <!-- Platform Buttons Grid -->
-        <div id="platform-grid" class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-6">
-          <!-- Dynamic Platform Buttons -->
-        </div>
-
-        <!-- Input Bar & Download Button -->
-        <div class="flex flex-col md:flex-row gap-3">
-          <div class="relative flex-1">
-            <div class="flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 py-3 dark:border-white/10 dark:bg-slate-800/80 shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 shrink-0 text-gray-400 dark:text-slate-500"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" x2="16" y1="12" y2="12"></line></svg>
-              <input id="url-input" type="text" placeholder="Paste your video or audio link here..." class="flex-1 bg-transparent outline-none text-gray-700 dark:text-slate-200 dark:placeholder:text-slate-500" value="" />
-              <button id="paste-btn" type="button" title="Paste from clipboard" class="shrink-0 text-gray-400 hover:text-cyan-500 dark:text-slate-500 dark:hover:text-cyan-400 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
-              </button>
-            </div>
-            <!-- Loading animated bar -->
-            <div id="progress-bar-container" class="hidden absolute -bottom-px left-3 right-3 h-[3px] overflow-hidden rounded-full bg-cyan-100 dark:bg-cyan-900/40">
-              <div class="h-full w-1/3 animate-[progress-slide_1.1s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400"></div>
-            </div>
+            <span id="live-online-count" class="text-emerald-400 font-mono">18</span>
+            <span class="text-slate-400 text-[10px]" data-i18n="online_text">Online</span>
           </div>
 
-          <button id="get-details-btn" type="button" class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-500 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-[1.05] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-70">
-            <svg id="btn-download-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-            <svg id="btn-spinner-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 animate-spin hidden"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-            <span id="btn-text">Get Details</span>
+          <!-- Dark/Light Mode Switcher -->
+          <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="lg:hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
           </button>
         </div>
-
-        <!-- Error Message Container -->
-        <div id="error-message" class="hidden mt-4 flex items-center justify-center md:justify-start gap-2 text-sm text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-          <span id="error-text">Please paste a link first.</span>
-        </div>
-
-        <!-- Privacy & Contact Notice -->
-        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500 dark:text-slate-400 gap-2">
-          <p class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-green-500 dark:text-green-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
-            We respect your privacy. No login required.
-          </p>
-          <a href="tel:0701854805" class="flex items-center gap-1.5 text-cyan-400 hover:underline font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span>Contact: 070 185 4805</span>
-          </a>
-        </div>
-
-        <!-- Result Card Area -->
-        <div id="result-card-container" class="hidden mt-8 border-t border-slate-200/80 pt-6 dark:border-white/10 text-left">
-          <!-- Injected dynamically -->
-        </div>
       </div>
 
-      <!-- Feature Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-12 transition-all duration-700">
-        <div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300 dark:shadow-black/30">
-          <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-3 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-cyan-600 dark:text-cyan-400"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"></path><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"></path></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 dark:text-white mb-1">Super Fast</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">Download in seconds with our high-speed servers.</p>
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="lg:hidden hidden mt-2 glass-nav rounded-2xl p-3 sm:p-4 flex flex-col gap-2.5 shadow-2xl animate-in slide-in-from-top duration-200">
+        <a href="/" class="p-2 rounded-xl text-cyan-400 bg-cyan-500/10 font-bold text-sm" data-i18n="nav_home">Home</a>
+        <a href="/about" class="p-2 rounded-xl text-slate-300 hover:bg-slate-800 font-semibold text-sm" data-i18n="nav_guide">How to Use</a>
+        <a href="/developer" class="p-2 rounded-xl text-purple-400 hover:bg-slate-800 font-bold text-sm" data-i18n="nav_developer">Developer 🇱🇰</a>
+        <a href="/contact" class="p-2 rounded-xl text-slate-300 hover:bg-slate-800 font-semibold text-sm" data-i18n="nav_contact">Contact Support</a>
+        <div class="pt-2 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400">
+          <span>WhatsApp: 070 185 4805</span>
+          <span class="text-cyan-400 font-bold">🇱🇰 SRI LANKA</span>
         </div>
-
-        <div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 dark:shadow-black/30">
-          <div class="w-12 h-12 bg-blue-100 dark:bg-blue-500/20 rounded-xl flex items-center justify-center mb-3 shadow-sm">
-            <span class="font-bold text-blue-600 dark:text-blue-400 text-sm">HD</span>
-          </div>
-          <h3 class="font-bold text-gray-900 dark:text-white mb-1">HD Quality</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">Save videos in HD quality up to 4K resolution.</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300 dark:shadow-black/30">
-          <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-3 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-cyan-600 dark:text-cyan-400"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 dark:text-white mb-1">All Devices</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">Works on mobile, tablet and desktop devices.</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300 dark:shadow-black/30">
-          <div class="w-12 h-12 bg-green-100 dark:bg-green-500/20 rounded-xl flex items-center justify-center mb-3 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-green-600 dark:text-green-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 dark:text-white mb-1">Safe &amp; Secure</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">100% safe. We don't store any of your data.</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900/80 dark:border dark:border-white/10 rounded-2xl p-5 text-left shadow-lg hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-300 dark:shadow-black/30">
-          <div class="w-12 h-12 bg-pink-100 dark:bg-pink-500/20 rounded-xl flex items-center justify-center mb-3 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-pink-600 dark:text-pink-400"><path d="M12 7v14"></path><path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"></path><path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"></path><rect width="18" height="4" x="3" y="7" rx="1"></rect></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 dark:text-white mb-1">100% Free</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">Unlimited downloads without any hidden charges.</p>
-      </div>
-
-      <!-- WHO IS LUKZI ? Developer Showcase -->
-      <section id="who-is-lukzi" class="mt-16 sm:mt-20 border-t border-slate-200/80 dark:border-white/10 pt-12 text-left">
-        <div class="text-center mb-10">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 text-xs font-black tracking-wider uppercase mb-3 shadow-sm">
-            <span>🇱🇰 SRI LANKAN TECH INNOVATOR</span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3">
-            <span class="text-gray-900 dark:text-white">WHO IS </span>
-            <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">LUKZI ?</span>
-          </h2>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-slate-300 max-w-2xl mx-auto font-medium">
-            Elite Sri Lankan software engineer, modder, and reverse engineering specialist pushing boundaries in gaming automations, performance tuning, and high-speed web apps.
-          </p>
-        </div>
-
-        <div class="relative overflow-hidden rounded-3xl border border-cyan-500/30 bg-white/70 dark:bg-slate-900/80 backdrop-blur-2xl p-6 sm:p-10 shadow-2xl shadow-cyan-500/10">
-          <!-- Ambient Glow FX -->
-          <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-purple-500/15 blur-3xl pointer-events-none"></div>
-
-          <div class="relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-8">
-            <!-- Profile Avatar & Identity -->
-            <div class="flex flex-col items-center text-center lg:w-72 shrink-0">
-              <div class="relative group">
-                <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 opacity-70 blur-md group-hover:opacity-100 transition duration-500"></div>
-                <img src="/lukzi-logo.png" alt="LUKZI Developer Profile" class="relative h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover border-4 border-slate-900 shadow-2xl" />
-                <span class="absolute bottom-1 right-1 flex h-7 w-7 items-center justify-center rounded-full bg-cyan-500 text-slate-950 font-black text-xs border-2 border-slate-900 shadow-lg" title="Verified Creator">✓</span>
-              </div>
-
-              <h3 class="text-2xl font-black text-gray-900 dark:text-white mt-4 tracking-wide">LUKZI</h3>
-              <p class="text-xs font-bold uppercase tracking-widest text-cyan-500 dark:text-cyan-400 mt-0.5">Software &amp; Gaming Engineer</p>
-
-              <div class="flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-xs font-bold text-gray-800 dark:text-slate-200">
-                <span>🇱🇰</span>
-                <span>Sri Lanka</span>
-                <span class="text-slate-400">•</span>
-                <span class="text-emerald-500 dark:text-emerald-400 font-semibold">Active Dev</span>
-              </div>
-
-              <div class="mt-4 px-3 py-1.5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 text-[11px] font-extrabold text-yellow-600 dark:text-yellow-300 text-center leading-tight">
-                DEVELOPED IN SRI LANKA 🇱🇰<br/>RESPECT LUKZI ...
-              </div>
-
-              <!-- Direct Contact Actions -->
-              <div class="w-full space-y-2 mt-5">
-                <a href="https://wa.me/94701854805" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold text-xs sm:text-sm hover:scale-[1.02] hover:shadow-lg hover:shadow-emerald-500/30 transition-all">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                  <span>WhatsApp: 070 185 4805</span>
-                </a>
-                <a href="tel:0701854805" class="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200 font-semibold text-xs hover:border-cyan-400 hover:text-cyan-400 transition-all">
-                  <span>Direct Call: 070 185 4805</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Skills, Portfolio & Credentials Grid -->
-            <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-              <!-- 1. Software Developer -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-cyan-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">SOFTWARE DEVELOPER</h4>
-                    <span class="text-[11px] font-semibold text-cyan-500 dark:text-cyan-400">Full-Stack &amp; Core Systems</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Full-stack software developer building ultra-fast web platforms, cloud microservices, media extractors, and automated online engines.
-                </p>
-              </div>
-
-              <!-- 2. APK Modify -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-purple-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/20 text-purple-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">APK MODIFY SPECIALIST</h4>
-                    <span class="text-[11px] font-semibold text-purple-500 dark:text-purple-400">Android Reverse Engineering</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Expert in Android app decompilation, smali patching, custom feature injection, asset tailoring, and advanced APK modification.
-                </p>
-              </div>
-
-              <!-- 3. FF Panel Developer -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-pink-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-pink-500/20 text-pink-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">FF PANEL DEVELOPER</h4>
-                    <span class="text-[11px] font-semibold text-pink-500 dark:text-pink-400">Gaming Overlays &amp; Panels</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Creator of high-performance gaming overlay panels, sensitive touch configurations, and live on-screen assistant toolkits.
-                </p>
-              </div>
-
-              <!-- 4. Free Fire Mobile Optimizer Dev -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-emerald-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path><circle cx="12" cy="12" r="4"></circle></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">FREE FIRE MOBILE OPTIMIZER DEV</h4>
-                    <span class="text-[11px] font-semibold text-emerald-500 dark:text-emerald-400">FPS &amp; Lag Fix Systems</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Specialized in low-latency gaming engine tweaks, memory flushers, lag reduction scripts, and smooth 90/120 FPS mobile gameplay.
-                </p>
-              </div>
-
-              <!-- 5. PC Mouse Bot AI Founder -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-blue-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="12" cy="10" r="3"></circle><path d="M7 21v-2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">PC MOUSE BOT AI FOUNDER</h4>
-                    <span class="text-[11px] font-semibold text-blue-500 dark:text-blue-400">Computer Vision &amp; AI Bots</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Founder of algorithmic AI mouse micro-movement models, computer vision pixel-tracking, and precision hardware automation tools.
-                </p>
-              </div>
-
-              <!-- 6. Work in BR MODS Team -->
-              <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-slate-800/60 p-4 transition-all duration-300 hover:border-yellow-400 hover:scale-[1.01] hover:shadow-lg">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-500/20 text-yellow-400 font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
-                  </span>
-                  <div>
-                    <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">WORK IN BR MODS TEAM</h4>
-                    <span class="text-[11px] font-semibold text-yellow-500 dark:text-yellow-400">Core Developer Member</span>
-                  </div>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-slate-300 leading-relaxed">
-                  Active member of the elite BR MODS team, collaborating with global modders to architect premium game enhancements and utility tools.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Supported Platforms Strip -->
-      <div class="mt-16 border-t dark:border-white/10 pt-8 transition-all duration-700">
-        <p class="text-gray-500 dark:text-slate-400 mb-4">Supported Platforms</p>
-        <div class="flex flex-wrap items-center justify-center gap-6">
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/yt.png" alt="YouTube" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">YouTube</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/tiktok.png" alt="TikTok" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">TikTok</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/insta.png" alt="Instagram" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">Instagram</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/fb.png" alt="Facebook" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">Facebook</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/twitter.png" alt="Twitter" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">Twitter</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/Pintarest.png" alt="Pinterest" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">Pinterest</span>
-          </div>
-          <div class="flex items-center gap-2 text-gray-700 dark:text-slate-300 font-medium transition-all duration-300 hover:scale-110 hover:text-cyan-400">
-            <img src="/spotify.png" alt="Spotify" class="h-6 w-6 rounded object-contain" />
-            <span class="text-sm">Spotify</span>
-          </div>
-          <span class="text-gray-400 dark:text-slate-500 text-sm">&amp; More</span>
-        </div>
-      </div>
-
-      <!-- Footer Branding -->
-      <footer class="mt-16 text-center text-sm text-gray-500 dark:text-slate-400">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-500 dark:text-yellow-300 font-extrabold text-xs mb-3">
-          <span>🇱🇰</span>
-          <span>DEVELOPED IN SRI LANKA • RESPECT LUKZI ...</span>
-        </div>
-        <p class="font-bold text-gray-700 dark:text-slate-300">LUKZI VS SOCIAL MEDIA — Download, Save, Enjoy &amp; Respect LUKZI</p>
-        <p class="mt-1 text-xs text-slate-400">Direct Contact: <a href="https://wa.me/94701854805" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-bold">070 185 4805</a> • Designed with ❤️ by LUKZI (BR MODS TEAM)</p>
-      </footer>
-    </main>
-  </div>
-
-  <!-- More Platforms Modal -->
-  <div id="more-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden">
-    <div id="modal-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"></div>
-    <div class="relative w-full max-w-md rounded-3xl border border-white/60 bg-white/90 p-6 shadow-2xl backdrop-blur-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 dark:border-white/10 dark:bg-slate-900/95">
-      <div class="mb-5 flex items-start justify-between">
-        <div class="text-left">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white">More Platforms</h3>
-          <p class="text-sm text-gray-500 dark:text-slate-400">Pick one - it replaces the last slot</p>
-        </div>
-        <button id="modal-close-btn" type="button" aria-label="Close" class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition-all hover:scale-105 hover:bg-slate-100 dark:border-white/10 dark:text-slate-400 dark:hover:bg-white/10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-        </button>
-      </div>
-      <div id="modal-platforms-grid" class="grid grid-cols-2 gap-3">
-        <!-- Rendered dynamically -->
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Client Application Engine -->
+  <!-- Main Container -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 pt-5 sm:pt-9 pb-16 flex flex-col items-center overflow-x-hidden">
+
+    <!-- Hero Title & Subtitle -->
+    <div class="text-center max-w-2xl w-full mb-5 sm:mb-7">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-2.5 shadow-sm">
+        <span data-i18n="badge_hero">✨ 100% Free & Unlimited Fast Downloader</span>
+      </div>
+
+      <h1 class="font-display font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white mb-2.5 leading-tight">
+        <span data-i18n="hero_title_1">Download</span> <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-pink-500 bg-clip-text text-transparent" data-i18n="hero_title_2">Any Video & Audio</span> <span data-i18n="hero_title_3">in Seconds</span>
+      </h1>
+
+      <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed" data-i18n="hero_desc">
+        Fastest downloader with <strong class="text-white">No Watermark</strong>. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, and Facebook.
+      </p>
+
+      <!-- Trust Badges Row -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-3.5 text-[11px] sm:text-xs font-bold text-slate-300">
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">📱 <span data-i18n="trust_device">Android • iOS • PC</span></span>
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700">🚫 <span data-i18n="trust_nowatermark">No Watermark</span></span>
+        <span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300">⚡ 1080p Ultra Fast</span>
+      </div>
+    </div>
+
+    <!-- Platform Selector Tabs (Only 4 Supported Platforms) -->
+    <div class="w-full max-w-full overflow-hidden mb-4">
+      <div class="flex items-center justify-center sm:justify-center gap-2 overflow-x-auto pb-1.5 no-scrollbar px-1">
+        <button type="button" onclick="selectPlatform('all')" data-platform="all" class="platform-tab active flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-md shadow-cyan-500/25 shrink-0">
+          <span>⚡ Auto Detect</span>
+        </button>
+
+        <button type="button" onclick="selectPlatform('youtube')" data-platform="youtube" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/yt.png" alt="YouTube" class="w-3.5 h-3.5 object-contain" />
+          <span>YouTube</span>
+        </button>
+
+        <button type="button" onclick="selectPlatform('tiktok')" data-platform="tiktok" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/tiktok.png" alt="TikTok" class="w-3.5 h-3.5 object-contain" />
+          <span>TikTok</span>
+        </button>
+
+        <button type="button" onclick="selectPlatform('instagram')" data-platform="instagram" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/insta.png" alt="Instagram" class="w-3.5 h-3.5 object-contain" />
+          <span>Instagram</span>
+        </button>
+
+        <button type="button" onclick="selectPlatform('facebook')" data-platform="facebook" class="platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0">
+          <img src="/fb.png" alt="Facebook" class="w-3.5 h-3.5 object-contain" />
+          <span>Facebook</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Downloader Input Box Card -->
+    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl mb-5 custom-glow">
+      <div class="flex flex-col sm:flex-row items-stretch gap-2">
+        <!-- Input Field Container (16px font-size to prevent iOS Safari auto-zoom) -->
+        <div class="relative flex-1 flex items-center">
+          <div class="absolute left-3.5 pointer-events-none text-slate-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+          </div>
+
+          <input 
+            id="url-input" 
+            type="url" 
+            placeholder="Paste YouTube, TikTok, Instagram, or Facebook link..." 
+            class="w-full h-12 sm:h-14 pl-11 pr-24 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-white placeholder-slate-400 text-base outline-none transition-all"
+            autocomplete="off"
+            spellcheck="false"
+          />
+
+          <!-- Inside Actions (Paste & Clear) -->
+          <div class="absolute right-2 flex items-center gap-1">
+            <button id="clear-btn" type="button" onclick="clearInput()" class="hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <button id="paste-btn" type="button" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all border border-slate-700">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+              <span data-i18n="btn_paste">Paste</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Download Action Button -->
+        <button 
+          id="get-details-btn" 
+          type="button" 
+          class="h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-display font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all shrink-0 cursor-pointer"
+        >
+          <span id="btn-text" data-i18n="btn_download">Download</span>
+          <svg id="btn-icon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <svg id="btn-spinner" class="w-4 h-4 sm:w-5 sm:h-5 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        </button>
+      </div>
+
+      <div class="mt-2.5 flex flex-wrap items-center justify-between text-[11px] text-slate-400 px-1 gap-1.5">
+        <div class="flex items-center gap-1.5 truncate">
+          <span data-i18n="supported_text">Supported:</span>
+          <span class="font-medium text-slate-300 truncate">YouTube, TikTok, Instagram, Facebook</span>
+        </div>
+        <div class="text-cyan-400 font-medium shrink-0">⚡ 100% Android, iOS & PC Ready</div>
+      </div>
+    </div>
+
+    <!-- Error Alert Box -->
+    <div id="error-container" class="w-full hidden mb-4 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs sm:text-sm flex items-start gap-2.5 shadow-lg">
+      <svg class="w-4 h-4 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/></svg>
+      <div class="flex-1">
+        <strong class="font-bold text-red-400 block mb-0.5" data-i18n="error_title">Download Error</strong>
+        <span id="error-message">Could not fetch download links for this URL. Please check the link and try again.</span>
+      </div>
+      <button onclick="hideError()" class="text-red-400 hover:text-white"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+    </div>
+
+    <!-- Loading Skeleton Card -->
+    <div id="loading-container" class="w-full hidden mb-6 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl animate-pulse">
+      <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+        <div class="w-full sm:w-40 aspect-video sm:aspect-square bg-slate-800 rounded-2xl shrink-0"></div>
+        <div class="flex-1 w-full space-y-2.5">
+          <div class="h-3.5 bg-slate-800 rounded-full w-24"></div>
+          <div class="h-5 bg-slate-800 rounded-xl w-3/4"></div>
+          <div class="h-3.5 bg-slate-800 rounded-full w-1/2"></div>
+          <div class="pt-3 flex gap-2">
+            <div class="h-10 bg-slate-800 rounded-xl w-32"></div>
+            <div class="h-10 bg-slate-800 rounded-xl w-32"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download Result Card Container -->
+    <div id="result-container" class="w-full hidden mb-8 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl border border-cyan-500/20">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- QR Code Modal (Instant Download on Mobile) -->
+    <div id="qr-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="glass-card max-w-xs w-full rounded-2xl sm:rounded-3xl p-5 text-center shadow-2xl border border-cyan-500/30 animate-in fade-in zoom-in duration-200">
+        <h3 class="font-display font-bold text-base text-white mb-1.5" data-i18n="qr_title">📱 Scan to Download on Mobile</h3>
+        <p class="text-slate-400 text-xs mb-3.5" data-i18n="qr_desc">Point your phone's camera at this QR code to download directly to your mobile gallery!</p>
+        
+        <div class="p-3 bg-white rounded-xl mx-auto w-44 h-44 flex items-center justify-center shadow-inner mb-3.5">
+          <img id="qr-image" src="" alt="QR Code" class="w-full h-full object-contain" />
+        </div>
+
+        <button type="button" onclick="closeQrModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all active:scale-95" data-i18n="qr_close">Close</button>
+      </div>
+    </div>
+
+    <!-- How It Works (3 Steps) -->
+    <div class="w-full mt-2 mb-8">
+      <div class="text-center mb-5">
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="how_title">How to Download in 3 Steps</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-0.5" data-i18n="how_subtitle">Super simple, works on Android, iOS & PC with no software needed</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">1</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_1_title">Copy Link</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_1_desc">Open YouTube, TikTok, Instagram or FB and copy the video share link.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-400/30 text-sky-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">2</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_2_title">Paste URL</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_2_desc">Paste the link into the search box above and click the Download button.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-4 sm:p-5 text-center hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 font-display font-black text-lg flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">3</div>
+          <h3 class="font-bold text-white text-sm sm:text-base mb-1" data-i18n="step_3_title">Save & Enjoy</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="step_3_desc">Choose your preferred quality (HD MP4 / MP3) and save directly to your device!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verified User Reviews -->
+    <div class="w-full mb-8">
+      <div class="text-center mb-5">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-0.5" data-i18n="reviews_tag">⭐ Social Proof</span>
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="reviews_title">Loved by Thousands Worldwide</h2>
+        <p class="text-slate-400 text-xs mt-0.5" data-i18n="reviews_subtitle">Rated 4.9/5 by 1800+ mobile & PC users</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+        <!-- Review 1 -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Works seamlessly on Android and iPhone! No glitchy popups, and TikTok downloads without any watermark."</p>
+          </div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-[11px]">KN</div>
+            <div>
+              <span class="text-xs font-bold text-white block">Kasun N.</span>
+              <span class="text-[9px] text-slate-400">🇱🇰 Sri Lanka • Creator</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"YouTube 1080p and Instagram Reel downloads are instantaneous. The QR code feature is genius for saving directly to phone gallery."</p>
+          </div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-[11px]">TH</div>
+            <div>
+              <span class="text-xs font-bold text-white block">Takeshi H.</span>
+              <span class="text-[9px] text-slate-400">🇯🇵 Tokyo, Japan • Mobile User</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+            <p class="text-slate-300 text-xs leading-relaxed mb-3">"Clean UI, zero JSON bugs, perfect responsiveness. Respect to Sri Lankan developer Lukzi for making this awesome tool!"</p>
+          </div>
+          <div class="flex items-center gap-2.5 pt-2.5 border-t border-slate-800">
+            <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-400 font-bold flex items-center justify-center text-[11px]">AL</div>
+            <div>
+              <span class="text-xs font-bold text-white block">Alex L.</span>
+              <span class="text-[9px] text-slate-400">🇺🇸 United States • Editor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="w-full glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-8">
+      <div class="text-center mb-5">
+        <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight" data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p class="text-slate-400 text-xs mt-0.5" data-i18n="faq_subtitle">Everything you need to know about LUKZI Downloader</p>
+      </div>
+
+      <div class="space-y-2.5 max-w-2xl mx-auto">
+        <!-- FAQ 1 -->
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+            <span data-i18n="faq_q1">Is LUKZI VS SOCIAL MEDIA completely free?</span>
+            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a1">
+            Yes, 100% free with unlimited downloads. No registration, login, or subscriptions required.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+            <span data-i18n="faq_q2">Does it work on Android and iPhone devices?</span>
+            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a2">
+            Yes! It is fully optimized for all Android devices, iPhones (iOS), and PC browsers with zero glitches.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+            <span data-i18n="faq_q3">Does it remove TikTok watermarks?</span>
+            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a3">
+            Yes! Our cloud engine extracts the original HD video stream without the TikTok watermark logo.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
+          <button type="button" onclick="toggleFaq(this)" class="w-full px-4 py-3 text-left font-bold text-xs sm:text-sm text-white flex items-center justify-between hover:text-cyan-400 transition-colors">
+            <span data-i18n="faq_q4">Can I convert YouTube videos to MP3?</span>
+            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content hidden px-4 pb-3 text-xs text-slate-300 leading-relaxed" data-i18n="faq_a4">
+            Yes, simply choose the "MP3 Audio" option for YouTube to save crystal-clear 320kbps audio.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/80 py-6 px-4 text-center w-full">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <img src="/lukzi-logo.png" alt="LUKZI Logo" class="h-5 w-5 rounded-full" />
+        <span class="font-bold text-slate-200">LUKZI VS SOCIAL MEDIA</span>
+        <span>•</span>
+        <span class="text-cyan-400 font-semibold">DEVELOPED IN SRI LANKA 🇱🇰</span>
+      </div>
+
+      <div class="flex items-center gap-4 text-[11px] sm:text-xs">
+        <a href="/" class="hover:text-cyan-400 transition-colors" data-i18n="nav_home">Home</a>
+        <a href="/about" class="hover:text-cyan-400 transition-colors" data-i18n="nav_guide">How to Use</a>
+        <a href="/developer" class="hover:text-cyan-400 transition-colors" data-i18n="nav_developer">Developer</a>
+        <a href="/contact" class="hover:text-cyan-400 transition-colors" data-i18n="nav_contact">Contact</a>
+      </div>
+
+      <div>
+        <span>WhatsApp: </span>
+        <a href="https://wa.me/94701854805" target="_blank" class="text-emerald-400 font-bold hover:underline">070 185 4805</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-[90vw]"></div>
+
+  <!-- Multi-Language Dictionary & Application Scripts -->
   <script>
-    const activePlatforms = [
-      { name: "YouTube", img: "/yt.png" },
-      { name: "TikTok", img: "/tiktok.png" },
-      { name: "Instagram", img: "/insta.png" },
-      { name: "Facebook", img: "/fb.png" },
-      { name: "Twitter", img: "/twitter.png" }
-    ];
+    const I18N = {
+      en: {
+        tagline: "Official Downloader • Respect Lukzi",
+        nav_home: "Home",
+        nav_guide: "How to Use",
+        nav_developer: "Developer 🇱🇰",
+        nav_contact: "Contact",
+        online_text: "Online",
+        badge_hero: "✨ 100% Free & Unlimited Fast Downloader",
+        hero_title_1: "Download",
+        hero_title_2: "Any Video & Audio",
+        hero_title_3: "in Seconds",
+        hero_desc: "Fastest downloader with No Watermark. Grab videos, reels, shorts & audio from YouTube, TikTok, Instagram, and Facebook.",
+        trust_device: "Android • iOS • PC",
+        trust_nowatermark: "No Watermark",
+        btn_paste: "Paste",
+        btn_download: "Download",
+        supported_text: "Supported:",
+        error_title: "Download Error",
+        how_title: "How to Download in 3 Steps",
+        how_subtitle: "Super simple, works on Android, iOS & PC with no software needed",
+        step_1_title: "Copy Link",
+        step_1_desc: "Open YouTube, TikTok, Instagram or FB and copy the video share link.",
+        step_2_title: "Paste URL",
+        step_2_desc: "Paste the link into the search box above and click the Download button.",
+        step_3_title: "Save & Enjoy",
+        step_3_desc: "Choose your preferred quality (HD MP4 / MP3) and save directly to your device!",
+        reviews_tag: "⭐ Social Proof",
+        reviews_title: "Loved by Thousands Worldwide",
+        reviews_subtitle: "Rated 4.9/5 by 1800+ mobile & PC users",
+        faq_title: "Frequently Asked Questions",
+        faq_subtitle: "Everything you need to know about LUKZI Downloader",
+        faq_q1: "Is LUKZI VS SOCIAL MEDIA completely free?",
+        faq_a1: "Yes, 100% free with unlimited downloads. No registration, login, or subscriptions required.",
+        faq_q2: "Does it work on Android and iPhone devices?",
+        faq_a2: "Yes! It is fully optimized for all Android devices, iPhones (iOS), and PC browsers with zero glitches.",
+        faq_q3: "Does it remove TikTok watermarks?",
+        faq_a3: "Yes! Our cloud engine extracts the original HD video stream without the TikTok watermark logo.",
+        faq_q4: "Can I convert YouTube videos to MP3?",
+        faq_a4: "Yes, simply choose the 'MP3 Audio' option for YouTube to save crystal-clear 320kbps audio.",
+        qr_title: "📱 Scan to Download on Mobile",
+        qr_desc: "Point your phone's camera at this QR code to download directly to your mobile gallery!",
+        qr_close: "Close"
+      },
+      si: {
+        tagline: "නිල ඩවුන්ලෝඩරය • Respect Lukzi",
+        nav_home: "මුල් පිටුව",
+        nav_guide: "භාවිතා කරන අයුරු",
+        nav_developer: "ඩිවලපර් 🇱🇰",
+        nav_contact: "සම්බන්ධ වන්න",
+        online_text: "ඔන්ලයින්",
+        badge_hero: "✨ 100% නොමිලේ සහ අසීමිත වේගවත් ඩවුන්ලෝඩරය",
+        hero_title_1: "ඕනෑම වීඩියෝ & ඕඩියෝ",
+        hero_title_2: "තත්පර ගණනින්",
+        hero_title_3: "Download කරගන්න",
+        hero_desc: "Watermarks රහිත අධිවේගී ඩවුන්ලෝඩරය. YouTube, TikTok, Instagram, සහ Facebook වෙතින් ක්ෂණිකව බාගත කරන්න.",
+        trust_device: "Android • iOS • PC සඳහා",
+        trust_nowatermark: "Watermark නොමැත",
+        btn_paste: "Paste කරන්න",
+        btn_download: "Download",
+        supported_text: "සහය දක්වන:",
+        error_title: "බාගත කිරීමේ දෝෂයකි",
+        how_title: "පියවර 3කින් Download කරගන්නා ආකාරය",
+        how_subtitle: "Android, iOS හෝ PC සඳහා කිසිදු මෘදුකාංගයක් අවශ්‍ය නොවේ",
+        step_1_title: "Link එක Copy කරන්න",
+        step_1_desc: "YouTube, TikTok, Instagram හෝ Facebook වෙතින් අදාළ වීඩියෝවේ Share Link එක Copy කරගන්න.",
+        step_2_title: "URL එක Paste කරන්න",
+        step_2_desc: "සෙවුම් තීරුවට Link එක Paste කර Download බොත්තම ඔබන්න.",
+        step_3_title: "Save කර රසවිඳින්න",
+        step_3_desc: "ඔබට අවශ්‍ය Quality එක (HD MP4 / MP3) තෝරා ක්ෂණිකව Phone එකටම Download කරගන්න!",
+        reviews_tag: "⭐ පරිශීලක ප්‍රතිචාර",
+        reviews_title: "ලොව පුරා දහස් ගණනකගේ විශ්වාසය",
+        reviews_subtitle: "1800+ පරිශීලකයින් විසින් 4.9/5 ක ඇගයීමක් ලබාදී ඇත",
+        faq_title: "නිතර අසන ප්‍රශ්න (FAQ)",
+        faq_subtitle: "LUKZI Downloader පිළිබඳ සියලු තොරතුරු",
+        faq_q1: "මෙම සේවාව සම්පූර්ණයෙන්ම නොමිලේද?",
+        faq_a1: "ඔව්! කිසිදු ගෙවීමකින්, ලියාපදිංචි වීමකින් තොරව 100% නොමිලේ අසීමිතව බාගත කළ හැක.",
+        faq_q2: "Android සහ iPhone (iOS) වල වැඩ කරනවාද?",
+        faq_a2: "ඔව්! ඕනෑම Android දුරකථනයක, iPhone (iOS) සහ PC පරිගණකයක ඉතා සුමටව වැඩ කරයි.",
+        faq_q3: "TikTok Watermark එක ඉවත් වෙනවාද?",
+        faq_a3: "ඔව්! අපගේ Cloud Engine එක මඟින් Watermark රහිත මුල් HD වීඩියෝව ලබාදේ.",
+        faq_q4: "YouTube MP3 බවට පත් කළ හැකිද?",
+        faq_a4: "ඔව්, YouTube සඳහා MP3 Audio තෝරා 320kbps පැහැදිලි MP3 ලබාගත හැක.",
+        qr_title: "📱 Phone එකට කෙලින්ම ගන්න QR Code එක Scan කරන්න",
+        qr_desc: "ඔබේ ජංගම දුරකථනයේ Camera එකෙන් මෙම QR Code එක Scan කර Video එක Phone එකටම ලබාගන්න!",
+        qr_close: "වසන්න"
+      },
+      ta: {
+        tagline: "அதிகாரப்பூர்வ பதிவிறக்கி • Respect Lukzi",
+        nav_home: "முகப்பு",
+        nav_guide: "பயன்படுத்துவது எப்படி",
+        nav_developer: "டெவலப்பர் 🇱🇰",
+        nav_contact: "தொடர்புக்கு",
+        online_text: "ஆன்லைன்",
+        badge_hero: "✨ 100% இலவச மற்றும் வரம்பற்ற வேகமான பதிவிறக்கி",
+        hero_title_1: "எந்தவொரு வீடியோ & ஆடியோவையும்",
+        hero_title_2: "வினாடிகளில்",
+        hero_title_3: "பதிவிறக்கவும்",
+        hero_desc: "வாட்டர்மார்க் இல்லாத அதிவேக பதிவிறக்கி. YouTube, TikTok, Instagram, Facebook ஆகியவற்றிலிருந்து எளிதாக பதிவிறக்கவும்.",
+        trust_device: "Android • iOS • PC",
+        trust_nowatermark: "வாட்டர்மார்க் இல்லை",
+        btn_paste: "ஒட்டுக",
+        btn_download: "பதிவிறக்கு",
+        supported_text: "ஆதரிக்கப்படும்:",
+        error_title: "பிழை ஏற்பட்டது",
+        how_title: "3 எளிய படிகளில் பதிவிறக்குவது எப்படி",
+        how_subtitle: "Android, iOS, PC ஆகியவற்றில் மென்பொருள் தேவையில்லை",
+        step_1_title: "இணைப்பை நகலெடுக்கவும்",
+        step_1_desc: "வீடியோவின் பகிர்வு இணைப்பை நகலெடுக்கவும்.",
+        step_2_title: "இணைப்பை ஒட்டவும்",
+        step_2_desc: "தேடல் பெட்டியில் ஒட்டி பதிவிறக்கு என்பதைக் கிளிக் செய்யவும்.",
+        step_3_title: "சேமித்து மகிழுங்கள்",
+        step_3_desc: "விரும்பிய தரத்தை தேர்வு செய்து உடனடியாக பதிவிறக்கவும்!",
+        reviews_tag: "⭐ பயனர் மதிப்புரைகள்",
+        reviews_title: "உலகளாவிய பயனர்களின் தேர்வு",
+        reviews_subtitle: "1800+ பயனர்களால் 4.9/5 மதிப்பீடு",
+        faq_title: "அடிக்கடி கேட்கப்படும் கேள்விகள்",
+        faq_subtitle: "LUKZI பற்றிய தகவல்கள்",
+        faq_q1: "இது முற்றிலும் இலவசமா?",
+        faq_a1: "ஆம், பதிவு செய்யாமல் 100% இலவசமாக பதிவிறக்கலாம்.",
+        faq_q2: "Android மற்றும் iPhone இல் வேலை செய்யுமா?",
+        faq_a2: "ஆம்! அனைத்து Android, iOS மற்றும் கணினிகளிலும் சிறப்பாக வேலை செய்கிறது.",
+        faq_q3: "TikTok வாட்டர்மார்க் நீக்கப்படுமா?",
+        faq_a3: "ஆம்! அசல் வாட்டர்மார்க் இல்லாத வீடியோவை வழங்குகிறோம்.",
+        faq_q4: "MP3 ஆக மாற்ற முடியுமா?",
+        faq_a4: "ஆம், 320kbps MP3 ஆடியோவாக பதிவிறக்கலாம்.",
+        qr_title: "📱 மொபைலில் பதிவிறக்க ஸ்கேன் செய்யவும்",
+        qr_desc: "கேமராவை காட்டி QR Code ஐ ஸ்கேன் செய்து போனில் பதிவிறக்கவும்!",
+        qr_close: "மூடு"
+      },
+      ja: {
+        tagline: "公式ダウンローダー • Respect Lukzi",
+        nav_home: "ホーム",
+        nav_guide: "使い方",
+        nav_developer: "開発者 🇱🇰",
+        nav_contact: "お問い合わせ",
+        online_text: "オンライン",
+        badge_hero: "✨ 100% 完全無料・無制限ダウンローダー",
+        hero_title_1: "あらゆる動画＆音声を",
+        hero_title_2: "数秒で高速",
+        hero_title_3: "ダウンロード",
+        hero_desc: "透かし（ウォーターマーク）なしの超高速ダウンローダー。YouTube、TikTok、Instagram、Facebookに対応。",
+        trust_device: "Android • iOS • PC",
+        trust_nowatermark: "透かしなし",
+        btn_paste: "貼り付け",
+        btn_download: "ダウンロード",
+        supported_text: "対応サービス:",
+        error_title: "ダウンロードエラー",
+        how_title: "簡単な3ステップでダウンロード",
+        how_subtitle: "アプリやソフトのインストール不要",
+        step_1_title: "リンクをコピー",
+        step_1_desc: "ダウンロードしたい動画のリンクをコピーします。",
+        step_2_title: "URLを貼り付け",
+        step_2_desc: "上の検索バーに貼り付けてダウンロードボタンを押します。",
+        step_3_title: "保存して楽しむ",
+        step_3_desc: "高画質MP4やMP3を選択してすぐに保存！",
+        reviews_tag: "⭐ ユーザーレビュー",
+        reviews_title: "世界中のクリエイターに愛用されています",
+        reviews_subtitle: "1800人以上から4.9/5の高評価",
+        faq_title: "よくある質問 (FAQ)",
+        faq_subtitle: "LUKZIダウンローダーについて",
+        faq_q1: "完全に無料ですか？",
+        faq_a1: "はい、登録不要で100%完全無料でダウンロードできます。",
+        faq_q2: "AndroidやiPhoneでも使えますか？",
+        faq_a2: "はい、全Android端末、iPhone(iOS)、PCに完全対応しています。",
+        faq_q3: "TikTokのロゴは消えますか？",
+        faq_a3: "はい！ウォーターマークなしのオリジナルHD動画が保存されます。",
+        faq_q4: "MP3変換はできますか？",
+        faq_a4: "はい、320kbpsの高音質MP3として保存可能です。",
+        qr_title: "📱 スマホで直接保存するQRコード",
+        qr_desc: "スマホのカメラでスキャンして直接ギャラリーにダウンロード！",
+        qr_close: "閉じる"
+      },
+      ko: {
+        tagline: "공식 다운로더 • Respect Lukzi",
+        nav_home: "홈",
+        nav_guide: "사용 방법",
+        nav_developer: "개발자 🇱🇰",
+        nav_contact: "문의하기",
+        online_text: "온라인",
+        badge_hero: "✨ 100% 무료 무제한 초고속 다운로더",
+        hero_title_1: "모든 소셜 미디어 비디오 & 오디오를",
+        hero_title_2: "몇 초 만에",
+        hero_title_3: "다운로드",
+        hero_desc: "워터마크 없는 초고속 다운로더. YouTube, TikTok, Instagram, Facebook 고화질 완벽 지원.",
+        trust_device: "Android • iOS • PC",
+        trust_nowatermark: "워터마크 제거",
+        btn_paste: "붙여넣기",
+        btn_download: "다운로드",
+        supported_text: "지원 플랫폼:",
+        error_title: "다운로드 오류",
+        how_title: "3단계로 쉽게 다운로드하는 방법",
+        how_subtitle: "Android, iOS, PC 추가 소프트웨어 설치가 필요 없습니다",
+        step_1_title: "링크 복사",
+        step_1_desc: "비디오의 공유 링크를 복사하세요.",
+        step_2_title: "URL 붙여넣기",
+        step_2_desc: "검색창에 링크를 붙여넣고 다운로드 버튼을 누르세요.",
+        step_3_title: "저장 및 감상",
+        step_3_desc: "원하는 화질(HD MP4 / MP3)을 선택하고 즉시 저장하세요!",
+        reviews_tag: "⭐ 사용자 평가",
+        reviews_title: "전 세계 수천 명이 신뢰하는 다운로더",
+        reviews_subtitle: "1800명 이상의 사용자가 4.9/5 평점 부여",
+        faq_title: "자주 묻는 질문 (FAQ)",
+        faq_subtitle: "LUKZI 다운로더 가이드",
+        faq_q1: "정말 완전 무료인가요?",
+        faq_a1: "네, 로그인이나 결제 없이 100% 무료로 무제한 이용할 수 있습니다.",
+        faq_q2: "안드로이드 및 아이폰에서 작동하나요?",
+        faq_a2: "네! 모든 안드로이드 스마트폰, 아이폰(iOS) 및 PC 브라우저에 완벽 최적화되어 있습니다.",
+        faq_q3: "TikTok 워터마크가 제거되나요?",
+        faq_a3: "네, 워터마크 없는 깨끗한 원본 HD 비디오로 다운로드됩니다.",
+        faq_q4: "MP3 오디오로 변환 가능한가요?",
+        faq_a4: "네, 320kbps 고음질 MP3 파일로 즉시 저장할 수 있습니다.",
+        qr_title: "📱 모바일로 바로 받는 QR 코드",
+        qr_desc: "스마트폰 카메라로 QR 코드를 스캔하여 갤러리에 직접 저장하세요!",
+        qr_close: "닫기"
+      }
+    };
 
-    const extraPlatforms = [
-      { name: "Pinterest", img: "/Pintarest.png" },
-      { name: "Spotify", img: "/spotify.png" }
-    ];
+    let currentLang = localStorage.getItem('lukzi_lang') || 'en';
+    let activePlatform = 'all';
+    let originalUrl = '';
+    let ytFormat = 'mp4';
+    let ytQuality = '720p';
 
-    let currentPlatform = "YouTube";
-    let isFetching = false;
-    let fetchedData = null;
-    let ytFormat = "mp4";
-    let ytQuality = "720p";
+    function changeLanguage(lang) {
+      if (!I18N[lang]) lang = 'en';
+      currentLang = lang;
+      localStorage.setItem('lukzi_lang', lang);
+      const dict = I18N[lang];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      const langSelect = document.getElementById('lang-select');
+      if (langSelect) langSelect.value = lang;
+    }
+
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('svg');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        if (icon) icon.classList.remove('rotate-180');
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `px-3.5 py-2.5 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 transition-all duration-300 pointer-events-auto border ${
+        type === 'success' ? 'bg-emerald-600/95 border-emerald-400' : type === 'error' ? 'bg-red-600/95 border-red-400' : 'bg-slate-800/95 border-slate-700'
+      }`;
+      toast.innerHTML = `
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="leading-tight">${message}</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function openQrModal(downloadUrl) {
+      if (!downloadUrl) return;
+      const qrImg = document.getElementById('qr-image');
+      const modal = document.getElementById('qr-modal');
+      const encoded = encodeURIComponent(downloadUrl);
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encoded}`;
+      modal.classList.remove('hidden');
+    }
+
+    function closeQrModal() {
+      document.getElementById('qr-modal').classList.add('hidden');
+    }
+
+    function selectPlatform(platform) {
+      activePlatform = platform;
+      document.querySelectorAll('.platform-tab').forEach(btn => {
+        const p = btn.getAttribute('data-platform');
+        if (p === platform) {
+          btn.className = 'platform-tab active flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all duration-200 border border-cyan-400 bg-cyan-500 text-white shadow-md shadow-cyan-500/25 shrink-0';
+        } else {
+          btn.className = 'platform-tab flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs whitespace-nowrap transition-all duration-200 border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white shrink-0';
+        }
+      });
+    }
 
     function detectPlatformFromUrl(url) {
       if (!url) return null;
       const lower = url.toLowerCase();
-      if (lower.includes('youtube.com') || lower.includes('youtu.be')) return 'YouTube';
-      if (lower.includes('tiktok.com')) return 'TikTok';
-      if (lower.includes('instagram.com')) return 'Instagram';
-      if (lower.includes('facebook.com') || lower.includes('fb.watch')) return 'Facebook';
-      if (lower.includes('twitter.com') || lower.includes('x.com')) return 'Twitter';
-      if (lower.includes('pinterest.com') || lower.includes('pin.it')) return 'Pinterest';
-      if (lower.includes('spotify.com')) return 'Spotify';
+      if (lower.includes('youtu.be') || lower.includes('youtube.com')) return 'youtube';
+      if (lower.includes('tiktok.com')) return 'tiktok';
+      if (lower.includes('instagram.com')) return 'instagram';
+      if (lower.includes('facebook.com') || lower.includes('fb.watch') || lower.includes('fb.com')) return 'facebook';
       return null;
     }
 
-    function renderPlatformGrid() {
-      const container = document.getElementById('platform-grid');
-      container.innerHTML = '';
-
-      activePlatforms.forEach(p => {
-        const isSelected = p.name === currentPlatform;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `relative flex flex-col items-center justify-center gap-2.5 rounded-2xl border px-3 py-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md ${
-          isSelected
-            ? 'border-cyan-500 bg-cyan-50/80 dark:border-cyan-400 dark:bg-cyan-500/15'
-            : 'border-slate-200/80 bg-white/50 hover:border-cyan-300 hover:bg-cyan-50/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-cyan-400/40 dark:hover:bg-white/10'
-        }`;
-
-        btn.onclick = () => {
-          currentPlatform = p.name;
-          renderPlatformGrid();
-          hideError();
-        };
-
-        let badgeHtml = '';
-        if (isSelected) {
-          badgeHtml = `<span class="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-white"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-          </span>`;
-        }
-
-        btn.innerHTML = `
-          ${badgeHtml}
-          <img src="${p.img}" alt="${p.name}" class="rounded-xl object-contain h-10 w-10" />
-          <span class="text-xs font-medium text-gray-700 dark:text-slate-300">${p.name}</span>
-        `;
-        container.appendChild(btn);
-      });
-
-      const addBtn = document.createElement('button');
-      addBtn.type = 'button';
-      addBtn.className = 'group flex flex-col items-center justify-center gap-2.5 rounded-2xl border-2 border-dashed border-slate-300 bg-white/30 px-3 py-4 cursor-pointer transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-50/40 dark:border-white/20 dark:bg-white/5 dark:hover:border-cyan-400/60 dark:hover:bg-white/10';
-      addBtn.onclick = openMoreModal;
-      addBtn.innerHTML = `
-        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/30 transition-transform duration-200 group-hover:scale-110">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-        </span>
-        <span class="text-xs font-medium text-gray-500 dark:text-slate-400">Add</span>
-      `;
-      container.appendChild(addBtn);
-    }
-
-    function selectPlatformByName(name) {
-      const foundActive = activePlatforms.find(p => p.name === name);
-      if (foundActive) {
-        currentPlatform = name;
-        renderPlatformGrid();
-        return;
-      }
-      const foundExtra = extraPlatforms.find(p => p.name === name);
-      if (foundExtra) {
-        swapWithLastPlatform(foundExtra);
-      }
-    }
-
-    function swapWithLastPlatform(selectedExtra) {
-      const lastActive = activePlatforms[activePlatforms.length - 1];
-      activePlatforms[activePlatforms.length - 1] = selectedExtra;
-      const extraIdx = extraPlatforms.findIndex(p => p.name === selectedExtra.name);
-      if (extraIdx !== -1) {
-        extraPlatforms[extraIdx] = lastActive;
-      }
-      currentPlatform = selectedExtra.name;
-      renderPlatformGrid();
-      closeMoreModal();
-    }
-
-    function openMoreModal() {
-      const modal = document.getElementById('more-modal');
-      const grid = document.getElementById('modal-platforms-grid');
-      grid.innerHTML = '';
-
-      extraPlatforms.forEach(p => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'group flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/60 p-3.5 cursor-pointer transition-all hover:scale-[1.02] hover:border-cyan-400 hover:bg-cyan-50/50 hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:hover:border-cyan-400/50 dark:hover:bg-white/10';
-        btn.onclick = () => swapWithLastPlatform(p);
-        btn.innerHTML = `
-          <img src="${p.img}" alt="${p.name}" class="h-9 w-9 rounded-xl object-contain transition-transform group-hover:scale-110" />
-          <span class="text-sm font-semibold text-gray-700 dark:text-slate-200">${p.name}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto h-4 w-4 text-slate-300 transition-all duration-300 group-hover:rotate-90 group-hover:text-cyan-500 dark:text-slate-600"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-        `;
-        grid.appendChild(btn);
-      });
-
-      modal.classList.remove('hidden');
-    }
-
-    function closeMoreModal() {
-      document.getElementById('more-modal').classList.add('hidden');
-    }
-
-    async function saveMediaToGallery(url, filename, btn = null) {
-      if (!url) {
-        showError('Download link is not available.');
-        return;
-      }
-
-      let origContent = '';
-      if (btn) {
-        origContent = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = `
-          <svg class="h-4 w-4 animate-spin inline-block mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span>Preparing File...</span>
-        `;
-      }
-
-      const resetBtn = (statusMsg = 'Saved!') => {
-        if (!btn) return;
-        btn.innerHTML = `
-          <svg class="h-4 w-4 inline-block mr-1.5 text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-          <span>${statusMsg}</span>
-        `;
-        setTimeout(() => {
-          btn.innerHTML = origContent;
-          btn.disabled = false;
-        }, 3500);
-      };
-
-      try {
-        // Step 1: Fetch as blob
-        let blob = null;
-        try {
-          const res = await fetch(url, { mode: 'cors' });
-          if (res.ok) blob = await res.blob();
-        } catch (fetchErr) {
-          console.warn('Direct blob fetch failed, trying proxy...', fetchErr);
-        }
-
-        if (!blob) {
-          try {
-            const proxyRes = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
-            if (proxyRes.ok) blob = await proxyRes.blob();
-          } catch (proxyErr) {
-            console.warn('Proxy fetch failed:', proxyErr);
-          }
-        }
-
-        if (!blob) {
-          console.warn('Could not fetch blob for Web Share, falling back to direct download');
-          if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
-          return proxyDownload(url, filename, btn);
-        }
-
-        // Determine proper MIME type for Gallery / Photos app recognition
-        let mimeType = blob.type;
-        if (!mimeType || mimeType === 'application/octet-stream') {
-          if (filename.endsWith('.mp4')) mimeType = 'video/mp4';
-          else if (filename.endsWith('.mp3')) mimeType = 'audio/mpeg';
-          else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) mimeType = 'image/jpeg';
-          else if (filename.endsWith('.png')) mimeType = 'image/png';
-          else mimeType = 'video/mp4';
-        }
-
-        const file = new File([blob], filename, { type: mimeType });
-
-        // Step 2: Check if Web Share API with files is supported (Mobile: iOS / Android)
-        let canShareFiles = false;
-        try {
-          canShareFiles = !!(navigator.canShare && navigator.canShare({ files: [file] }));
-        } catch (e) {
-          canShareFiles = false;
-        }
-
-        if (canShareFiles) {
-          if (btn) {
-            btn.innerHTML = `
-              <svg class="h-4 w-4 animate-pulse inline-block mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              <span>Opening Share Sheet...</span>
-            `;
-          }
-
-          try {
-            await navigator.share({
-              files: [file],
-              title: filename,
-              text: 'Save video to Gallery / Photos'
-            });
-            resetBtn('Saved to Gallery!');
-            return;
-          } catch (shareErr) {
-            if (shareErr.name === 'AbortError') {
-              if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
-              return;
-            }
-            console.warn('Navigator share error, falling back to download:', shareErr);
-          }
-        }
-
-        // Step 3: Desktop fallback or when Web Share is unsupported
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
-
-        resetBtn('Downloaded!');
-      } catch (err) {
-        console.error('saveMediaToGallery error:', err);
-        if (btn) { btn.innerHTML = origContent; btn.disabled = false; }
-        proxyDownload(url, filename, btn);
-      }
-    }
-
-    async function proxyDownload(url, filename, btn = null) {
-      if (!url) {
-        showError('Download link is not available. Please try another link.');
-        return;
-      }
-
-      let origContent = '';
-      if (btn) {
-        origContent = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = `
-          <svg class="h-4 w-4 animate-spin inline-block mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span>Downloading...</span>
-        `;
-      }
-
-      const resetBtn = (success = false) => {
-        if (!btn) return;
-        if (success) {
-          btn.innerHTML = `
-            <svg class="h-4 w-4 inline-block mr-1.5 text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Saved!</span>
-          `;
-          setTimeout(() => {
-            btn.innerHTML = origContent;
-            btn.disabled = false;
-          }, 3500);
-        } else {
-          btn.innerHTML = origContent;
-          btn.disabled = false;
-        }
-      };
-
-      try {
-        // Strategy 1: Fetch as blob directly (works with CORS allowed streams)
-        try {
-          const res = await fetch(url, { mode: 'cors' });
-          if (res.ok) {
-            const blob = await res.blob();
-            const blobUrl = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
-            resetBtn(true);
-            return;
-          }
-        } catch (fetchErr) {
-          console.warn('Direct blob fetch failed, trying proxy download endpoint...', fetchErr);
-        }
-
-        // Strategy 2: Proxy download endpoint /api/download
-        try {
-          const proxyRes = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
-          if (proxyRes.ok) {
-            const blob = await proxyRes.blob();
-            const blobUrl = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
-            resetBtn(true);
-            return;
-          }
-        } catch (proxyErr) {
-          console.warn('Proxy download error, using browser direct stream:', proxyErr);
-        }
-
-        // Strategy 3: Standard anchor download trigger with new tab fallback
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        resetBtn(true);
-      } catch (err) {
-        console.error('Download error:', err);
-        resetBtn(false);
-        window.open(url, '_blank');
-      }
-    }
-
-    async function directDownload(url, filename, btn = null) {
-      return proxyDownload(url, filename, btn);
+    function clearInput() {
+      const input = document.getElementById('url-input');
+      input.value = '';
+      document.getElementById('clear-btn').classList.add('hidden');
+      input.focus();
     }
 
     function showError(msg) {
-      const errBox = document.getElementById('error-message');
-      const errText = document.getElementById('error-text');
-      errText.textContent = msg;
-      errBox.classList.remove('hidden');
+      const el = document.getElementById('error-container');
+      const msgEl = document.getElementById('error-message');
+      if (msgEl) msgEl.textContent = msg;
+      if (el) el.classList.remove('hidden');
     }
 
     function hideError() {
-      document.getElementById('error-message').classList.add('hidden');
+      const el = document.getElementById('error-container');
+      if (el) el.classList.add('hidden');
     }
 
-    function setLoading(loading) {
-      isFetching = loading;
-      const btn = document.getElementById('get-details-btn');
-      const btnText = document.getElementById('btn-text');
-      const downloadIcon = document.getElementById('btn-download-icon');
-      const spinnerIcon = document.getElementById('btn-spinner-icon');
-      const prog = document.getElementById('progress-bar-container');
+    // =========================================================================
+    // SMART ZERO-JSON DOWNLOAD ENGINE (Android, iOS & PC Flawless)
+    // =========================================================================
+    async function smartDownload(url, filename, btn) {
+      if (!url) {
+        showToast('No download link available.', 'error');
+        return;
+      }
 
-      if (loading) {
+      const originalBtnHtml = btn ? btn.innerHTML : '';
+      if (btn) {
         btn.disabled = true;
-        btnText.textContent = 'Processing...';
-        downloadIcon.classList.add('hidden');
-        spinnerIcon.classList.remove('hidden');
-        prog.classList.remove('hidden');
-      } else {
-        btn.disabled = false;
-        btnText.textContent = 'Get Details';
-        downloadIcon.classList.remove('hidden');
-        spinnerIcon.classList.add('hidden');
-        prog.classList.add('hidden');
+        btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Downloading...</span>`;
       }
-    }
 
-    async function safeFetchJson(url, options = {}) {
+      showToast('Preparing download...', 'info');
+
       try {
-        const res = await fetch(url, options);
-        const text = await res.text();
-        try {
-          const json = JSON.parse(text);
-          return { ok: res.ok, status: res.status, data: json };
-        } catch {
-          return { ok: false, status: res.status, error: 'Invalid response from server' };
-        }
-      } catch (err) {
-        return { ok: false, status: 0, error: err.message || 'Network error' };
-      }
-    }
+        const cleanName = filename || 'lukzi-media.mp4';
+        const dlUrl = `/api/download?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(cleanName)}`;
 
-    async function fetchTikTokDirect(rawUrl) {
-      const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(rawUrl)}`);
-      const data = await res.json();
-      if (data && data.code === 0 && data.data) {
-        const d = data.data;
-        return {
-          platform: 'tiktok',
-          title: d.title || 'TikTok Video',
-          thumbnail: d.cover || d.origin_cover || '/lukzi-logo.png',
-          meta: {
-            author: d.author ? (d.author.nickname || d.author.unique_id) : 'TikTok User',
-            duration: d.duration ? `${d.duration}s` : null,
-            views: d.play_count || null,
-            profile_pic: d.author ? d.author.avatar : null
-          },
-          qualities: {
-            no_watermark: d.play,
-            watermark: d.wmplay,
-            audio: d.music
-          }
-        };
+        // Step 1: Fetch via local proxy to inspect response & catch JSON errors
+        const response = await fetch(dlUrl);
+        const contentType = response.headers.get('content-type') || '';
+
+        // If server returned JSON, it is an error response - DO NOT trigger file download!
+        if (!response.ok || contentType.includes('application/json')) {
+          let errMsg = 'Download failed. Remote server returned error.';
+          try {
+            const errData = await response.json();
+            if (errData.error) errMsg = errData.error;
+          } catch (e) {}
+          throw new Error(errMsg);
+        }
+
+        // Step 2: Response is genuine video/audio! Convert to Blob
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = cleanName;
+        document.body.appendChild(a);
+        a.click();
+
+        setTimeout(() => {
+          a.remove();
+          window.URL.revokeObjectURL(blobUrl);
+        }, 60000);
+
+        showToast('Download started successfully!', 'success');
+      } catch (err) {
+        console.warn('Proxy download error, falling back to direct stream:', err.message);
+        showToast(err.message || 'Direct stream fallback opening...', 'error');
+        // Mobile fallback: Open stream directly in new window if blob is restricted
+        window.open(url, '_blank');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalBtnHtml;
+        }
       }
-      throw new Error((data && data.msg) || 'Could not fetch TikTok video');
     }
 
     async function handleGetDetails() {
       hideError();
       const input = document.getElementById('url-input');
-      const rawUrl = input.value.trim();
-
+      const rawUrl = (input.value || '').trim();
       if (!rawUrl) {
-        showError('Please paste a link first.');
+        showError('Please paste a YouTube, TikTok, Instagram, or Facebook link.');
         return;
       }
 
       const detected = detectPlatformFromUrl(rawUrl);
-      if (detected && detected !== currentPlatform) {
-        selectPlatformByName(detected);
+      if (!detected) {
+        showError('Only YouTube, TikTok, Instagram, and Facebook links are supported. Please paste a valid link.');
+        return;
       }
 
-      setLoading(true);
-      document.getElementById('result-card-container').classList.add('hidden');
+      originalUrl = rawUrl;
+      selectPlatform(detected);
+
+      const btn = document.getElementById('get-details-btn');
+      const btnText = document.getElementById('btn-text');
+      const btnIcon = document.getElementById('btn-icon');
+      const btnSpinner = document.getElementById('btn-spinner');
+      const loadingBox = document.getElementById('loading-container');
+      const resultBox = document.getElementById('result-container');
+
+      btn.disabled = true;
+      btnText.textContent = 'Fetching...';
+      btnIcon.classList.add('hidden');
+      btnSpinner.classList.remove('hidden');
+      loadingBox.classList.remove('hidden');
+      resultBox.classList.add('hidden');
 
       try {
-        // Direct handling for TikTok (100% CORS-friendly, zero rate limit, works everywhere without server)
-        if (currentPlatform === 'TikTok') {
-          try {
-            fetchedData = await fetchTikTokDirect(rawUrl);
-            renderResultCard(fetchedData, rawUrl);
-            return;
-          } catch (e) {
-            console.warn('Direct TikTok failed, attempting API proxy...', e);
-          }
-        }
-
-        let apiEndpoint = '/api/yts';
-        if (currentPlatform === 'YouTube') apiEndpoint = '/api/yts';
-        else if (currentPlatform === 'TikTok') apiEndpoint = '/api/tiktok';
-        else if (currentPlatform === 'Facebook') apiEndpoint = '/api/facebook';
-        else if (currentPlatform === 'Instagram') apiEndpoint = '/api/instagram';
-        else if (currentPlatform === 'Spotify') apiEndpoint = '/api/spotify';
-        else if (currentPlatform === 'Pinterest') apiEndpoint = '/api/pinterest';
-        else if (currentPlatform === 'Twitter') apiEndpoint = '/api/twitter';
-        else {
-          showError(`${currentPlatform} is coming soon. Please use a supported platform.`);
-          return;
-        }
-
-        // Get security token safely
-        const tokenRes = await safeFetchJson('/api/token', { method: 'POST' });
-        const token = tokenRes.data?.token || '';
-
-        const headers = { 'Content-Type': 'application/json' };
-        if (token) headers['x-qs-token'] = token;
-
-        const res = await safeFetchJson(apiEndpoint, {
+        const res = await fetch('/api/details', {
           method: 'POST',
-          headers,
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: rawUrl })
         });
 
-        if (!res.ok || !res.data || (!res.data.success && res.data.error)) {
-          // If TikTok failed via API, try direct fallback
-          if (currentPlatform === 'TikTok') {
-            fetchedData = await fetchTikTokDirect(rawUrl);
-            renderResultCard(fetchedData, rawUrl);
-            return;
-          }
-          const rawErr = (res.data?.error || res.error || '').toLowerCase();
-          if (currentPlatform === 'Instagram' && (rawErr.includes('private') || rawErr.includes('not found') || rawErr.includes('login') || rawErr.includes('empty') || rawErr.includes('unavailable'))) {
-            throw new Error('⚠️ මෙම Instagram Reel එක Private Account එකක හෝ Privacy Protected එකක් විය හැක. Instagram ප්‍රතිපත්ති අනුව Private Accounts ඩවුන්ලෝඩ් කළ නොහැක. කරුණාකර Public Account එකක වීඩියෝ ලින්ක් එකක් ඇතුළත් කරන්න.');
-          }
-          throw new Error(res.data?.error || res.error || 'Download service unavailable. Please check your link or try again.');
-        }
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Failed to fetch media details');
 
-        const data = res.data;
-        if (currentPlatform === 'Spotify' && data.data) {
-          fetchedData = {
-            platform: 'spotify',
-            title: data.data.title || 'Unknown Track',
-            thumbnail: data.data.thumbnail || null,
-            meta: {
-              duration: data.data.duration_ms ? `${Math.floor(data.data.duration_ms / 60000)}:${String(Math.floor((data.data.duration_ms % 60000) / 1000)).padStart(2, '0')}` : null,
-              author: data.data.artist || null
-            },
-            qualities: {
-              audio: data.data.download_url || null,
-              hd: data.data.download_url || null,
-              sd: data.data.download_url || null
-            }
-          };
-        } else {
-          fetchedData = data.data || data;
-        }
-
-        renderResultCard(fetchedData, rawUrl);
+        renderResultCard(data);
       } catch (err) {
-        console.error(err);
-        const errMsg = err.message || '';
-        if (currentPlatform === 'Instagram' && (errMsg.toLowerCase().includes('private') || errMsg.toLowerCase().includes('not found') || errMsg.toLowerCase().includes('restricted'))) {
-          showError('⚠️ මෙම Instagram Reel එක Private Account එකක හෝ Privacy Protected එකක් විය හැක. Instagram ප්‍රතිපත්ති අනුව Private Accounts ඩවුන්ලෝඩ් කළ නොහැක. කරුණාකර Public Account එකක වීඩියෝ ලින්ක් එකක් ඇතුළත් කරන්න.');
-        } else {
-          showError(errMsg || 'Something went wrong. Please check your link and try again.');
-        }
+        showError(err.message || 'Could not fetch media. Please check if link is public and accessible.');
       } finally {
-        setLoading(false);
+        btn.disabled = false;
+        btnText.textContent = 'Download';
+        btnIcon.classList.remove('hidden');
+        btnSpinner.classList.add('hidden');
+        loadingBox.classList.add('hidden');
       }
     }
 
-    function renderResultCard(data, originalUrl) {
-      const container = document.getElementById('result-card-container');
-      container.classList.remove('hidden');
+    function renderResultCard(data) {
+      const container = document.getElementById('result-container');
+      if (!container) return;
 
-      const title = data.title || 'Media Content';
-      const thumbnail = data.thumbnail || '/lukzi-logo.png';
-      const platform = (data.platform || currentPlatform).toLowerCase();
-      const meta = data.meta || {};
+      const platform = (data.platform || detectPlatformFromUrl(originalUrl) || 'video').toLowerCase();
+      let rawTitle = data.title || data.meta?.title || 'Social Media Video';
+      if (typeof rawTitle === 'string') {
+        const noisePatterns = ['"}]},"count"', '"}]]', '"}]}', '\\"}', '"}', '"}]'];
+        for (const p of noisePatterns) {
+          const idx = rawTitle.indexOf(p);
+          if (idx !== -1) rawTitle = rawTitle.substring(0, idx);
+        }
+        rawTitle = rawTitle.replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      const title = rawTitle || 'Social Media Video';
 
-      const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.qualities?.sd || null;
+      const thumbnail = data.thumbnail || data.meta?.thumbnail || '/lukzi-logo.png';
+      const author = data.author || data.meta?.author || data.meta?.uploader || '';
+      const duration = data.duration || data.meta?.duration || '';
+      const views = data.views || data.meta?.views || '';
+
+      const hdUrl = data.qualities?.hd || data.qualities?.no_watermark || data.download_url || '';
       const sdUrl = data.qualities?.sd || hdUrl;
 
-      let metaChips = '';
-      if (meta.author) {
-        metaChips += `<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          ${meta.author}
-        </span>`;
-      }
-      if (meta.duration) {
-        metaChips += `<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          ${meta.duration}
-        </span>`;
-      }
-      if (meta.views) {
-        metaChips += `<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          ${Number(meta.views).toLocaleString()}
-        </span>`;
-      }
+      let badgesHtml = '';
+      if (author) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👤 ${author}</span>`;
+      if (duration) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">⏱️ ${duration}</span>`;
+      if (views) badgesHtml += `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-medium">👁️ ${isNaN(views) ? views : Number(views).toLocaleString()}</span>`;
 
       let actionsHtml = '';
 
       if (platform === 'youtube') {
         actionsHtml = `
-          <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
-            <div class="flex rounded-lg bg-slate-100 p-1 dark:bg-slate-800 mb-3 shadow-sm">
-              <button type="button" onclick="setYtFormat('mp4')" id="tab-mp4" class="flex-1 rounded-md py-1.5 text-xs font-semibold transition-all ${ytFormat === 'mp4' ? 'bg-white text-cyan-600 shadow-sm dark:bg-slate-700 dark:text-cyan-400' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'}">MP4 Video</button>
-              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 rounded-md py-1.5 text-xs font-semibold transition-all ${ytFormat === 'mp3' ? 'bg-white text-cyan-600 shadow-sm dark:bg-slate-700 dark:text-cyan-400' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'}">MP3 Audio</button>
+          <div class="w-full flex flex-col gap-2.5">
+            <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700">
+              <button type="button" onclick="setYtFormat('mp4')" id="tab-mp4" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp4' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎥 MP4 Video</button>
+              <button type="button" onclick="setYtFormat('mp3')" id="tab-mp3" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${ytFormat === 'mp3' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}">🎵 MP3 Audio (320kbps)</button>
             </div>
 
-            <div id="yt-mp4-options" class="${ytFormat === 'mp4' ? 'space-y-2' : 'hidden'}">
-              <div class="grid grid-cols-2 gap-1.5">
+            <div id="yt-mp4-opts" class="${ytFormat === 'mp4' ? 'space-y-2' : 'hidden'}">
+              <div class="grid grid-cols-4 gap-1.5">
                 ${['360p', '480p', '720p', '1080p'].map(q => `
-                  <button type="button" onclick="setYtQuality('${q}')" class="yt-q-btn rounded-lg border py-1.5 text-xs font-medium transition-all ${ytQuality === q ? 'bg-cyan-600 text-white shadow-md border-cyan-600' : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}">${q}</button>
+                  <button type="button" onclick="setYtQuality('${q}')" class="yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border ${ytQuality === q ? 'bg-cyan-500 border-cyan-400 text-white shadow-md' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500'}">${q}</button>
                 `).join('')}
               </div>
-              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/40 active:scale-[0.98]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-                <span>Generate</span>
+              <button type="button" id="yt-generate-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>Download YouTube HD Video</span>
               </button>
             </div>
 
-            <div id="yt-mp3-options" class="${ytFormat === 'mp3' ? 'space-y-2' : 'hidden'}">
-              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/40 active:scale-[0.98]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-                <span>Generate</span>
+            <div id="yt-mp3-opts" class="${ytFormat === 'mp3' ? 'space-y-2' : 'hidden'}">
+              <button type="button" id="yt-generate-audio-btn" onclick="generateYouTubeDownload('${originalUrl}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                <span>Download MP3 Audio (320kbps)</span>
               </button>
             </div>
-            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
-              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
-            </div>
-          </div>
-        `;
-      } else if (platform === 'spotify') {
-        const audioUrl = data.qualities?.audio;
-        actionsHtml = `
-          <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
-            <button type="button" onclick="directDownload('${audioUrl}', 'lukzi-track.mp3', this)" ${!audioUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>Download Audio</span>
-            </button>
           </div>
         `;
       } else if (platform === 'tiktok') {
-        const noWatermark = data.qualities?.no_watermark;
+        const noWm = data.qualities?.no_watermark || hdUrl;
         const audio = data.qualities?.audio;
-        const profilePic = data.meta?.profile_pic;
         actionsHtml = `
-          <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
-            ${noWatermark ? `
-            <button type="button" onclick="saveMediaToGallery('${noWatermark}', 'lukzi-tiktok.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-              <span>Save to Gallery</span>
-            </button>` : ''}
-            <button type="button" onclick="proxyDownload('${noWatermark}', 'lukzi-tiktok.mp4', this)" ${!noWatermark ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>Download MP4</span>
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="smartDownload('${noWm}', 'tiktok-video-nowatermark.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download TikTok (No Watermark)</span>
             </button>
-            <button type="button" onclick="proxyDownload('${audio}', 'lukzi-tiktok-audio.mp3', this)" ${!audio ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98] disabled:opacity-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              <span>Audio (MP3)</span>
-            </button>
-            ${profilePic ? `
-            <button type="button" onclick="proxyDownload('${profilePic}', 'lukzi-tiktok-profile.jpg', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span>Profile Picture</span>
+
+            ${audio ? `
+            <button type="button" onclick="smartDownload('${audio}', 'tiktok-audio.mp3', this)" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+              <span>Download TikTok Audio (MP3)</span>
             </button>` : ''}
-            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
-              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
-            </div>
+          </div>
+        `;
+      } else if (platform === 'instagram') {
+        actionsHtml = `
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="smartDownload('${hdUrl}', 'instagram-reel-hd.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-pink-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download Instagram HD Reel / Video</span>
+            </button>
           </div>
         `;
       } else {
+        // Facebook
         actionsHtml = `
-          <div class="flex flex-col gap-2 w-full max-w-xs md:max-w-[220px] md:justify-center">
-            ${hdUrl ? `
-            <button type="button" onclick="saveMediaToGallery('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-              <span>Save to Gallery</span>
-            </button>` : ''}
-            <button type="button" onclick="proxyDownload('${hdUrl}', 'lukzi-${platform}-hd.mp4', this)" ${!hdUrl ? 'disabled' : ''} class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.98] disabled:opacity-50">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>Download HD</span>
+          <div class="w-full flex flex-col gap-2">
+            <button type="button" onclick="smartDownload('${hdUrl}', 'facebook-video-hd.mp4', this)" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download Facebook HD Video</span>
             </button>
+
             ${sdUrl && sdUrl !== hdUrl ? `
-            <button type="button" onclick="proxyDownload('${sdUrl}', 'lukzi-${platform}-sd.mp4', this)" class="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 w-full cursor-pointer border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-500 hover:bg-cyan-50/50 hover:scale-[1.02] hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-cyan-400/50 dark:hover:bg-white/15 active:scale-[0.98]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>Download SD</span>
+            <button type="button" onclick="smartDownload('${sdUrl}', 'facebook-video-sd.mp4', this)" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-all active:scale-95">
+              <span>Download SD (Faster)</span>
             </button>` : ''}
-            <div class="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 py-1 px-2 rounded-lg border border-slate-200/60 dark:border-white/5 text-center">
-              <span>💡 <strong>Mobile:</strong> <em>Save to Gallery</em> ඔබා <strong>Save Video</strong> තෝරන්න</span>
-            </div>
           </div>
         `;
       }
 
-      container.innerHTML = `
-        <div class="flex flex-col md:flex-row items-center md:items-stretch gap-6 w-full justify-center">
-          <div class="flex flex-col items-center gap-3 w-full md:w-auto md:justify-center">
-            <div class="relative rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-md max-w-[200px] max-h-[260px] flex items-center justify-center">
-              ${(platform === 'instagram' || platform === 'facebook' || platform === 'tiktok') && hdUrl ? `
-                <video src="${hdUrl}" poster="${thumbnail && !thumbnail.includes('lukzi-logo') ? thumbnail : ''}" preload="metadata" muted playsinline controls referrerpolicy="no-referrer" class="max-w-[200px] max-h-[260px] w-auto h-auto rounded-2xl object-contain"></video>
-              ` : `
-                <img src="${thumbnail}" referrerpolicy="no-referrer" alt="Thumbnail" class="max-w-[200px] max-h-[200px] w-auto h-auto object-contain rounded-2xl" onerror="this.src='/lukzi-logo.png'" />
-              `}
-            </div>
+      // Quick Tools (QR code + Direct Link + Copy link)
+      const qrTargetUrl = hdUrl || originalUrl;
+      const toolsHtml = `
+        <div class="flex flex-wrap items-center justify-between pt-2.5 border-t border-slate-800/80 gap-2">
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openQrModal('${qrTargetUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold transition-all active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+              <span>📱 QR Code</span>
+            </button>
+
+            ${hdUrl ? `
+            <a href="${hdUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold transition-all active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <span>Watch / Direct Link</span>
+            </a>` : ''}
           </div>
 
-          <div class="flex-1 flex flex-col justify-center text-center md:text-left">
-            <span class="text-xs font-bold uppercase tracking-wide text-cyan-500 dark:text-cyan-400">${platform}</span>
-            <h3 class="line-clamp-2 text-base md:text-lg font-bold text-gray-900 dark:text-white mt-1">${title}</h3>
-            <div class="mt-3 flex flex-wrap justify-center md:justify-start gap-2">
-              ${metaChips}
-            </div>
-          </div>
-
-          ${actionsHtml}
+          <button type="button" onclick="copyDirectUrl('${hdUrl || originalUrl}')" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-cyan-400 text-xs font-semibold transition-colors active:scale-95">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            <span>Copy Link</span>
+          </button>
         </div>
       `;
+
+      container.innerHTML = `
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+          <div class="relative w-full sm:w-48 aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shrink-0 shadow-lg flex items-center justify-center">
+            <img src="${thumbnail}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src='/lukzi-logo.png'" />
+            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-md text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider">${platform}</span>
+          </div>
+
+          <div class="flex-1 w-full flex flex-col justify-between overflow-hidden">
+            <div>
+              <h3 class="font-display font-bold text-sm sm:text-base text-white leading-snug line-clamp-2 mb-2 break-words">${title}</h3>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                ${badgesHtml}
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-800 space-y-2.5">
+              ${actionsHtml}
+              ${toolsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.classList.remove('hidden');
+      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function setYtFormat(fmt) {
       ytFormat = fmt;
       const tabMp4 = document.getElementById('tab-mp4');
       const tabMp3 = document.getElementById('tab-mp3');
-      const mp4Opts = document.getElementById('yt-mp4-options');
-      const mp3Opts = document.getElementById('yt-mp3-options');
+      const mp4Opts = document.getElementById('yt-mp4-opts');
+      const mp3Opts = document.getElementById('yt-mp3-opts');
 
       if (fmt === 'mp4') {
-        tabMp4.className = 'flex-1 rounded-md py-1.5 text-xs font-semibold transition-all bg-white text-cyan-600 shadow-sm dark:bg-slate-700 dark:text-cyan-400';
-        tabMp3.className = 'flex-1 rounded-md py-1.5 text-xs font-semibold transition-all text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200';
-        mp4Opts.classList.remove('hidden');
-        mp3Opts.classList.add('hidden');
+        tabMp4.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
+        tabMp3.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
+        if (mp4Opts) mp4Opts.classList.remove('hidden');
+        if (mp3Opts) mp3Opts.classList.add('hidden');
       } else {
-        tabMp3.className = 'flex-1 rounded-md py-1.5 text-xs font-semibold transition-all bg-white text-cyan-600 shadow-sm dark:bg-slate-700 dark:text-cyan-400';
-        tabMp4.className = 'flex-1 rounded-md py-1.5 text-xs font-semibold transition-all text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200';
-        mp4Opts.classList.add('hidden');
-        mp3Opts.classList.remove('hidden');
+        tabMp3.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500 text-white shadow-md';
+        tabMp4.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white';
+        if (mp3Opts) mp3Opts.classList.remove('hidden');
+        if (mp4Opts) mp4Opts.classList.add('hidden');
       }
-      const secBtn = document.getElementById('yt-secondary-dl-btn');
-      if (secBtn) secBtn.remove();
     }
 
     function setYtQuality(q) {
       ytQuality = q;
       document.querySelectorAll('.yt-q-btn').forEach(btn => {
         if (btn.textContent.trim() === q) {
-          btn.className = 'yt-q-btn rounded-lg border py-1.5 text-xs font-medium transition-all bg-cyan-600 text-white shadow-md border-cyan-600';
+          btn.className = 'yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border bg-cyan-500 border-cyan-400 text-white shadow-md';
         } else {
-          btn.className = 'yt-q-btn rounded-lg border py-1.5 text-xs font-medium transition-all border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700';
+          btn.className = 'yt-q-btn py-1.5 rounded-xl text-xs font-bold transition-all border bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-500';
         }
       });
-      const secBtn = document.getElementById('yt-secondary-dl-btn');
-      if (secBtn) secBtn.remove();
     }
 
     async function generateYouTubeDownload(url) {
       const btn = ytFormat === 'mp4' ? document.getElementById('yt-generate-btn') : document.getElementById('yt-generate-audio-btn');
-      btn.disabled = true;
-      btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-        <span>Generating...</span>
-      `;
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Generating Stream...</span>`;
+      }
 
       try {
-        const tokenRes = await safeFetchJson('/api/token', { method: 'POST' });
-        const token = tokenRes.data?.token || '';
-        const payload = { url, type: ytFormat };
-        if (ytFormat === 'mp4') payload.quality = ytQuality;
-
-        const headers = { 'Content-Type': 'application/json' };
-        if (token) headers['x-qs-token'] = token;
-
-        const res = await safeFetchJson('/api/ytdl', {
+        const res = await fetch('/api/youtube', {
           method: 'POST',
-          headers,
-          body: JSON.stringify(payload)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, type: ytFormat, quality: ytQuality })
         });
 
-        if (!res.ok || !res.data || !res.data.success) {
-          throw new Error(res.data?.error || res.error || 'Download generation failed. Please try again.');
-        }
-
-        const data = res.data;
-        const downloadUrl = ytFormat === 'mp3' ? data.data?.qualities?.audio : data.data?.qualities?.hd;
-        if (!downloadUrl) throw new Error('No download URL returned from server.');
-
-        const ext = ytFormat === 'mp3' ? 'mp3' : 'mp4';
-        const filename = `${data.data?.title || 'lukzi-video'}.${ext}`;
-
-        btn.disabled = false;
-        if (ytFormat === 'mp4') {
-          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98]';
-          btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-            <span>Save to Gallery</span>
-          `;
-          btn.onclick = function() { saveMediaToGallery(downloadUrl, filename, this); };
-
-          let secBtn = document.getElementById('yt-secondary-dl-btn');
-          if (!secBtn) {
-            secBtn = document.createElement('button');
-            secBtn.id = 'yt-secondary-dl-btn';
-            secBtn.type = 'button';
-            secBtn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] mt-2';
-            secBtn.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-              <span>Download MP4</span>
-            `;
-            secBtn.onclick = () => directDownload(downloadUrl, filename);
-            btn.insertAdjacentElement('afterend', secBtn);
-          }
+        const data = await res.json();
+        if (data && data.download_url) {
+          const fn = ytFormat === 'mp3' ? 'youtube-audio-320kbps.mp3' : `youtube-${ytQuality}.mp4`;
+          await smartDownload(data.download_url, fn, btn);
         } else {
-          btn.className = 'w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:shadow-green-500/40 active:scale-[0.98]';
-          btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-            <span>Download Audio</span>
-          `;
-          btn.onclick = () => directDownload(downloadUrl, filename);
+          throw new Error(data.error || 'Could not generate YouTube download');
         }
       } catch (err) {
-        console.error(err);
-        alert(err.message || 'Download generation failed. Please try again.');
-        btn.disabled = false;
-        btn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-          <span>Generate</span>
-        `;
+        showToast(err.message || 'YouTube server busy, please retry.', 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Download YouTube ${ytFormat.toUpperCase()}</span>`;
+        }
       }
     }
 
-    function initTheme() {
-      const toggleBtn = document.getElementById('theme-toggle-btn');
-      const sunIcon = document.getElementById('sun-icon');
-      const moonIcon = document.getElementById('moon-icon');
-      const headerContainer = document.getElementById('header-container');
-
-      function updateThemeUi(isDark) {
-        if (isDark) {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-          sunIcon.className = 'absolute transition-all duration-500 group-hover:rotate-180 rotate-0 scale-100 opacity-100';
-          moonIcon.className = 'absolute transition-all duration-500 group-hover:-rotate-12 -rotate-90 scale-0 opacity-0';
-          toggleBtn.className = 'group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-yellow-300/20 bg-slate-800 text-yellow-300 hover:border-yellow-300/50 hover:shadow-[0_0_20px_rgba(253,224,71,0.4)]';
-          headerContainer.className = 'relative mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-[24px] border px-4 sm:px-6 backdrop-blur-2xl transition-all duration-300 sm:h-[78px] border-white/10 bg-slate-900/80 shadow-xl shadow-black/40';
-        } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-          sunIcon.className = 'absolute transition-all duration-500 group-hover:rotate-180 rotate-90 scale-0 opacity-0';
-          moonIcon.className = 'absolute transition-all duration-500 group-hover:-rotate-12 rotate-0 scale-100 opacity-100';
-          toggleBtn.className = 'group relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-visible rounded-xl border transition-all duration-300 hover:scale-110 active:scale-95 border-cyan-200 bg-cyan-50 text-cyan-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]';
-          headerContainer.className = 'relative mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-[24px] border px-4 sm:px-6 backdrop-blur-2xl transition-all duration-300 sm:h-[78px] border-white/80 bg-white/75 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.35),0_4px_15px_-5px_rgba(0,0,0,0.1)]';
-        }
-      }
-
-      const isCurrentDark = document.documentElement.classList.contains('dark');
-      updateThemeUi(isCurrentDark);
-
-      toggleBtn.addEventListener('click', () => {
-        const currentlyDark = document.documentElement.classList.contains('dark');
-        updateThemeUi(!currentlyDark);
+    function copyDirectUrl(url) {
+      if (!url) return;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Link copied to clipboard!', 'success');
       });
     }
 
-    function initNavigation() {
-      const platformsBtn = document.getElementById('platforms-btn');
-      const platformsMenu = document.getElementById('platforms-menu');
-      const dropdownArrow = document.getElementById('dropdown-arrow');
-      let isDropdownOpen = false;
+    function startDynamicOnlineCounter() {
+      const el = document.getElementById('live-online-count');
+      if (!el) return;
 
-      function toggleDropdown(open) {
-        isDropdownOpen = open;
-        if (open) {
-          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-100 translate-y-0 pointer-events-auto border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
-          dropdownArrow.classList.add('rotate-180');
-        } else {
-          platformsMenu.className = 'absolute left-1/2 -translate-x-1/2 top-full pt-1 min-w-[200px] rounded-2xl border p-2 backdrop-blur-2xl transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none border-white/10 bg-slate-900/95 shadow-xl shadow-black/40';
-          dropdownArrow.classList.remove('rotate-180');
-        }
+      function getRandomCount() {
+        return Math.floor(Math.random() * (22 - 12 + 1)) + 12;
       }
 
-      platformsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleDropdown(!isDropdownOpen);
-      });
+      el.textContent = getRandomCount();
 
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.platforms-dropdown')) {
-          toggleDropdown(false);
-        }
-      });
+      setInterval(() => {
+        const nextCount = getRandomCount();
+        el.style.transition = 'opacity 0.25s ease';
+        el.style.opacity = '0.3';
+        setTimeout(() => {
+          el.textContent = nextCount;
+          el.style.opacity = '1';
+        }, 250);
+      }, 5000);
+    }
 
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuOpenIcon = document.getElementById('menu-open-icon');
-      const menuCloseIcon = document.getElementById('menu-close-icon');
-      let isMobileMenuOpen = false;
+    document.addEventListener('DOMContentLoaded', () => {
+      changeLanguage(currentLang);
+      startDynamicOnlineCounter();
 
-      window.toggleMobileMenu = function(open) {
-        isMobileMenuOpen = open;
-        if (open) {
-          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden mt-2 max-h-[600px] opacity-100';
-          menuOpenIcon.classList.add('hidden');
-          menuCloseIcon.classList.remove('hidden');
-        } else {
-          mobileMenu.className = 'mx-auto max-w-7xl overflow-hidden transition-all duration-500 ease-out lg:hidden pointer-events-none max-h-0 opacity-0';
-          menuOpenIcon.classList.remove('hidden');
-          menuCloseIcon.classList.add('hidden');
-        }
-      };
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      }
 
-      mobileBtn.addEventListener('click', () => {
-        toggleMobileMenu(!isMobileMenuOpen);
-      });
-
-      const mobilePlatformsToggle = document.getElementById('mobile-platforms-toggle');
-      const mobilePlatformsSub = document.getElementById('mobile-platforms-sub');
-      const mobilePlatformsArrow = document.getElementById('mobile-platforms-arrow');
-      let isMobilePlatformsOpen = false;
-
-      mobilePlatformsToggle.addEventListener('click', () => {
-        isMobilePlatformsOpen = !isMobilePlatformsOpen;
-        if (isMobilePlatformsOpen) {
-          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-[400px] opacity-100';
-          mobilePlatformsArrow.classList.add('rotate-180');
-        } else {
-          mobilePlatformsSub.className = 'overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0';
-          mobilePlatformsArrow.classList.remove('rotate-180');
-        }
-      });
-
-      const pasteBtn = document.getElementById('paste-btn');
       const urlInput = document.getElementById('url-input');
-      pasteBtn.addEventListener('click', async () => {
-        try {
-          const text = await navigator.clipboard.readText();
-          urlInput.value = text;
-          hideError();
-          const detected = detectPlatformFromUrl(text);
-          if (detected) selectPlatformByName(detected);
-        } catch (err) {
-          alert('Clipboard access denied. Please paste manually.');
+      const pasteBtn = document.getElementById('paste-btn');
+      const clearBtn = document.getElementById('clear-btn');
+      const getDetailsBtn = document.getElementById('get-details-btn');
+      const themeToggle = document.getElementById('theme-toggle');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      urlInput.addEventListener('input', () => {
+        if (urlInput.value.trim().length > 0) {
+          clearBtn.classList.remove('hidden');
+          const detected = detectPlatformFromUrl(urlInput.value.trim());
+          if (detected) selectPlatform(detected);
+        } else {
+          clearBtn.classList.add('hidden');
         }
       });
 
@@ -1518,80 +1269,20 @@
         if (e.key === 'Enter') handleGetDetails();
       });
 
-      document.getElementById('get-details-btn').addEventListener('click', handleGetDetails);
-
-      document.getElementById('modal-close-btn').addEventListener('click', closeMoreModal);
-      document.getElementById('modal-backdrop').addEventListener('click', closeMoreModal);
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMoreModal();
+      pasteBtn.addEventListener('click', async () => {
+        try {
+          const text = await navigator.clipboard.readText();
+          urlInput.value = text;
+          clearBtn.classList.remove('hidden');
+          const detected = detectPlatformFromUrl(text);
+          if (detected) selectPlatform(detected);
+          showToast('URL pasted from clipboard', 'info');
+        } catch (err) {
+          urlInput.focus();
+        }
       });
-    }
 
-    async function initVisitorStats() {
-      // 1. Session ID for presence tracking
-      let sid = sessionStorage.getItem('lukzi_sid');
-      if (!sid) {
-        sid = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-        sessionStorage.setItem('lukzi_sid', sid);
-      }
-
-      // 2. Real-Time Online Presence Heartbeat
-      async function sendHeartbeat(isLeaving = false) {
-        try {
-          const payload = { sid, leave: isLeaving };
-          if (isLeaving && navigator.sendBeacon) {
-            navigator.sendBeacon('/api/presence', JSON.stringify(payload));
-            return;
-          }
-          const res = await fetch('/api/presence', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          const data = await res.json();
-          if (data && typeof data.online === 'number') {
-            const el = document.getElementById('live-online-count');
-            if (el) el.textContent = data.online;
-          }
-        } catch (e) {
-          const el = document.getElementById('live-online-count');
-          if (el && (!el.textContent || el.textContent === '...')) el.textContent = '1';
-        }
-      }
-
-      sendHeartbeat();
-      setInterval(() => sendHeartbeat(), 20000);
-      window.addEventListener('beforeunload', () => sendHeartbeat(true));
-
-      // 3. Total Unique Visits (100% Real Persistent Cloud Hit Counter)
-      const hasCounted = sessionStorage.getItem('lukzi_counted');
-      const action = hasCounted ? 'get' : 'hit';
-      try {
-        const res = await fetch(`https://countapi.mileshilliard.com/api/v1/${action}/lukzi_vs_social_media_visits`);
-        const data = await res.json();
-        if (data && typeof data.value === 'number') {
-          sessionStorage.setItem('lukzi_counted', '1');
-          const el = document.getElementById('live-total-count');
-          if (el) el.textContent = Number(data.value).toLocaleString();
-        }
-      } catch (err) {
-        try {
-          const res2 = await fetch(`https://abacus.jasoncameron.dev/${hasCounted ? 'get' : 'hit'}/lukzi-downloader/visits`);
-          const data2 = await res2.json();
-          if (data2 && typeof data2.value === 'number') {
-            sessionStorage.setItem('lukzi_counted', '1');
-            const el = document.getElementById('live-total-count');
-            if (el) el.textContent = Number(data2.value).toLocaleString();
-          }
-        } catch (e2) {}
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderPlatformGrid();
-      initTheme();
-      initNavigation();
-      initVisitorStats();
+      getDetailsBtn.addEventListener('click', handleGetDetails);
     });
   </script>
 </body>

@@ -1,24 +1,27 @@
-# LUKZI VS SOCIAL MEDIA — All-in-One Video & Audio Downloader
+# LUKZI VS SOCIAL MEDIA 🇱🇰 — Video & Audio Downloader
 
-A modern, high-speed, full-stack social media video and audio downloader supporting **YouTube**, **TikTok**, **Instagram**, **Facebook**, **Twitter (X)**, **Pinterest**, and **Spotify**.
+A modern, high-speed, full-stack social media video and audio downloader engineered for **YouTube**, **TikTok**, **Instagram**, and **Facebook**.
 
-Designed & Developed for **LUKZI DEV**.
+Developed for **LUKZI DEV** • **100% Android, iOS, and PC Compatible**.
 
-## Features
-- **TikTok**: No-watermark HD video & audio extraction.
-- **YouTube**: MP4 video (360p, 480p, 720p, 1080p) & MP3 audio download.
-- **Instagram**: Reels, posts, and videos.
-- **Facebook**: Public HD/SD videos.
-- **Spotify**: High-quality MP3 converter.
-- **Twitter & Pinterest**: Fast media extraction.
-- Clean Tailwind CSS UI with Dark & Light theme modes.
-- Powered by Netlify Serverless Functions (`netlify/functions/api.js`).
+## 🚀 Supported Platforms (100% Active)
+1. **YouTube**: Full HD 1080p, 720p, 480p, 360p MP4 videos & 320kbps MP3 audio extraction.
+2. **TikTok**: Crystal clear HD video download with **No Watermark** & MP3 audio extraction.
+3. **Instagram**: Reels, videos, and post downloader with original sound.
+4. **Facebook**: High-definition HD and fast SD video downloader.
 
-## Deployment on Netlify via GitHub
-1. Push this repository to your GitHub account.
-2. In Netlify, click **"Add new site" -> "Import an existing project" -> "Deploy with GitHub"**.
-3. Select this repository.
-4. Netlify will automatically detect `netlify.toml` and deploy:
+## 📱 Cross-Platform Optimizations
+- **Android Ready**: Fully responsive, touch-friendly thumb navigation, and zero JSON error downloads.
+- **iOS Safari Ready**: Fixed viewport auto-zoom glitch on input focus, smooth touch momentum scrolling.
+- **PC & Mac Ready**: Ultra-fast media extraction with instant RAM cache and QR Code generator for sending files to phone gallery.
+- **Zero JSON Bug**: Intelligent smart-download stream verification stops browsers from downloading error JSON files.
+
+## 🛠️ How to Run Locally
+1. Double-click `run.bat` (or run `node server.js`).
+2. Open `http://localhost:3000` in your web browser.
+
+## 🌐 How to Deploy to Netlify
+1. Connect this repository to Netlify or drag-and-drop the deploy package.
+2. Netlify will automatically detect `netlify.toml` and deploy:
    - Frontend: `public/`
-   - Serverless Backend Functions: `netlify/functions/`
-5. Your site is 100% live with all social media platforms active!
+   - Serverless Functions: `netlify/functions/api.js`
