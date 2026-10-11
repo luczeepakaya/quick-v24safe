@@ -16,44 +16,19 @@
   status = 200
 
 [[redirects]]
-  from = "/developer"
-  to = "/developer.html"
-  status = 200
-
-[[redirects]]
   from = "/contact"
   to = "/contact.html"
   status = 200
 
 [[redirects]]
   from = "/apis"
-  to = "/developer"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/apis.html"
-  to = "/developer"
-  status = 301
-  force = true
+  to = "/apis.html"
+  status = 200
 
 [[redirects]]
   from = "/guaid"
-  to = "/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guaid/*"
-  to = "/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guaid.html"
-  to = "/"
-  status = 301
-  force = true
+  to = "/guaid.html"
+  status = 200
 
 [[redirects]]
   from = "/*"
